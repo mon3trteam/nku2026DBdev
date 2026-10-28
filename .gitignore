@@ -1,0 +1,24 @@
+# ===== 系统与编辑器 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# ===== 运行时与日志 =====
+*.log
+code/runtime/
+code/public/static/upload/
+
+# ===== 依赖与临时 =====
+vendor/
+node_modules/
+tmp/
+*.tmp
+
+# ===== 敏感配置（本地环境差异）=====
+code/app/config.local.php
+
+# ===== 大文件（不入库，交付时放入 data/）=====
+# 团队文档 PDF 与个人作业 zip 最终需要放 code/data/ 交付，此处不忽略

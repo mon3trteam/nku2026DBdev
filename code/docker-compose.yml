@@ -1,0 +1,44 @@
+# =====================================================================
+# 文件名：docker-compose.yml
+# 功能：团队主页项目一键部署编排（web: PHP8+Apache + db: MySQL8）
+# 作者：（部署模块负责人 学号 姓名）
+# 创建日期：2026-10-29
+# 所属模块：部署（加分项）
+# 说明：docker compose up -d 后访问 http://localhost:8080
+#       国内拉取受限时先配置镜像加速源（如 docker.m.daocloud.io）
+# =====================================================================
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: teamhome-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123456}
+      MYSQL_DATABASE: team_home
+      MYSQL_USER: team
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-team123456}
+    volumes:
+      - db_data:/var/lib/mysql
+      # 首次启动自动导入建表脚本（仅 data 目录有该文件时生效）
+      - ./data/install.sql:/docker-entrypoint-initdb.d/install.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+
+  web:
+    build: .
+    container_name: teamhome-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    volumes:
+      # 源码挂载便于开发调试；发布时可改为镜像内 COPY
+      - .:/var/www/html
+
+volumes:
+  db_data:
