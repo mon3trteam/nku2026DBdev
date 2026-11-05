@@ -10,7 +10,11 @@ FROM php:8.2-apache
 
 # 数据库扩展与常用配置
 RUN docker-php-ext-install mysqli pdo_mysql && \
-    a2enmod rewrite
+    a2enmod rewrite expires headers
+
+# 静态资源长缓存 + PHP 页面不缓存
+COPY apache-cache.conf /etc/apache2/conf-available/teamhub-cache.conf
+RUN a2enconf teamhub-cache
 
 # 站点根目录指向 public/（统一入口 index.php）
 # TODO：骨架细化后取消注释并验证虚拟主机配置
