@@ -14,5 +14,6 @@
 <?php require APP_ROOT . '/app/view/partial/toast.php'; ?>
 <script src="<?= e(asset('vendor/bootstrap/5.3.8/bootstrap.bundle.min.js')) ?>" defer></script>
 <script src="<?= e(asset('js/common.js')) ?>" defer></script>
+<script src="<?= e(asset('js/media-preview.js')) ?>" defer></script>
 </body>
 </html>

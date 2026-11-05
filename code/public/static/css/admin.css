@@ -445,3 +445,87 @@
         grid-column: auto;
     }
 }
+
+/* ---------- 后台表单 ---------- */
+.admin-form .admin-card {
+    margin-bottom: var(--space-4);
+}
+
+.admin-form .admin-card__head h2 {
+    font-size: 17px;
+}
+
+.admin-savebar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 -4px 18px rgba(16, 42, 67, .08);
+    backdrop-filter: blur(8px);
+}
+
+.admin-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.admin-preview img {
+    border-radius: var(--radius-control);
+    object-fit: cover;
+    background: var(--c-primary-050);
+}
+
+.admin-preview__cover {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-card);
+}
+
+.admin-value {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-control);
+}
+
+.admin-value strong {
+    color: var(--c-primary);
+    font-family: var(--font-heading);
+    font-size: 14px;
+}
+
+.admin-value span {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.admin-role-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.admin-form .form-hint {
+    margin-top: 4px;
+}
+
+@media (max-width: 767.98px) {
+    .admin-savebar {
+        position: static;
+    }
+}

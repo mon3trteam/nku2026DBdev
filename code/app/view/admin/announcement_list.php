@@ -42,7 +42,7 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
                 <td><span class="badge badge--success"><?= e($announcement['status_label']) ?></span></td>
                 <td><?= e($announcement['published_at']) ?></td>
                 <td class="text-nowrap">
-                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>编辑</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?= e(url('admin/announcementEdit', ['id' => $announcement['id']])) ?>">编辑</a>
                     <button class="btn btn-sm btn-outline-danger" type="button" disabled>下线</button>
                 </td>
             </tr>

@@ -26,6 +26,7 @@ final class TeamModel
             'location' => '天津',
             'email' => 'team@example.com',
             'phone' => '',
+            'updated_at' => '2026-11-05 10:00:00',
         ];
     }
 

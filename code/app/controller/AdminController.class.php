@@ -11,6 +11,11 @@ declare(strict_types=1);
 
 require_once APP_ROOT . '/app/model/MemberModel.class.php';
 require_once APP_ROOT . '/app/model/AnnouncementModel.class.php';
+require_once APP_ROOT . '/app/model/TeamModel.class.php';
+require_once APP_ROOT . '/app/model/ResourceModel.class.php';
+require_once APP_ROOT . '/app/model/UserModel.class.php';
+require_once APP_ROOT . '/app/model/SiteSettingModel.class.php';
+require_once APP_ROOT . '/app/model/LogModel.class.php';
 
 final class AdminController
 {
@@ -83,7 +88,248 @@ final class AdminController
             'pageTitle' => '公告管理 · 管理后台',
             'adminNav' => 'announcements',
             'announcements' => AnnouncementModel::all(),
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '公告已保存（演示）。' : '',
+            'toastType' => 'success',
         ]);
+    }
+
+    public function team(): void
+    {
+        $team = TeamModel::profile();
+
+        render('admin/team', [
+            'pageTitle' => '团队资料 · 管理后台',
+            'adminNav' => 'team',
+            'team' => $team,
+            'values' => TeamModel::values(),
+            'errors' => [],
+            'old' => $team,
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '团队资料已保存（演示）。' : '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function updateTeam(): void
+    {
+        $team = TeamModel::profile();
+        $input = [
+            'name' => trim((string) ($_POST['name'] ?? '')),
+            'english_name' => trim((string) ($_POST['english_name'] ?? '')),
+            'slogan' => trim((string) ($_POST['slogan'] ?? '')),
+            'short_intro' => trim((string) ($_POST['short_intro'] ?? '')),
+            'story' => trim((string) ($_POST['story'] ?? '')),
+            'founded_on' => trim((string) ($_POST['founded_on'] ?? '')),
+            'location' => trim((string) ($_POST['location'] ?? '')),
+            'email' => trim((string) ($_POST['email'] ?? '')),
+            'phone' => trim((string) ($_POST['phone'] ?? '')),
+        ];
+
+        $errors = [];
+        if ($input['name'] === '' || mb_strlen($input['name'], 'UTF-8') > 80) {
+            $errors['name'] = '团队名称必填，且不超过 80 字。';
+        }
+        if ($input['email'] !== '' && filter_var($input['email'], FILTER_VALIDATE_EMAIL) === false) {
+            $errors['email'] = '邮箱格式不正确。';
+        }
+        if (mb_strlen($input['story'], 'UTF-8') > 800) {
+            $errors['story'] = '团队故事不超过 800 字。';
+        }
+
+        if ($errors !== []) {
+            http_response_code(422);
+            render('admin/team', [
+                'pageTitle' => '团队资料 · 管理后台',
+                'adminNav' => 'team',
+                'team' => $team,
+                'values' => TeamModel::values(),
+                'errors' => $errors,
+                'old' => $input,
+                'toastMessage' => '',
+                'toastType' => 'success',
+            ]);
+            return;
+        }
+
+        redirect(url('admin/team', ['saved' => '1']));
+    }
+
+    public function resources(): void
+    {
+        render('admin/resource_list', [
+            'pageTitle' => '资源管理 · 管理后台',
+            'adminNav' => 'resources',
+            'resources' => ResourceModel::all(),
+            'categories' => ResourceModel::categories(),
+            'toastMessage' => '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function users(): void
+    {
+        render('admin/user_list', [
+            'pageTitle' => '用户与角色 · 管理后台',
+            'adminNav' => 'users',
+            'users' => UserModel::all(),
+            'roles' => UserModel::roles(),
+            'toastMessage' => '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function settings(): void
+    {
+        render('admin/setting', [
+            'pageTitle' => '站点设置 · 管理后台',
+            'adminNav' => 'settings',
+            'grouped' => SiteSettingModel::grouped(),
+            'groups' => SiteSettingModel::groups(),
+            'errors' => [],
+            'old' => [],
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '站点设置已保存（演示）。' : '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function updateSettings(): void
+    {
+        $posted = $_POST['settings'] ?? [];
+        if (!is_array($posted)) {
+            $posted = [];
+        }
+
+        $input = [];
+        $errors = [];
+        foreach (SiteSettingModel::all() as $setting) {
+            $key = $setting['key'];
+            if ($setting['type'] === 'bool') {
+                $input[$key] = isset($posted[$key]) ? '1' : '0';
+                continue;
+            }
+
+            $value = trim((string) ($posted[$key] ?? ''));
+            $input[$key] = $value;
+
+            if ($setting['type'] === 'json' && $value !== '') {
+                json_decode($value, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $errors[$key] = 'JSON 格式不正确。';
+                }
+            }
+        }
+
+        if ($errors !== []) {
+            http_response_code(422);
+            render('admin/setting', [
+                'pageTitle' => '站点设置 · 管理后台',
+                'adminNav' => 'settings',
+                'grouped' => SiteSettingModel::grouped(),
+                'groups' => SiteSettingModel::groups(),
+                'errors' => $errors,
+                'old' => $input,
+                'toastMessage' => '',
+                'toastType' => 'success',
+            ]);
+            return;
+        }
+
+        redirect(url('admin/settings', ['saved' => '1']));
+    }
+
+    public function logs(): void
+    {
+        render('admin/log_list', [
+            'pageTitle' => '日志审计 · 管理后台',
+            'adminNav' => 'logs',
+            'loginLogs' => LogModel::loginLogs(),
+            'auditLogs' => LogModel::auditLogs(),
+            'toastMessage' => '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function announcementEdit(): void
+    {
+        $id = (int) ($_GET['id'] ?? 1);
+        $announcement = AnnouncementModel::findById($id);
+        if ($announcement === null) {
+            http_response_code(404);
+            render('error_404', ['pageTitle' => '公告不存在']);
+            return;
+        }
+
+        if (!isset($announcement['content'])) {
+            $announcement['content'] = strip_tags((string) ($announcement['content_html'] ?? ''));
+        }
+
+        render('admin/announcement_edit', [
+            'pageTitle' => '编辑公告 · 管理后台',
+            'adminNav' => 'announcements',
+            'announcement' => $announcement,
+            'old' => $announcement,
+            'categories' => AnnouncementModel::categories(),
+            'errors' => [],
+            'toastMessage' => '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    public function updateAnnouncement(): void
+    {
+        $id = (int) ($_POST['id'] ?? 0);
+        $announcement = AnnouncementModel::findById($id);
+        if ($announcement === null) {
+            http_response_code(404);
+            render('error_404', ['pageTitle' => '公告不存在']);
+            return;
+        }
+
+        $input = [
+            'id' => $id,
+            'title' => trim((string) ($_POST['title'] ?? '')),
+            'slug' => trim((string) ($_POST['slug'] ?? '')),
+            'category' => trim((string) ($_POST['category'] ?? 'news')),
+            'summary' => trim((string) ($_POST['summary'] ?? '')),
+            'content' => trim((string) ($_POST['content'] ?? '')),
+            'status' => trim((string) ($_POST['status'] ?? 'draft')),
+            'is_pinned' => isset($_POST['is_pinned']) ? 1 : 0,
+            'published_at' => trim((string) ($_POST['published_at'] ?? '')),
+            'expires_at' => trim((string) ($_POST['expires_at'] ?? '')),
+        ];
+
+        $errors = [];
+        if ($input['title'] === '' || mb_strlen($input['title'], 'UTF-8') > 150) {
+            $errors['title'] = '标题必填，且不超过 150 字。';
+        }
+        if (preg_match('/^[a-z0-9-]{3,100}$/', $input['slug']) !== 1) {
+            $errors['slug'] = 'slug 只允许小写字母、数字和连字符，长度 3—100。';
+        }
+        if (!array_key_exists($input['category'], AnnouncementModel::categories())) {
+            $errors['category'] = '分类不存在。';
+        }
+        if ($input['content'] === '') {
+            $errors['content'] = '正文不能为空。';
+        }
+        if (!in_array($input['status'], ['draft', 'published', 'offline'], true)) {
+            $errors['status'] = '状态不合法。';
+        }
+
+        if ($errors !== []) {
+            http_response_code(422);
+            render('admin/announcement_edit', [
+                'pageTitle' => '编辑公告 · 管理后台',
+                'adminNav' => 'announcements',
+                'announcement' => $announcement,
+                'old' => $input,
+                'categories' => AnnouncementModel::categories(),
+                'errors' => $errors,
+                'toastMessage' => '',
+                'toastType' => 'success',
+            ]);
+            return;
+        }
+
+        redirect(url('admin/announcements', ['saved' => '1']));
     }
 
     public function messages(): void

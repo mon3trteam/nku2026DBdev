@@ -19,10 +19,12 @@ final class AnnouncementModel
             'summary' => '首页、团队介绍、成员列表与成员主页已经完成第一版，欢迎提出意见。',
             'content_html' => '<p>团队主页的第一版界面已经完成，包含首页、团队介绍、成员列表与成员主页。</p>'
                 . '<p>当前使用演示数据，后端接口接入后会替换为真实内容。欢迎在留言板留下你的建议。</p>',
+            'content' => "团队主页的第一版界面已经完成，包含首页、团队介绍、成员列表与成员主页。\n\n当前使用演示数据，后端接口接入后会替换为真实内容。欢迎在留言板留下你的建议。",
             'category' => 'news',
             'category_label' => '团队动态',
             'is_pinned' => 1,
             'published_at' => '2026-11-05 10:00',
+            'expires_at' => null,
             'author' => '周予安',
             'status' => 'published',
             'status_label' => '已发布',
@@ -34,10 +36,12 @@ final class AnnouncementModel
             'summary' => '32 项功能、21 张表与页面线框已定稿，进入开发阶段。',
             'content_html' => '<p>需求文档与设计文档已完成内部评审。</p>'
                 . '<p>下一步按 P0 优先级推进：公共门户、成员中心与管理后台。</p>',
+            'content' => "需求文档与设计文档已完成内部评审。\n\n下一步按 P0 优先级推进：公共门户、成员中心与管理后台。",
             'category' => 'notice',
             'category_label' => '项目通知',
             'is_pinned' => 0,
             'published_at' => '2026-10-28 18:30',
+            'expires_at' => null,
             'author' => '林知远',
             'status' => 'published',
             'status_label' => '已发布',
@@ -49,10 +53,12 @@ final class AnnouncementModel
             'summary' => '团队文档与个人作业将按分类提供下载，并记录下载次数。',
             'content_html' => '<p>下载中心将读取 <code>data/team</code> 与 <code>data/personal</code> 目录，'
                 . '按团队文档与个人作业分类展示。</p><p>资源管理页面完成后即可在后台上传与公开。</p>',
+            'content' => "下载中心将读取 data/team 与 data/personal 目录，按团队文档与个人作业分类展示。\n\n资源管理页面完成后即可在后台上传与公开。",
             'category' => 'activity',
             'category_label' => '功能预告',
             'is_pinned' => 0,
             'published_at' => '2026-10-30 14:20',
+            'expires_at' => null,
             'author' => '陈一鸣',
             'status' => 'published',
             'status_label' => '已发布',
@@ -90,6 +96,17 @@ final class AnnouncementModel
     {
         foreach (self::$announcements as $announcement) {
             if ($announcement['slug'] === $slug) {
+                return $announcement;
+            }
+        }
+
+        return null;
+    }
+
+    public static function findById(int $id): ?array
+    {
+        foreach (self::$announcements as $announcement) {
+            if ((int) $announcement['id'] === $id) {
                 return $announcement;
             }
         }

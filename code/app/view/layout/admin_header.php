@@ -9,6 +9,8 @@
 
 $pageTitle = $pageTitle ?? '管理后台';
 $adminNav = $adminNav ?? 'dashboard';
+$toastMessage = $toastMessage ?? '';
+$toastType = $toastType ?? 'success';
 $adminItems = [
     'dashboard' => '数据看板',
     'team' => '团队资料',
@@ -23,10 +25,15 @@ $adminItems = [
 ];
 $adminRoutes = [
     'dashboard' => 'admin/dashboard',
+    'team' => 'admin/team',
     'members' => 'admin/members',
     'projects' => 'admin/projects',
     'announcements' => 'admin/announcements',
     'messages' => 'admin/messages',
+    'resources' => 'admin/resources',
+    'users' => 'admin/users',
+    'settings' => 'admin/settings',
+    'logs' => 'admin/logs',
 ];
 ?>
 <!doctype html>
@@ -42,7 +49,7 @@ $adminRoutes = [
     <link rel="stylesheet" href="<?= e(asset('css/admin.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/enhancements.css')) ?>">
 </head>
-<body class="admin-body">
+<body class="admin-body"<?= $toastMessage !== '' ? ' data-toast="' . e($toastMessage) . '" data-toast-type="' . e($toastType) . '"' : '' ?>>
 <div class="admin-shell">
     <aside class="admin-sidebar" aria-label="后台导航">
         <a class="admin-brand" href="<?= e(url('admin/dashboard')) ?>">
