@@ -56,6 +56,8 @@ final class MemberController
             'member' => $member,
             'projects' => MemberModel::projectsOf($member['slug']),
             'messages' => MemberModel::messagesOf($member['slug']),
+            'toastMessage' => ($_GET['sent'] ?? '') === '1' ? '留言已提交，审核通过后公开。' : '',
+            'toastType' => 'success',
         ]);
     }
 }

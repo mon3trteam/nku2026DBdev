@@ -23,6 +23,8 @@
                     <li><a href="<?= e(url('team/index')) ?>">团队介绍</a></li>
                     <li><a href="<?= e(url('member/index')) ?>">成员</a></li>
                     <li><a href="<?= e(url('announcement/index')) ?>">公告</a></li>
+                    <li><a href="<?= e(url('resource/index')) ?>">资源</a></li>
+                    <li><a href="<?= e(url('message/index')) ?>">留言板</a></li>
                 </ul>
             </div>
             <div class="col-6 col-lg-4">

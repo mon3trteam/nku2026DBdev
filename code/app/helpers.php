@@ -70,6 +70,15 @@ function render(string $view, array $data = []): void
 }
 
 /**
+ * 302 跳转并结束请求。
+ */
+function redirect(string $url): never
+{
+    header('Location: ' . $url);
+    exit;
+}
+
+/**
  * 表单回填（已转义）。
  */
 function old(string $key, string $default = ''): string

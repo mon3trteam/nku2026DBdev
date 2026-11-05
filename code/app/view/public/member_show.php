@@ -75,9 +75,16 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                         <?php endforeach; ?>
                     </div>
 
-                    <form class="message-form" action="" method="post">
+                    <form class="message-form" action="<?= e(url('message/store')) ?>" method="post" novalidate>
                         <h3 class="form-title">给 <?= e($member['name']) ?> 留言</h3>
                         <p class="form-hint">留言需要审核后才会公开，邮箱不会公开。当前为演示表单，提交不会入库。</p>
+                        <input type="hidden" name="_token" value="">
+                        <input type="hidden" name="member_slug" value="<?= e($member['slug']) ?>">
+                        <input type="hidden" name="member_id" value="<?= e($member['id']) ?>">
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="website_hp">网站</label>
+                            <input id="website_hp" name="website_hp" type="text" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label" for="author_name">昵称 <span class="required">*</span></label>

@@ -119,10 +119,10 @@ require APP_ROOT . '/app/view/layout/public_header.php';
             <div>
                 <p class="eyebrow">Say hello</p>
                 <h2 class="section-title">想进一步了解我们？</h2>
-                <p class="text-muted mb-0">欢迎在成员主页留言，或直接查看团队介绍与项目。</p>
+                <p class="text-muted mb-0">欢迎在留言板留下建议，或直接查看团队介绍与项目。</p>
             </div>
             <div class="d-flex flex-wrap gap-3">
-                <a class="btn btn-primary" href="<?= e(url('member/index')) ?>">给成员留言</a>
+                <a class="btn btn-primary" href="<?= e(url('message/index')) ?>">去留言板</a>
                 <a class="btn btn-outline-secondary" href="<?= e(url('team/index')) ?>">了解团队</a>
             </div>
         </div>

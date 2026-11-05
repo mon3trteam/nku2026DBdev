@@ -14,6 +14,7 @@ $modalTitle = $modalTitle ?? '确认操作';
 $modalBody = $modalBody ?? '该操作需要二次确认。';
 $modalConfirmText = $modalConfirmText ?? '确认';
 $modalDanger = $modalDanger ?? true;
+$modalConfirmDisabled = $modalConfirmDisabled ?? true;
 ?>
 <div class="modal fade" id="<?= e($modalId) ?>" tabindex="-1" aria-labelledby="<?= e($modalId) ?>Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -25,8 +26,9 @@ $modalDanger = $modalDanger ?? true;
             <div class="modal-body"><?= e($modalBody) ?></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn <?= $modalDanger ? 'btn-danger' : 'btn-primary' ?>" data-bs-dismiss="modal" disabled>
-                    <?= e($modalConfirmText) ?>（接口接入后启用）
+                <button type="button" class="btn <?= $modalDanger ? 'btn-danger' : 'btn-primary' ?>"
+                        data-bs-dismiss="modal" <?= $modalConfirmDisabled ? 'disabled' : '' ?>>
+                    <?= e($modalConfirmText) ?><?= $modalConfirmDisabled ? '（接口接入后启用）' : '' ?>
                 </button>
             </div>
         </div>

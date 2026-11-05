@@ -13,6 +13,8 @@ $metaDescription = $metaDescription ?? '数聚 TeamHub：团队展示、成员�
 $ogType = $ogType ?? 'website';
 $ogImage = $ogImage ?? asset('img/placeholder-cover.svg');
 $currentUrl = (string) ($_SERVER['REQUEST_URI'] ?? (APP_BASE . '/index.php'));
+$toastMessage = $toastMessage ?? '';
+$toastType = $toastType ?? 'success';
 ?>
 <!doctype html>
 <html lang="zh-CN">
@@ -35,7 +37,7 @@ $currentUrl = (string) ($_SERVER['REQUEST_URI'] ?? (APP_BASE . '/index.php'));
     <link rel="stylesheet" href="<?= e(asset('css/public.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/enhancements.css')) ?>">
 </head>
-<body>
+<body<?= $toastMessage !== '' ? ' data-toast="' . e($toastMessage) . '" data-toast-type="' . e($toastType) . '"' : '' ?>>
 <a class="skip-link" href="#main">跳到主要内容</a>
 
 <header class="site-header">
@@ -70,7 +72,7 @@ $currentUrl = (string) ($_SERVER['REQUEST_URI'] ?? (APP_BASE . '/index.php'));
                         <a class="nav-link <?= e(is_active('announcement')) ?>" href="<?= e(url('announcement/index')) ?>">公告</a>
                     </li>
                     <li class="nav-item">
-                        <span class="nav-link is-disabled" title="资源下载页将在后端接口接入后开放">资源</span>
+                        <a class="nav-link <?= e(is_active('resource')) ?>" href="<?= e(url('resource/index')) ?>">资源</a>
                     </li>
                     <li class="nav-item ms-lg-2">
                         <a class="btn btn-outline-primary btn-sm" href="<?= e(url('auth/login')) ?>">登录</a>
