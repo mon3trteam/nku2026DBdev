@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="封面占位图">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102A43"/>
+      <stop offset="1" stop-color="#1B3A5A"/>
+    </linearGradient>
+    <radialGradient id="r" cx="78%" cy="18%" r="55%">
+      <stop offset="0" stop-color="#2A9D8F" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#2A9D8F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect width="1600" height="900" fill="url(#r)"/>
+  <g fill="#FFFFFF" opacity=".18">
+    <circle cx="1240" cy="180" r="6"/>
+    <circle cx="1320" cy="240" r="4"/>
+    <circle cx="1400" cy="160" r="5"/>
+    <circle cx="1360" cy="320" r="3"/>
+    <circle cx="1180" cy="300" r="4"/>
+  </g>
+  <text x="96" y="760" fill="#FFFFFF" fill-opacity=".72" font-family="Microsoft YaHei, sans-serif"
+        font-size="42" font-weight="700" letter-spacing="6">DATANOVA</text>
+  <text x="96" y="810" fill="#FFFFFF" fill-opacity=".38" font-family="Microsoft YaHei, sans-serif"
+        font-size="22" letter-spacing="3">数聚 TeamHub · 团队主页</text>
+</svg>

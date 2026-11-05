@@ -17,6 +17,10 @@ node_modules/
 tmp/
 *.tmp
 
+# 前端本地化静态依赖需要入库（上面的 vendor/ 只针对 PHP Composer）
+!code/public/static/vendor/
+!code/public/static/vendor/**
+
 # ===== 敏感配置（本地环境差异）=====
 code/app/config.local.php
 

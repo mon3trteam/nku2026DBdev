@@ -1,0 +1,426 @@
+/*
+ * 文件名：enhancements.css
+ * 功能：列表工具栏、分页、状态组件、Toast、表单错误与项目详情补充样式
+ * 作者：杨斯源（学号待填）
+ * 创建日期：2026-11-05
+ * 所属模块：公共样式
+ */
+
+/* ---------- 成员搜索与排序 ---------- */
+.member-search {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.member-search .form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.member-search .btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.list-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.list-toolbar .result-count {
+    margin-bottom: 0;
+}
+
+.sort-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.sort-link {
+    padding: 3px 9px;
+    border-radius: 999px;
+    color: var(--c-muted);
+}
+
+.sort-link:hover,
+.sort-link.is-active {
+    background: var(--c-accent-050);
+    color: var(--c-accent-600);
+    font-weight: 600;
+}
+
+/* ---------- 分页 ---------- */
+.pagination-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+}
+
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 4px 12px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-control);
+    color: var(--c-text);
+    font-family: var(--font-heading);
+    font-size: 13px;
+}
+
+.page-link:hover,
+.page-link.is-active {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: #fff;
+}
+
+.page-link.is-disabled {
+    color: var(--c-muted);
+    opacity: .5;
+    pointer-events: none;
+}
+
+/* ---------- 加载态 ---------- */
+.state-loading {
+    padding: var(--space-6);
+}
+
+.state-loading__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.skeleton {
+    display: block;
+    min-height: 150px;
+    background: linear-gradient(90deg, #EDF2F7 25%, #F7F9FB 37%, #EDF2F7 63%);
+    background-size: 400% 100%;
+    border-radius: var(--radius-card);
+    animation: skeleton-shine 1.4s ease infinite;
+}
+
+.state-loading__text {
+    margin-top: var(--space-3);
+    color: var(--c-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+@keyframes skeleton-shine {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+/* ---------- 错误态 ---------- */
+.empty-state--error {
+    border-color: #F0D3CB;
+    background: #FFF9F7;
+}
+
+.empty-state--error .empty-state__icon {
+    color: var(--c-danger);
+}
+
+.request-id {
+    color: var(--c-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+/* ---------- 表单错误 ---------- */
+.is-invalid {
+    border-color: var(--c-danger) !important;
+    background-image: none;
+}
+
+.is-invalid:focus {
+    border-color: var(--c-danger) !important;
+    box-shadow: 0 0 0 3px rgba(217, 95, 67, .16) !important;
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 4px;
+    color: var(--c-danger);
+    font-size: 12px;
+}
+
+/* ---------- Toast ---------- */
+.toast-stack {
+    position: fixed;
+    top: 84px;
+    right: 20px;
+    z-index: 2000;
+    display: grid;
+    gap: 8px;
+    width: min(340px, calc(100vw - 40px));
+}
+
+.app-toast {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 12px 14px;
+    background: var(--c-primary);
+    border-radius: var(--radius-control);
+    box-shadow: var(--shadow-float);
+    color: #fff;
+    font-size: 14px;
+    animation: toast-in .18s ease;
+}
+
+.app-toast--success { background: var(--c-accent-600); }
+.app-toast--danger { background: var(--c-danger); }
+.app-toast--warning { background: #8A6612; }
+
+.app-toast__close {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 16px;
+    line-height: 1;
+    opacity: .7;
+}
+
+.app-toast__close:hover {
+    opacity: 1;
+}
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 后台状态分布 ---------- */
+.status-bars {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.status-bar {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) 28px;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 13px;
+}
+
+.status-bar__label {
+    color: var(--c-muted);
+}
+
+.status-bar__track {
+    height: 8px;
+    background: var(--c-primary-050);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.status-bar__fill {
+    display: block;
+    height: 100%;
+    background: var(--c-accent);
+    border-radius: 999px;
+}
+
+.status-bar__fill--gold {
+    background: var(--c-gold);
+}
+
+.status-bar__num {
+    color: var(--c-muted);
+    text-align: right;
+}
+
+/* ---------- 后台工具栏与进度 ---------- */
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.admin-toolbar p {
+    margin-bottom: 0;
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.admin-person {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.admin-person img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-person small {
+    display: block;
+    color: var(--c-muted);
+    font-size: 11px;
+}
+
+.admin-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 12px;
+}
+
+.admin-progress__track {
+    width: 70px;
+    height: 6px;
+    background: var(--c-primary-050);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.admin-progress__fill {
+    display: block;
+    height: 100%;
+    background: var(--c-accent);
+    border-radius: 999px;
+}
+
+.admin-todo {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.admin-todo a {
+    display: block;
+    padding: 10px 12px;
+    background: var(--c-bg);
+    border-radius: var(--radius-control);
+    color: var(--c-text);
+    font-size: 13px;
+}
+
+.admin-todo a:hover {
+    background: var(--c-accent-050);
+    color: var(--c-accent-600);
+}
+
+/* ---------- 项目详情 ---------- */
+.project-hero {
+    padding: var(--space-8) 0 var(--space-7);
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+}
+
+.project-hero__cover {
+    aspect-ratio: 16 / 9;
+    background: var(--c-primary-050);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.project-hero__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-hero__title {
+    margin: var(--space-3) 0 var(--space-3);
+    font-size: clamp(30px, 3.6vw, 44px);
+}
+
+.project-hero__summary {
+    color: var(--c-muted);
+    font-size: 16px;
+}
+
+.project-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-5) 0 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--c-border);
+}
+
+.project-meta dt {
+    color: var(--c-muted);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.project-meta dd {
+    margin: 0;
+    color: var(--c-text);
+    font-size: 13px;
+}
+
+.member-role-card {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-control);
+}
+
+.member-role-card span {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 登录演示状态 ---------- */
+.auth-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--c-border);
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.auth-demo a {
+    color: var(--c-accent-600);
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 767.98px) {
+    .member-search {
+        flex-wrap: wrap;
+    }
+
+    .member-search .form-control {
+        flex-basis: 100%;
+    }
+
+    .state-loading__row {
+        grid-template-columns: 1fr;
+    }
+
+    .project-meta {
+        grid-template-columns: 1fr;
+    }
+}

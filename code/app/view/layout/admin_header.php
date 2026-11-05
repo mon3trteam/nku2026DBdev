@@ -1,0 +1,77 @@
+<?php
+/**
+ * 文件名：admin_header.php
+ * 功能：管理后台头部布局（侧栏、顶栏、面包屑）
+ * 作者：杨斯源（学号待填）
+ * 创建日期：2026-11-05
+ * 所属模块：后台布局
+ */
+
+$pageTitle = $pageTitle ?? '管理后台';
+$adminNav = $adminNav ?? 'dashboard';
+$adminItems = [
+    'dashboard' => '数据看板',
+    'team' => '团队资料',
+    'members' => '成员管理',
+    'projects' => '项目管理',
+    'announcements' => '公告管理',
+    'messages' => '留言管理',
+    'resources' => '资源管理',
+    'users' => '用户与角色',
+    'settings' => '站点设置',
+    'logs' => '日志审计',
+];
+$adminRoutes = [
+    'dashboard' => 'admin/dashboard',
+    'members' => 'admin/members',
+    'projects' => 'admin/projects',
+    'announcements' => 'admin/announcements',
+    'messages' => 'admin/messages',
+];
+?>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?= e($pageTitle) ?></title>
+    <link rel="stylesheet" href="<?= e(asset('vendor/bootstrap/5.3.8/bootstrap.min.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/tokens.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/base.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/components.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/admin.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/enhancements.css')) ?>">
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+    <aside class="admin-sidebar" aria-label="后台导航">
+        <a class="admin-brand" href="<?= e(url('admin/dashboard')) ?>">
+            <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="32" height="32">
+            <span>数聚 TeamHub<small>ADMIN</small></span>
+        </a>
+        <nav class="admin-nav">
+            <?php foreach ($adminItems as $key => $label): ?>
+                <?php if (isset($adminRoutes[$key])): ?>
+                    <a class="admin-nav__item <?= $key === $adminNav ? 'is-active' : '' ?>"
+                       href="<?= e(url($adminRoutes[$key])) ?>"
+                       <?= $key === $adminNav ? 'aria-current="page"' : '' ?>><?= e($label) ?></a>
+                <?php else: ?>
+                    <span class="admin-nav__item is-disabled" title="模块接入后开放"><?= e($label) ?></span>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </nav>
+        <a class="admin-back" href="<?= e(url('home/index')) ?>">← 返回前台</a>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div>
+                <p class="admin-breadcrumb">管理后台 / <?= e($adminItems[$adminNav] ?? '数据看板') ?></p>
+                <h1 class="admin-page-title"><?= e($adminItems[$adminNav] ?? '数据看板') ?></h1>
+            </div>
+            <div class="admin-user">
+                <span class="admin-user__avatar" aria-hidden="true">管</span>
+                <span>管理员</span>
+            </div>
+        </header>
+        <div class="admin-content">

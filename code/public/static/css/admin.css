@@ -1,0 +1,447 @@
+/*
+ * 文件名：admin.css
+ * 功能：管理后台布局与看板样式
+ * 作者：杨斯源（学号待填）
+ * 创建日期：2026-11-05
+ * 所属模块：管理后台
+ */
+
+.admin-body {
+    background: #EEF2F6;
+}
+
+.admin-shell {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: var(--space-5) var(--space-4);
+    background: var(--c-primary);
+    color: rgba(255, 255, 255, .76);
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-2) var(--space-5);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.admin-brand:hover {
+    color: #fff;
+}
+
+.admin-brand small {
+    display: block;
+    color: rgba(255, 255, 255, .45);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .18em;
+}
+
+.admin-brand img {
+    border-radius: 9px;
+}
+
+.admin-nav {
+    display: grid;
+    gap: 2px;
+    margin-top: var(--space-4);
+    overflow-y: auto;
+}
+
+.admin-nav__item {
+    display: block;
+    padding: 9px 12px;
+    border-radius: var(--radius-control);
+    color: rgba(255, 255, 255, .72);
+    font-family: var(--font-heading);
+    font-size: 14px;
+}
+
+.admin-nav__item:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+
+.admin-nav__item.is-active {
+    background: var(--c-accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.admin-nav__item.is-disabled {
+    color: rgba(255, 255, 255, .34);
+    cursor: not-allowed;
+}
+
+.admin-back {
+    margin-top: auto;
+    padding: var(--space-3) var(--space-2) 0;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    color: rgba(255, 255, 255, .6);
+    font-size: 13px;
+}
+
+.admin-back:hover {
+    color: #fff;
+}
+
+.admin-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+}
+
+.admin-breadcrumb {
+    margin-bottom: 2px;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.admin-page-title {
+    margin-bottom: 0;
+    font-size: 24px;
+}
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.admin-user__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: var(--c-accent-050);
+    border-radius: 50%;
+    color: var(--c-accent-600);
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.admin-content {
+    flex: 1;
+    padding: var(--space-6);
+}
+
+.admin-footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--c-border);
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- KPI ---------- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+}
+
+.kpi-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-5);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    color: inherit;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+    color: inherit;
+}
+
+.kpi-card--warn {
+    border-color: #F0D3CB;
+    background: #FFF9F7;
+}
+
+.kpi-card__label {
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.kpi-card__value {
+    margin: 2px 0;
+    color: var(--c-primary);
+    font-family: var(--font-heading);
+    font-size: 34px;
+    line-height: 1.15;
+}
+
+.kpi-card__hint {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 网格与卡片 ---------- */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.admin-card {
+    min-width: 0;
+    padding: var(--space-5);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+}
+
+.admin-card--wide {
+    grid-column: span 2;
+}
+
+.admin-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.admin-card__head h2 {
+    margin-bottom: 2px;
+    font-size: 17px;
+}
+
+.admin-card__head p {
+    margin-bottom: 0;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 柱状图占位 ---------- */
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 230px;
+    padding-top: var(--space-4);
+}
+
+.bar-chart__item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 0;
+}
+
+.bar-chart__value {
+    color: var(--c-muted);
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.bar-chart__item:hover .bar-chart__value {
+    opacity: 1;
+}
+
+.bar-chart__bar {
+    width: 100%;
+    max-width: 26px;
+    min-height: 4px;
+    background: linear-gradient(180deg, var(--c-accent) 0%, #4FB8AA 100%);
+    border-radius: 5px 5px 0 0;
+}
+
+.bar-chart__label {
+    margin-top: 6px;
+    color: var(--c-muted);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+/* ---------- 技能分布 ---------- */
+.skill-dist {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.skill-dist__row {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 13px;
+}
+
+.skill-dist__track {
+    height: 8px;
+    background: var(--c-primary-050);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.skill-dist__fill {
+    display: block;
+    height: 100%;
+    background: var(--c-accent);
+    border-radius: 999px;
+}
+
+.skill-dist__num {
+    color: var(--c-muted);
+    text-align: right;
+}
+
+/* ---------- 表格 ---------- */
+.admin-table {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.admin-table thead th {
+    padding: 10px 12px;
+    background: var(--c-primary);
+    color: rgba(255, 255, 255, .86);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-table tbody td {
+    padding: 10px 12px;
+    color: var(--c-text);
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: #FAFCFE;
+}
+
+.admin-table .btn {
+    padding: 3px 10px;
+    font-size: 12px;
+}
+
+.admin-hint {
+    margin: var(--space-3) 0 0;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 列表 ---------- */
+.admin-list li {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--c-border);
+}
+
+.admin-list li:last-child {
+    border-bottom: 0;
+}
+
+.admin-list__title {
+    color: var(--c-text);
+    font-size: 14px;
+}
+
+.admin-list__meta {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 1199.98px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-card--wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .admin-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+        height: auto;
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .admin-brand {
+        padding-bottom: var(--space-3);
+    }
+
+    .admin-nav {
+        display: flex;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+        overflow-x: auto;
+    }
+
+    .admin-nav__item {
+        white-space: nowrap;
+    }
+
+    .admin-back {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-content {
+        padding: var(--space-4);
+    }
+
+    .admin-topbar {
+        padding: var(--space-4);
+    }
+
+    .kpi-grid,
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-card--wide {
+        grid-column: auto;
+    }
+}
