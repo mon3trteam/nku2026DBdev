@@ -90,6 +90,7 @@ $disabled = $disabled ?? false;
             <a href="<?= e(url('auth/login', ['state' => 'locked'])) ?>">账号锁定</a>
             <a href="<?= e(url('auth/login', ['state' => 'rate'])) ?>">限流</a>
             <a href="<?= e(url('auth/login', ['state' => 'success'])) ?>">成功</a>
+            <a href="<?= e(url('me/index')) ?>">进入成员中心</a>
         </div>
     </section>
 

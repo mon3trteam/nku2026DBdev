@@ -30,6 +30,7 @@ final class MemberModel
             'website' => '',
             'location' => '天津',
             'join_date' => '2026-09-01',
+            'updated_at' => '2026-11-05 10:00:00',
             'is_featured' => 1,
             'skills' => [
                 ['name' => 'JavaScript', 'category' => 'tech', 'proficiency' => 5],
@@ -211,14 +212,26 @@ final class MemberModel
 
     public static function skillOptions(): array
     {
-        $names = [];
+        return array_column(self::skillCatalog(), 'name');
+    }
+
+    /**
+     * 全局技能库（去重，按名称排序），用于成员资料页的技能选择。
+     */
+    public static function skillCatalog(): array
+    {
+        $catalog = [];
         foreach (self::$members as $member) {
             foreach ($member['skills'] as $skill) {
-                $names[$skill['name']] = true;
+                $catalog[$skill['name']] = [
+                    'name' => $skill['name'],
+                    'category' => $skill['category'],
+                ];
             }
         }
 
-        return array_keys($names);
+        ksort($catalog);
+        return array_values($catalog);
     }
 
     public static function filterBySkill(string $skill): array

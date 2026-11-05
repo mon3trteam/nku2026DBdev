@@ -38,7 +38,10 @@
         </div>
         <div class="footer-bottom">
             <span>© 2026 数聚 TeamHub · 课程设计演示</span>
-            <a href="<?= e(url('auth/login')) ?>">管理入口</a>
+            <span class="d-flex gap-3">
+                <a href="<?= e(url('me/index')) ?>">成员中心</a>
+                <a href="<?= e(url('auth/login')) ?>">管理入口</a>
+            </span>
         </div>
     </div>
 </footer>

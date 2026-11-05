@@ -1,0 +1,644 @@
+/*
+ * 文件名：me.css
+ * 功能：成员中心布局与页面样式
+ * 作者：杨斯源（学号待填）
+ * 创建日期：2026-11-05
+ * 所属模块：成员中心
+ */
+
+.me-body {
+    background: #EEF2F6;
+}
+
+.me-shell {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+/* ---------- 侧栏 ---------- */
+.me-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: var(--space-5) var(--space-4);
+    background: var(--c-primary);
+    color: rgba(255, 255, 255, .76);
+}
+
+.me-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-2) var(--space-5);
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.me-brand:hover {
+    color: #fff;
+}
+
+.me-brand small {
+    display: block;
+    color: rgba(255, 255, 255, .45);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .18em;
+}
+
+.me-brand img {
+    border-radius: 9px;
+}
+
+.me-nav {
+    display: grid;
+    gap: 2px;
+    margin-top: var(--space-4);
+}
+
+.me-nav__item {
+    display: block;
+    padding: 9px 12px;
+    border-radius: var(--radius-control);
+    color: rgba(255, 255, 255, .72);
+    font-family: var(--font-heading);
+    font-size: 14px;
+}
+
+.me-nav__item:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+
+.me-nav__item.is-active {
+    background: var(--c-accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.me-sidebar__foot {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding: var(--space-3) var(--space-2) 0;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    font-size: 13px;
+}
+
+.me-sidebar__foot a {
+    color: rgba(255, 255, 255, .6);
+}
+
+.me-sidebar__foot a:hover {
+    color: #fff;
+}
+
+/* ---------- 主区 ---------- */
+.me-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.me-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+}
+
+.me-breadcrumb {
+    margin-bottom: 2px;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.me-page-title {
+    margin-bottom: 0;
+    font-size: 24px;
+}
+
+.me-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.me-user img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--c-primary-050);
+}
+
+.me-user strong {
+    display: block;
+    color: var(--c-text);
+    font-family: var(--font-heading);
+    font-size: 13px;
+}
+
+.me-user small {
+    color: var(--c-muted);
+    font-size: 11px;
+}
+
+.me-content {
+    flex: 1;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: var(--space-6);
+}
+
+.me-footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--c-border);
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 概览 ---------- */
+.me-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-card);
+}
+
+.me-summary__avatar img {
+    width: 104px;
+    height: 104px;
+    border: 5px solid var(--c-accent-050);
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--c-primary-050);
+}
+
+.me-summary__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.me-summary__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-bottom: 4px;
+    font-size: 28px;
+}
+
+.me-summary__name span {
+    color: var(--c-muted);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.me-summary__role {
+    margin-bottom: var(--space-4);
+    color: var(--c-muted);
+    font-size: 14px;
+}
+
+.me-summary__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 0 0 auto;
+}
+
+.completeness {
+    max-width: 460px;
+}
+
+.completeness__head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.completeness__head strong {
+    color: var(--c-primary);
+}
+
+.completeness__track {
+    height: 8px;
+    background: var(--c-primary-050);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.completeness__fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--c-accent) 0%, #4FB8AA 100%);
+    border-radius: 999px;
+}
+
+.completeness__hint {
+    margin: 6px 0 0;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.completeness__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: var(--c-accent-050);
+    border-radius: 999px;
+    color: var(--c-accent-600);
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.me-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-5) 0;
+}
+
+.me-stat {
+    padding: var(--space-4) var(--space-5);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+}
+
+.me-stat__num {
+    display: block;
+    color: var(--c-primary);
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.me-stat__label {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+/* ---------- 卡片 ---------- */
+.me-card {
+    padding: var(--space-5);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+}
+
+.me-card + .me-card {
+    margin-top: var(--space-4);
+}
+
+.me-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.me-card__head h2 {
+    margin-bottom: 2px;
+    font-size: 18px;
+}
+
+.me-card__head p {
+    margin-bottom: 0;
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.me-project-list {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.me-project-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-bg);
+    border-radius: var(--radius-control);
+    color: var(--c-text);
+}
+
+.me-project-row:hover {
+    background: var(--c-accent-050);
+    color: var(--c-text);
+}
+
+.me-project-row strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 14px;
+}
+
+.me-project-row span {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.me-quick {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.me-quick a {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-bg);
+    border-radius: var(--radius-control);
+    color: var(--c-text);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.me-quick a span {
+    display: block;
+    margin-top: 2px;
+    color: var(--c-muted);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.me-quick a:hover {
+    background: var(--c-accent-050);
+    color: var(--c-accent-600);
+}
+
+/* ---------- 个人资料 ---------- */
+.me-profile-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+}
+
+.me-profile-head .section-title {
+    margin-bottom: 2px;
+}
+
+.me-profile-head__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.me-form .me-card {
+    margin-bottom: var(--space-4);
+}
+
+.me-savebar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 -4px 18px rgba(16, 42, 67, .08);
+    backdrop-filter: blur(8px);
+}
+
+/* ---------- 头像/封面上传 ---------- */
+.avatar-upload,
+.cover-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.avatar-upload img {
+    width: 120px;
+    height: 120px;
+    border: 4px solid var(--c-accent-050);
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--c-primary-050);
+}
+
+.cover-upload img {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-card);
+    object-fit: cover;
+    background: var(--c-primary-050);
+}
+
+/* ---------- 技能选择 ---------- */
+.skill-picker {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-4);
+}
+
+.skill-picker__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 68px;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-control);
+}
+
+.skill-picker__check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.skill-picker__check input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--c-accent);
+}
+
+/* ---------- 我的项目 ---------- */
+.me-project-list--detailed {
+    gap: var(--space-4);
+}
+
+.me-project-card {
+    padding: var(--space-5);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+}
+
+.me-project-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+.me-project-card__head h3 {
+    margin-bottom: 2px;
+    font-size: 18px;
+}
+
+.me-project-card__head p {
+    margin-bottom: 0;
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.me-project-card__meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--c-border);
+    border-bottom: 1px solid var(--c-border);
+}
+
+.me-project-card__meta dt {
+    color: var(--c-muted);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.me-project-card__meta dd {
+    margin: 0;
+    color: var(--c-text);
+    font-size: 13px;
+}
+
+.me-project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+/* ---------- 账号安全 ---------- */
+.password-rules {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--c-muted);
+    font-size: 13px;
+}
+
+.password-rules li {
+    position: relative;
+    padding-left: var(--space-4);
+}
+
+.password-rules li::before {
+    content: "•";
+    position: absolute;
+    left: 4px;
+    color: var(--c-accent);
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 991.98px) {
+    .me-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .me-sidebar {
+        position: static;
+        height: auto;
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .me-brand {
+        padding-bottom: var(--space-3);
+    }
+
+    .me-nav {
+        display: flex;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+        overflow-x: auto;
+    }
+
+    .me-nav__item {
+        white-space: nowrap;
+    }
+
+    .me-sidebar__foot {
+        display: flex;
+        gap: var(--space-4);
+        margin-top: var(--space-3);
+        padding-top: var(--space-3);
+    }
+
+    .me-summary {
+        flex-wrap: wrap;
+    }
+
+    .me-summary__actions {
+        flex-direction: row;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .me-content {
+        padding: var(--space-4);
+    }
+
+    .me-topbar {
+        padding: var(--space-4);
+    }
+
+    .me-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .skill-picker {
+        grid-template-columns: 1fr;
+    }
+
+    .me-project-card__meta {
+        grid-template-columns: 1fr;
+    }
+
+    .me-summary__avatar img {
+        width: 80px;
+        height: 80px;
+    }
+}
