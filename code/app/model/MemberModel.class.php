@@ -4,6 +4,7 @@
  * 功能：成员、技能、项目与成员留言的数据访问；对外字段保持前端契约不变
  * 作者：杨斯源（学号待填）
  * 修改：金暄琛（2411672）后端接入数据库（2026-11-08）
+ * 修改：黄浩天（2413421）updateForAdmin 增加乐观锁，与 /me 路径冲突检测对齐（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 成员
  */
@@ -62,14 +63,31 @@ final class MemberModel
     /**
      * 后台更新公开档案字段；传入技能数组时在同一事务内同步技能关联。
      *
+     * 与 updateProfile 一致使用乐观锁：expectedUpdatedAt 非空且与当前
+     * updated_at 不符时返回 conflict，避免两个管理员互相静默覆盖。
+     *
      * @param array<string, int>|null $skills 技能名 => 熟练度；null 表示不修改技能
+     * @return string ok / conflict / missing
      */
-    public static function updateForAdmin(int $id, array $data, ?array $skills = null): bool
+    public static function updateForAdmin(int $id, array $data, ?array $skills = null, string $expectedUpdatedAt = ''): string
     {
-        return Db::transaction(static function () use ($id, $data, $skills): bool {
+        return Db::transaction(static function () use ($id, $data, $skills, $expectedUpdatedAt): string {
+            $current = Db::fetchOne(
+                'SELECT updated_at FROM members WHERE id = :id FOR UPDATE',
+                ['id' => $id]
+            );
+
+            if ($current === null) {
+                return 'missing';
+            }
+
+            if ($expectedUpdatedAt !== '' && (string) $current['updated_at'] !== $expectedUpdatedAt) {
+                return 'conflict';
+            }
+
             $nullable = static fn (string $value): ?string => $value === '' ? null : $value;
 
-            $affected = Db::execute(
+            Db::execute(
                 'UPDATE members SET
                     name = :name,
                     english_name = :english_name,
@@ -115,7 +133,7 @@ final class MemberModel
                 self::replaceSkills($id, $skills);
             }
 
-            return $affected > 0;
+            return 'ok';
         });
     }
 

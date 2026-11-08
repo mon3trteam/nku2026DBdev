@@ -45,6 +45,16 @@ final class SystemController
      */
     public function healthz(): void
     {
+        // 可选令牌：设置 HEALTHZ_TOKEN 环境变量后，探活请求须带 ?token=…
+        // （compose 内部探活不设该变量，行为不变；公网部署可开启防探测）
+        $expectedToken = (string) getenv('HEALTHZ_TOKEN');
+        if ($expectedToken !== '' && !hash_equals($expectedToken, (string) ($_GET['token'] ?? ''))) {
+            http_response_code(403);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['status' => 'forbidden'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
         header('Content-Type: application/json; charset=utf-8');
         header('Cache-Control: no-store');
 

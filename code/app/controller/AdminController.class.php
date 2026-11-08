@@ -161,8 +161,51 @@ final class AdminController
             $avatarMediaId > 0
         );
 
-        MemberModel::updateForAdmin($id, $data, $selectedSkills);
+        $result = MemberModel::updateForAdmin($id, $data, $selectedSkills, (string) ($_POST['updated_at'] ?? ''));
+        if ($result === 'conflict') {
+            $this->renderMemberEditConflict($member, $input, $selectedSkills, $uploadedIds);
+            return;
+        }
+        if ($result === 'missing') {
+            http_response_code(404);
+            render('error_404', ['pageTitle' => '成员不存在']);
+            return;
+        }
+        $this->finishMemberUpdate($id, $data, $oldAvatarId, $avatarMediaId, $oldCoverId, $coverMediaId);
+    }
 
+    /**
+     * 后台并发编辑冲突：清理本次上传的孤儿媒体后，409 渲染编辑页提示刷新。
+     */
+    private function renderMemberEditConflict(
+        array $member,
+        array $input,
+        array $selectedSkills,
+        array $uploadedIds
+    ): void {
+        foreach ($uploadedIds as $mediaId) {
+            MediaModel::deleteIfUnused($mediaId);
+        }
+        $this->renderMemberEdit(
+            [...$member, ...$input],
+            ['updated_at' => '资料已被他人修改，请刷新页面获取最新内容后再提交。'],
+            409,
+            '',
+            $selectedSkills
+        );
+    }
+
+    /**
+     * 更新成功后的收尾：清理被替换的旧头像/封面媒体、写审计并回编辑页。
+     */
+    private function finishMemberUpdate(
+        int $id,
+        array $data,
+        int $oldAvatarId,
+        int $avatarMediaId,
+        int $oldCoverId,
+        int $coverMediaId
+    ): void {
         if ($oldAvatarId > 0 && $oldAvatarId !== $avatarMediaId) {
             MediaModel::deleteIfUnused($oldAvatarId);
         }

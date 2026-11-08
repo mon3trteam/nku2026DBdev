@@ -12,6 +12,9 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
 $isEdit = (int) ($old['id'] ?? 0) > 0;
 $avatar = (string) ($old['avatar'] ?? 'img/placeholder-avatar.svg');
 ?>
+<?php if (!empty($errors['updated_at'])): ?>
+    <div class="alert alert-warning" role="alert"><?= e($errors['updated_at']) ?></div>
+<?php endif; ?>
 <?php if ($errors !== []): ?>
     <div class="alert alert-danger" role="alert">请检查标红字段后重试。</div>
 <?php endif; ?>
@@ -19,6 +22,7 @@ $avatar = (string) ($old['avatar'] ?? 'img/placeholder-avatar.svg');
 <form class="admin-form" action="<?= e(url('admin/updateMember')) ?>" method="post" enctype="multipart/form-data" novalidate>
     <?= csrf_field() ?>
     <input type="hidden" name="id" value="<?= e((string) ($old['id'] ?? 0)) ?>">
+<input type="hidden" name="updated_at" value="<?= e((string) ($old['updated_at'] ?? '')) ?>">
 
     <div class="row g-4">
         <div class="col-lg-8">
