@@ -4,7 +4,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 REM =====================================================================
 REM File: install.bat
 REM Purpose: local deployment on Windows without Docker (phpStudy/XAMPP)
-REM Author: (deployment owner, student ID, name)
+REM Author: 金暄琛（2411672）
 REM Created: 2026-10-29
 REM Module: deployment (bonus)
 REM
