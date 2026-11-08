@@ -131,6 +131,11 @@
     color: #8A6612;
 }
 
+.badge--danger {
+    background: var(--c-danger-050);
+    color: var(--c-danger);
+}
+
 .tag-list {
     display: flex;
     flex-wrap: wrap;

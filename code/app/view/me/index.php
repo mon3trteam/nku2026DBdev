@@ -68,7 +68,7 @@ require APP_ROOT . '/app/view/layout/me_header.php';
             <?php if ($projects === []): ?>
                 <?php
                 $emptyTitle = '还没有关联项目';
-                $emptyMessage = '项目关联由管理员维护，接口接入后可在这里查看。';
+                $emptyMessage = '项目关联由管理员维护，关联后会在这里显示。';
                 $emptyActionUrl = '';
                 $emptyActionText = '';
                 require APP_ROOT . '/app/view/partial/state_empty.php';

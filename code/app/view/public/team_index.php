@@ -8,12 +8,30 @@
  */
 
 require APP_ROOT . '/app/view/layout/public_header.php';
+
+$teamHeroSlogan = trim((string) ($team['slogan'] ?? '')) !== ''
+    ? (string) $team['slogan']
+    : '把团队的每一次协作，变成看得见的作品。';
+$teamMeta = [];
+if (trim((string) ($team['founded_on'] ?? '')) !== '') {
+    $teamMeta[] = '成立于 ' . $team['founded_on'];
+}
+if (trim((string) ($team['location'] ?? '')) !== '') {
+    $teamMeta[] = (string) $team['location'];
+}
+if (trim((string) ($team['email'] ?? '')) !== '') {
+    $teamMeta[] = (string) $team['email'];
+}
+$teamMetaText = implode(' · ', $teamMeta);
 ?>
 <section class="page-hero">
     <div class="container">
         <p class="eyebrow">About us</p>
-        <h1 class="page-hero__title">关于数聚</h1>
-        <p class="page-hero__lead">一群把数据当作语言的年轻人，用数据库、代码与设计，把课程作业做成作品。</p>
+        <h1 class="page-hero__title"><?= e($team['name']) ?></h1>
+        <p class="page-hero__lead"><?= e($teamHeroSlogan) ?></p>
+        <?php if ($teamMetaText !== ''): ?>
+            <p class="text-muted mt-2 mb-0"><?= e($teamMetaText) ?></p>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -21,8 +39,12 @@ require APP_ROOT . '/app/view/layout/public_header.php';
     <div class="container">
         <div class="row g-5 align-items-center">
             <div class="col-lg-5">
-                <div class="story-visual" aria-hidden="true">
-                    <span class="story-visual__label">DataNova</span>
+                <div class="story-visual">
+                    <img class="story-visual__cover" src="<?= e(asset($team['cover'])) ?>" alt="">
+                    <div class="story-visual__body">
+                        <img class="story-visual__logo" src="<?= e(asset($team['logo'])) ?>" alt="团队 Logo" width="88" height="88">
+                        <span class="story-visual__label"><?= e(((string) ($team['english_name'] ?? '')) !== '' ? $team['english_name'] : 'TeamHub') ?></span>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -102,9 +124,9 @@ require APP_ROOT . '/app/view/layout/public_header.php';
             <div>
                 <p class="eyebrow">Resources</p>
                 <h2 class="section-title">团队文档与作业下载</h2>
-                <p class="text-muted mb-0">下载中心将在资源模块接入后开放，提供团队文档与个人作业的分类下载。</p>
+                <p class="text-muted mb-0">下载中心提供团队文档与个人作业的分类下载，文件经下载控制器校验后输出。</p>
             </div>
-            <a class="btn btn-outline-secondary" href="<?= e(url('announcement/index')) ?>">查看公告</a>
+            <a class="btn btn-outline-secondary" href="<?= e(url('resource/index')) ?>">前往下载中心</a>
         </div>
     </div>
 </section>

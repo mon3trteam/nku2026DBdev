@@ -67,8 +67,13 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                     <?php foreach ($project['members'] as $member): ?>
                         <div class="col-sm-6">
                             <div class="member-role-card">
-                                <strong><?= e($member['name']) ?></strong>
-                                <span><?= e($member['role_name']) ?></span>
+                                <div class="member-role-card__main">
+                                    <strong><?= e($member['name']) ?></strong>
+                                    <span><?= e($member['role_name']) ?></span>
+                                </div>
+                                <?php if ((string) ($member['contribution'] ?? '') !== ''): ?>
+                                    <p class="member-role-card__contribution"><?= e($member['contribution']) ?></p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>

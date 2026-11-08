@@ -25,8 +25,8 @@ final class MemberController
         $result = MemberModel::search($keyword, $skill, $sort, $page, $perPage);
 
         render('public/member_list', [
-            'pageTitle' => '成员列表 · 数聚 TeamHub',
-            'metaDescription' => '浏览数聚 TeamHub 的成员，按技能筛选、按姓名搜索，进入成员主页查看项目与留言。',
+            'pageTitle' => '成员列表 · ' . site_name(),
+            'metaDescription' => '浏览' . site_name() . '的成员，按技能筛选、按姓名搜索，进入成员主页查看项目与留言。',
             'activeNav' => 'member',
             'members' => $result['items'],
             'skills' => MemberModel::skillOptions(),

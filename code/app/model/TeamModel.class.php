@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+require_once APP_ROOT . '/app/model/MediaModel.class.php';
+
 final class TeamModel
 {
     /**
@@ -31,13 +33,70 @@ final class TeamModel
                 'email' => '',
                 'phone' => '',
                 'updated_at' => '',
+                'logo_media_id' => 0,
+                'cover_media_id' => 0,
+                'logo' => 'img/logo.svg',
+                'cover' => 'img/placeholder-cover.svg',
             ];
         }
 
         $row['phone'] = (string) ($row['phone'] ?? '');
         $row['updated_at'] = format_datetime((string) ($row['updated_at'] ?? ''));
+        $row['logo_media_id'] = isset($row['logo_media_id']) ? (int) $row['logo_media_id'] : 0;
+        $row['cover_media_id'] = isset($row['cover_media_id']) ? (int) $row['cover_media_id'] : 0;
+        $row['logo'] = MediaModel::pathForId($row['logo_media_id']) ?? 'img/logo.svg';
+        $row['cover'] = MediaModel::pathForId($row['cover_media_id']) ?? 'img/placeholder-cover.svg';
 
         return $row;
+    }
+
+    /**
+     * 保存团队资料单例。空字符串统一写 NULL，日期由控制器先校验。
+     *
+     * @param array{name: string, english_name: string, slogan: string, short_intro: string,
+     *              story: string, founded_on: ?string, location: string, email: string, phone: string,
+     *              values?: array<int, array{title: string, description: string}>} $data
+     */
+    public static function updateProfile(array $data, int $actorId): void
+    {
+        $nullable = static fn (string $value): ?string => $value === '' ? null : $value;
+        $values = $data['values'] ?? [];
+        $valuesJson = $values === []
+            ? null
+            : json_encode(array_values($values), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        Db::execute(
+            'UPDATE team_profile
+             SET name = :name,
+                 english_name = :english_name,
+                 slogan = :slogan,
+                 short_intro = :short_intro,
+                 story = :story,
+                 founded_on = :founded_on,
+                 location = :location,
+                 email = :email,
+                 phone = :phone,
+                 values_json = :values_json,
+                 logo_media_id = :logo_media_id,
+                 cover_media_id = :cover_media_id,
+                 updated_by = :updated_by
+             WHERE id = 1',
+            [
+                'name'         => $data['name'],
+                'english_name' => $nullable($data['english_name']),
+                'slogan'       => $nullable($data['slogan']),
+                'short_intro'  => $nullable($data['short_intro']),
+                'story'        => $nullable($data['story']),
+                'founded_on'   => $data['founded_on'],
+                'location'     => $nullable($data['location']),
+                'email'        => $nullable($data['email']),
+                'phone'        => $nullable($data['phone']),
+                'values_json'  => $valuesJson,
+                'logo_media_id' => !empty($data['logo_media_id']) ? (int) $data['logo_media_id'] : null,
+                'cover_media_id' => !empty($data['cover_media_id']) ? (int) $data['cover_media_id'] : null,
+                'updated_by'   => $actorId > 0 ? $actorId : null,
+            ]
+        );
     }
 
     /**

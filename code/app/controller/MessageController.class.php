@@ -1,9 +1,10 @@
 <?php
 /**
  * 文件名：MessageController.class.php
- * 功能：留言板控制器；演示表单校验与 PRG 跳转，数据库接入后替换成功分支
+ * 功能：留言板控制器；公开留言写入待审核队列，审核在后台完成
  * 作者：杨斯源（学号待填）
  * 创建日期：2026-11-05
+ * 修改：接入 messages 表与提交限流（2026-11-08）
  * 所属模块：公共门户 / 留言
  */
 
@@ -16,31 +17,13 @@ final class MessageController
 {
     public function index(): void
     {
-        $page = max(1, (int) ($_GET['page'] ?? 1));
-        $result = MessageModel::approved($page, 5);
-
-        render('public/message_index', [
-            'pageTitle' => '留言板 · 数聚 TeamHub',
-            'metaDescription' => '在数聚 TeamHub 留言板留下建议。留言需要审核后才会公开，邮箱不会公开。',
-            'activeNav' => 'message',
-            'messages' => $result['items'],
-            'pagination' => $result,
-            'members' => MemberModel::allVisible(),
-            'errors' => [],
-            'old' => [
-                'author_name' => '',
-                'author_email' => '',
-                'author_website' => '',
-                'member_slug' => '',
-                'content' => '',
-            ],
-            'toastMessage' => ($_GET['sent'] ?? '') === '1' ? '留言已提交，审核通过后公开。' : '',
-            'toastType' => 'success',
-        ]);
+        $this->renderPage($this->emptyInput(), []);
     }
 
     public function store(): void
     {
+        $this->requirePost();
+
         $input = [
             'author_name' => trim((string) ($_POST['author_name'] ?? '')),
             'author_email' => trim((string) ($_POST['author_email'] ?? '')),
@@ -52,6 +35,12 @@ final class MessageController
         // 蜜罐字段：真实访客看不到；被填写时按垃圾留言处理，但不暴露判断逻辑。
         if (trim((string) ($_POST['website_hp'] ?? '')) !== '') {
             redirect(url('message/index', ['sent' => '1']));
+        }
+
+        // 同一 IP 10 分钟最多 5 条，防止公开表单被刷。
+        if (MessageModel::recentCountByIp(Auth::ipHash(), 10) >= 5) {
+            $this->renderPage($input, [], 429, '提交过于频繁，请 10 分钟后再试。');
+            return;
         }
 
         $errors = [];
@@ -80,29 +69,89 @@ final class MessageController
         }
 
         if ($errors !== []) {
-            http_response_code(422);
-            $result = MessageModel::approved(1, 5);
-
-            render('public/message_index', [
-                'pageTitle' => '留言板 · 数聚 TeamHub',
-                'metaDescription' => '在数聚 TeamHub 留言板留下建议。留言需要审核后才会公开，邮箱不会公开。',
-                'activeNav' => 'message',
-                'messages' => $result['items'],
-                'pagination' => $result,
-                'members' => MemberModel::allVisible(),
-                'errors' => $errors,
-                'old' => $input,
-                'toastMessage' => '',
-                'toastType' => 'success',
-            ]);
+            $this->renderPage($input, $errors, 422);
             return;
         }
 
-        // 演示：不落库，直接 PRG 回显成功；后端接入后在此写 messages 表并返回待审核状态。
+        MessageModel::create([
+            'member_id' => $member === null ? null : (int) $member['id'],
+            'author_name' => $input['author_name'],
+            'author_email' => $input['author_email'],
+            'author_website' => $input['author_website'],
+            'content' => $input['content'],
+            'status' => 'pending',
+            'ip_hash' => Auth::ipHash(),
+            'user_agent' => Auth::userAgent(),
+        ]);
+
         if ($member !== null) {
             redirect(url('member/show', ['slug' => $member['slug'], 'sent' => '1']));
         }
 
         redirect(url('message/index', ['sent' => '1']));
+    }
+
+    private function renderPage(array $input, array $errors, int $status = 200, string $formNotice = ''): void
+    {
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $result = MessageModel::approved($page, 5);
+
+        http_response_code($status);
+        render('public/message_index', [
+            'pageTitle' => '留言板 · ' . site_name(),
+            'metaDescription' => '在' . site_name() . '留言板留下建议。留言需要审核后才会公开，邮箱不会公开。',
+            'activeNav' => 'message',
+            'messages' => $result['items'],
+            'pagination' => $result,
+            'members' => MemberModel::allVisible(),
+            'errors' => $errors,
+            'formNotice' => $formNotice,
+            'old' => $input,
+            'toastMessage' => ($_GET['sent'] ?? '') === '1' ? '留言已提交，审核通过后公开。' : '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function emptyInput(): array
+    {
+        return [
+            'author_name' => '',
+            'author_email' => '',
+            'author_website' => '',
+            'member_slug' => '',
+            'content' => '',
+        ];
+    }
+
+    /**
+     * 公开写操作只接受 POST，并校验 CSRF token。
+     */
+    private function requirePost(): void
+    {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Allow: POST');
+            $this->abort(405, '请求方式不正确', '留言只接受表单 POST 提交，请从留言板页面操作。');
+        }
+
+        if (!Auth::verifyCsrf($_POST['_token'] ?? null)) {
+            $this->abort(400, '页面已过期', '安全令牌已失效，请返回留言板刷新后重新提交。');
+        }
+    }
+
+    private function abort(int $code, string $title, string $message): never
+    {
+        http_response_code($code);
+        render('error_request', [
+            'pageTitle' => $title . ' · ' . site_name(),
+            'metaDescription' => $message,
+            'activeNav' => '',
+            'errorCode' => $code,
+            'errorTitle' => $title,
+            'errorMessage' => $message,
+        ]);
+        exit;
     }
 }

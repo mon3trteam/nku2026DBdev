@@ -167,13 +167,42 @@ final class Auth
      */
     public static function requireLogin(): void
     {
-        if (self::check()) {
-            return;
+        if (!self::check()) {
+            $next = (string) ($_SERVER['REQUEST_URI'] ?? '');
+            $params = self::safeNext($next) !== '' ? ['next' => $next] : [];
+            redirect(url('auth/login', $params));
         }
 
-        $next = (string) ($_SERVER['REQUEST_URI'] ?? '');
-        $params = self::safeNext($next) !== '' ? ['next' => $next] : [];
-        redirect(url('auth/login', $params));
+        // 首次登录或管理员重置密码后，必须先改密才能访问其他页面
+        if (self::mustChangePassword() && !self::isPasswordChangeRequest()) {
+            redirect(self::passwordChangeUrl());
+        }
+    }
+
+    public static function mustChangePassword(): bool
+    {
+        return self::check() && (int) ($_SESSION['user']['must_change_password'] ?? 0) === 1;
+    }
+
+    /**
+     * 当前账号的改密页：后台账号进后台安全页，成员进成员中心。
+     */
+    public static function passwordChangeUrl(): string
+    {
+        return self::isAdmin() ? url('admin/security') : url('me/security');
+    }
+
+    private static function isPasswordChangeRequest(): bool
+    {
+        $route = is_string($_GET['r'] ?? null) ? $_GET['r'] : '';
+
+        return in_array($route, [
+            'admin/security',
+            'admin/updatePassword',
+            'me/security',
+            'me/updatePassword',
+            'auth/logout',
+        ], true);
     }
 
     /**
@@ -189,7 +218,7 @@ final class Auth
 
         http_response_code(403);
         render('error_403', [
-            'pageTitle' => '没有访问权限 · 数聚 TeamHub',
+            'pageTitle' => '没有访问权限 · ' . site_name(),
             'metaDescription' => '当前账号没有访问该页面的权限。',
             'activeNav' => '',
         ]);
@@ -309,8 +338,11 @@ final class Auth
         }
 
         $row = Db::fetchOne(
-            'SELECT status, locked_until, password_changed_at
-             FROM users WHERE id = :id LIMIT 1',
+            'SELECT u.status, u.locked_until, u.password_changed_at, u.must_change_password,
+                    u.display_name, r.code AS role_code, r.name AS role_name
+             FROM users u
+             JOIN roles r ON r.id = u.role_id
+             WHERE u.id = :id LIMIT 1',
             ['id' => self::id()]
         );
 
@@ -327,6 +359,19 @@ final class Auth
             if (session_status() === PHP_SESSION_ACTIVE) {
                 session_regenerate_id(true);
             }
+
+            return;
+        }
+
+        // 角色、显示名与强制改密标记在后台可能被管理员修改，每次请求同步到会话
+        $roleChanged = (string) ($_SESSION['user']['role_code'] ?? '') !== (string) $row['role_code'];
+        $_SESSION['user']['role_code'] = (string) $row['role_code'];
+        $_SESSION['user']['role_name'] = (string) $row['role_name'];
+        $_SESSION['user']['display_name'] = (string) $row['display_name'];
+        $_SESSION['user']['must_change_password'] = (int) $row['must_change_password'];
+
+        if ($roleChanged) {
+            self::$permissions = null;
         }
     }
 

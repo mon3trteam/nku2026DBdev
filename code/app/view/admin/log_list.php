@@ -11,15 +11,61 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
 ?>
 <div class="admin-toolbar">
     <p>日志只追加、不修改；登录日志与操作审计保留 180 天。</p>
-    <div class="d-flex gap-2">
-        <select class="form-select form-select-sm" aria-label="按用户筛选" disabled>
-            <option>全部用户</option>
-        </select>
-        <select class="form-select form-select-sm" aria-label="按动作筛选" disabled>
-            <option>全部动作</option>
-        </select>
-    </div>
+    <span class="badge badge--muted">登录 <?= e((string) count($loginLogs)) ?> 条 · 审计 <?= e((string) count($auditLogs)) ?> 条</span>
 </div>
+
+<section class="admin-card">
+    <div class="admin-card__head">
+        <div>
+            <h2>筛选</h2>
+            <p>账号与操作者支持模糊匹配；日期范围同时作用于两张表。</p>
+        </div>
+    </div>
+    <form action="<?= e(APP_BASE . '/index.php') ?>" method="get" class="row g-2 align-items-end">
+        <input type="hidden" name="r" value="admin/logs">
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="login_user">登录账号</label>
+            <input class="form-control form-control-sm" id="login_user" name="login_user" type="search"
+                   maxlength="50" value="<?= e($filters['login_user']) ?>">
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="login_result">登录结果</label>
+            <select class="form-select form-select-sm" id="login_result" name="login_result">
+                <option value="">全部结果</option>
+                <option value="1" <?= $filters['login_result'] === '1' ? 'selected' : '' ?>>成功</option>
+                <option value="0" <?= $filters['login_result'] === '0' ? 'selected' : '' ?>>失败</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="audit_actor">操作者</label>
+            <input class="form-control form-control-sm" id="audit_actor" name="audit_actor" type="search"
+                   maxlength="50" value="<?= e($filters['audit_actor']) ?>">
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="audit_action">审计动作</label>
+            <select class="form-select form-select-sm" id="audit_action" name="audit_action">
+                <option value="">全部动作</option>
+                <?php foreach ($actionOptions as $code => $label): ?>
+                    <option value="<?= e($code) ?>" <?= $filters['audit_action'] === $code ? 'selected' : '' ?>>
+                        <?= e($label) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="from">开始日期</label>
+            <input class="form-control form-control-sm" id="from" name="from" type="date" value="<?= e($filters['from']) ?>">
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <label class="form-label" for="to">结束日期</label>
+            <input class="form-control form-control-sm" id="to" name="to" type="date" value="<?= e($filters['to']) ?>">
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button class="btn btn-sm btn-primary" type="submit">筛选</button>
+            <a class="btn btn-sm btn-outline-secondary" href="<?= e(url('admin/logs')) ?>">重置</a>
+        </div>
+    </form>
+</section>
 
 <section class="admin-card">
     <div class="admin-card__head">

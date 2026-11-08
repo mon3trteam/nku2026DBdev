@@ -22,14 +22,22 @@ final class HomeController
         $projects = MemberModel::featuredProjects(2);
         $announcements = AnnouncementModel::latest(3);
 
+        $pageTitle = (string) $team['name'];
+        if (trim((string) ($team['slogan'] ?? '')) !== '') {
+            $pageTitle .= ' · ' . $team['slogan'];
+        }
+        $metaDescription = trim((string) ($team['short_intro'] ?? '')) !== ''
+            ? $team['short_intro'] . ' 查看团队成员、精选项目、最新公告与课程作业下载。'
+            : $team['name'] . '：查看团队成员、精选项目、最新公告与课程作业下载。';
+
         render('public/home_index', [
-            'pageTitle' => $team['name'] . ' · ' . $team['slogan'],
-            'metaDescription' => $team['short_intro'] . ' 查看团队成员、精选项目、最新公告与课程作业下载。',
+            'pageTitle' => $pageTitle,
+            'metaDescription' => $metaDescription,
             'activeNav' => 'home',
             'team' => $team,
             'stats' => [
                 'members' => count(MemberModel::allVisible()),
-                'projects' => 12,
+                'projects' => MemberModel::countVisibleProjects(),
                 'tables' => 21,
                 'dimensions' => 3,
             ],

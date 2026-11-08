@@ -546,6 +546,25 @@
     font-size: 13px;
 }
 
+.me-project-card__contribution {
+    margin: calc(var(--space-2) * -1) 0 var(--space-3);
+    color: var(--c-text);
+    font-size: 13px;
+}
+
+.me-project-card__editor {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--c-border);
+}
+
+.me-project-card__editor summary {
+    color: var(--c-accent);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .me-project-card__actions {
     display: flex;
     flex-wrap: wrap;

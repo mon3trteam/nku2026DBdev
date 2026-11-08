@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+require_once APP_ROOT . '/app/model/MediaModel.class.php';
+
 final class AnnouncementModel
 {
     private const CATEGORIES = [
@@ -99,6 +101,122 @@ final class AnnouncementModel
     }
 
     /**
+     * slug 是否已被其他公告占用。
+     */
+    public static function slugExists(string $slug, int $exceptId = 0): bool
+    {
+        $id = Db::fetchValue(
+            'SELECT id FROM announcements WHERE slug = :slug AND id <> :id LIMIT 1',
+            ['slug' => $slug, 'id' => $exceptId]
+        );
+
+        return $id !== null;
+    }
+
+    /**
+     * 当前置顶公告数量；编辑时排除自身。
+     */
+    public static function pinnedCount(int $exceptId = 0): int
+    {
+        $count = Db::fetchValue(
+            'SELECT COUNT(*) FROM announcements WHERE is_pinned = 1 AND id <> :id',
+            ['id' => $exceptId]
+        );
+
+        return (int) ($count ?? 0);
+    }
+
+    /**
+     * 新建公告，返回自增 ID。时间字段由控制器标准化后传入。
+     *
+     * @param array{title: string, slug: string, summary: string, content: string,
+     *              category: string, status: string, is_pinned: int,
+     *              published_at: ?string, expires_at: ?string} $data
+     */
+    public static function create(array $data, int $authorId): int
+    {
+        Db::execute(
+            'INSERT INTO announcements
+                (title, slug, summary, content, category, status, is_pinned,
+                 published_at, expires_at, cover_media_id, author_id)
+             VALUES
+                (:title, :slug, :summary, :content, :category, :status, :is_pinned,
+                 :published_at, :expires_at, :cover_media_id, :author_id)',
+            [
+                'title'        => $data['title'],
+                'slug'         => $data['slug'],
+                'summary'      => $data['summary'] === '' ? null : $data['summary'],
+                'content'      => $data['content'],
+                'category'     => $data['category'],
+                'status'       => $data['status'],
+                'is_pinned'    => $data['is_pinned'],
+                'published_at' => $data['published_at'],
+                'expires_at'   => $data['expires_at'],
+                'cover_media_id' => !empty($data['cover_media_id']) ? (int) $data['cover_media_id'] : null,
+                'author_id'    => $authorId,
+            ]
+        );
+
+        return Db::lastInsertId();
+    }
+
+    /**
+     * 保存公告编辑结果。时间字段由控制器标准化后传入。
+     *
+     * @param array{title: string, slug: string, summary: string, content: string,
+     *              category: string, status: string, is_pinned: int,
+     *              published_at: ?string, expires_at: ?string} $data
+     */
+    public static function update(int $id, array $data): void
+    {
+        Db::execute(
+            'UPDATE announcements
+             SET title = :title,
+                 slug = :slug,
+                 summary = :summary,
+                 content = :content,
+                 category = :category,
+                 status = :status,
+                 is_pinned = :is_pinned,
+                 published_at = :published_at,
+                 expires_at = :expires_at,
+                 cover_media_id = :cover_media_id
+             WHERE id = :id',
+            [
+                'title'        => $data['title'],
+                'slug'         => $data['slug'],
+                'summary'      => $data['summary'] === '' ? null : $data['summary'],
+                'content'      => $data['content'],
+                'category'     => $data['category'],
+                'status'       => $data['status'],
+                'is_pinned'    => $data['is_pinned'],
+                'published_at' => $data['published_at'],
+                'expires_at'   => $data['expires_at'],
+                'cover_media_id' => !empty($data['cover_media_id']) ? (int) $data['cover_media_id'] : null,
+                'id'           => $id,
+            ]
+        );
+    }
+
+    /**
+     * 仅更新公告状态；首次发布时补发布时间。
+     */
+    public static function setStatus(int $id, string $status): void
+    {
+        Db::execute(
+            'UPDATE announcements
+             SET status = :status,
+                 published_at = COALESCE(published_at, :published_at)
+             WHERE id = :id',
+            [
+                'status'       => $status,
+                'published_at' => $status === 'published' ? date('Y-m-d H:i:s') : null,
+                'id'           => $id,
+            ]
+        );
+    }
+
+    /**
      * 公告分类字典。
      */
     public static function categories(): array
@@ -120,6 +238,8 @@ final class AnnouncementModel
             ? null
             : format_datetime((string) $row['expires_at'], '');
         $row['author'] = (string) ($row['author_name'] ?? '');
+        $row['cover_media_id'] = (int) ($row['cover_media_id'] ?? 0);
+        $row['cover'] = MediaModel::pathForId($row['cover_media_id']);
         $row['status_label'] = match ((string) $row['status']) {
             'draft'     => '草稿',
             'published' => '已发布',

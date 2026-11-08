@@ -20,7 +20,7 @@ final class TeamController
 
         render('public/team_index', [
             'pageTitle' => '团队介绍 · ' . $team['name'],
-            'metaDescription' => '了解数聚 TeamHub 的团队故事、成长时间线、价值观、能力矩阵与成员。',
+            'metaDescription' => '了解' . $team['name'] . '的团队故事、成长时间线、价值观、能力矩阵与成员。',
             'activeNav' => 'team',
             'team' => $team,
             'milestones' => TeamModel::milestones(),

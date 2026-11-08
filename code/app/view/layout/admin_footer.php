@@ -8,7 +8,7 @@
  */
 ?>
         </div>
-        <footer class="admin-footer">数聚 TeamHub 管理后台 · 课程设计演示</footer>
+        <footer class="admin-footer"><?= e(site_name()) ?> 管理后台 · 课程设计演示</footer>
     </div>
 </div>
 <?php require APP_ROOT . '/app/view/partial/toast.php'; ?>

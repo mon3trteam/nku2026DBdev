@@ -35,6 +35,76 @@ function asset(string $path): string
 }
 
 /**
+ * 全站品牌上下文：团队资料、公开站点设置与兜底值。
+ * 每个请求只查询一次；数据库不可用时返回静态兜底，保证错误页仍可渲染。
+ *
+ * @return array{team: array<string, mixed>, settings: array<string, string>, name: string, description: string, logo: string}
+ */
+function site_identity(): array
+{
+    static $identity = null;
+    if ($identity !== null) {
+        return $identity;
+    }
+
+    $team = [
+        'name' => '数聚 TeamHub',
+        'english_name' => '',
+        'slogan' => '',
+        'short_intro' => '',
+        'story' => '',
+        'founded_on' => '',
+        'location' => '',
+        'email' => '',
+        'phone' => '',
+        'logo' => 'img/logo.svg',
+        'cover' => 'img/placeholder-cover.svg',
+    ];
+    $settings = [];
+
+    try {
+        require_once APP_ROOT . '/app/model/TeamModel.class.php';
+        require_once APP_ROOT . '/app/model/SiteSettingModel.class.php';
+        $team = array_merge($team, TeamModel::profile());
+        $settings = SiteSettingModel::publicValues();
+    } catch (Throwable $e) {
+        error_log('[site identity] ' . $e->getMessage());
+    }
+
+    $name = trim((string) ($settings['site.name'] ?? ''));
+    if ($name === '') {
+        $name = trim((string) ($team['name'] ?? ''));
+    }
+    if ($name === '') {
+        $name = '数聚 TeamHub';
+    }
+
+    $description = trim((string) ($settings['site.description'] ?? ''));
+    $logo = trim((string) ($team['logo'] ?? ''));
+    if ($logo === '') {
+        $logo = 'img/logo.svg';
+    }
+
+    $identity = [
+        'team' => $team,
+        'settings' => $settings,
+        'name' => $name,
+        'description' => $description,
+        'logo' => $logo,
+    ];
+
+    return $identity;
+}
+
+/**
+ * 当前站点品牌名；团队更名保存时会与团队名称同步。
+ */
+function site_name(): string
+{
+    return site_identity()['name'];
+}
+
+/**
  * 生成绝对 URL，供 Open Graph / canonical 使用。
  */
 function absolute_url(string $path): string

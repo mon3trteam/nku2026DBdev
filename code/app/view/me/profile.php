@@ -140,18 +140,22 @@ $errorText = static function (string $key, array $errors): string {
                 <div class="avatar-upload">
                     <img id="avatarPreview" src="<?= e(asset($member['avatar'])) ?>" alt="头像预览" width="120" height="120">
                     <label class="btn btn-outline-secondary btn-sm" for="avatar">更换头像</label>
-                    <input class="visually-hidden" id="avatar" name="avatar" type="file" accept="image/*"
+                    <input class="visually-hidden" id="avatar" name="avatar" type="file"
+                           accept="image/jpeg,image/png,image/webp,image/gif"
                            data-preview="avatarPreview" data-max-mb="2">
-                    <p class="form-hint">建议 400×400，单文件 ≤ 2 MB。媒体上传模块接入前，头像仍使用占位图。</p>
+                    <p class="form-hint">建议 400×400，单文件 ≤ 2 MB；不选择文件则保留原头像。</p>
+                    <?php if (isset($errors['avatar'])): ?><div class="invalid-feedback d-block"><?= e($errors['avatar']) ?></div><?php endif; ?>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="cover-upload">
                     <img id="coverPreview" src="<?= e(asset($member['cover'])) ?>" alt="封面预览" width="640" height="360">
                     <label class="btn btn-outline-secondary btn-sm" for="cover">更换封面</label>
-                    <input class="visually-hidden" id="cover" name="cover" type="file" accept="image/*"
+                    <input class="visually-hidden" id="cover" name="cover" type="file"
+                           accept="image/jpeg,image/png,image/webp,image/gif"
                            data-preview="coverPreview" data-max-mb="5">
-                    <p class="form-hint">建议 1600×900，单文件 ≤ 5 MB。媒体上传模块接入前，封面仍使用占位图。</p>
+                    <p class="form-hint">建议 1600×900，单文件 ≤ 5 MB；不选择文件则保留原封面。</p>
+                    <?php if (isset($errors['cover'])): ?><div class="invalid-feedback d-block"><?= e($errors['cover']) ?></div><?php endif; ?>
                 </div>
             </div>
         </div>

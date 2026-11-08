@@ -32,6 +32,12 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                     <p class="article-author">作者：<?= e($announcement['author']) ?></p>
                 </header>
 
+                <?php if (($announcement['cover'] ?? null) !== null): ?>
+                    <div class="article-cover">
+                        <img src="<?= e(asset($announcement['cover'])) ?>" alt="<?= e($announcement['title']) ?> 封面" width="1280" height="720">
+                    </div>
+                <?php endif; ?>
+
                 <div class="article-body">
                     <?= $announcement['content_html'] ?>
                 </div>

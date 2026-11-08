@@ -84,7 +84,11 @@ require APP_ROOT . '/app/view/layout/public_header.php';
             <aside class="col-lg-5">
                 <form class="message-form message-form--sticky" action="<?= e(url('message/store')) ?>" method="post" novalidate>
                     <h2 class="form-title">写留言</h2>
-                    <p class="form-hint">留言需审核后公开，邮箱不会公开。当前为演示表单，提交不会入库。</p>
+                    <p class="form-hint">留言提交后进入待审核队列，审核通过后才会公开；邮箱不会公开。</p>
+
+                    <?php if (($formNotice ?? '') !== ''): ?>
+                        <div class="alert alert-warning" role="alert"><?= e($formNotice) ?></div>
+                    <?php endif; ?>
 
                     <?php if ($errors !== []): ?>
                         <div class="alert alert-danger" role="alert">请检查标红字段后重试。</div>

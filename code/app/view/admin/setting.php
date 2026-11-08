@@ -22,7 +22,7 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
             <div class="admin-card__head">
                 <div>
                     <h2><?= e($groupLabel) ?></h2>
-                    <p>键值配置；公开项可被前台读取。</p>
+                    <p>键值配置；公开项会用于前台导航品牌、页脚与 SEO，保存后刷新前台生效。</p>
                 </div>
             </div>
             <div class="row g-3">
@@ -44,8 +44,10 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
                                       id="setting-<?= e($key) ?>" name="settings[<?= e($key) ?>]" rows="3"><?= e($value) ?></textarea>
                             <?php if (isset($errors[$key])): ?><div class="invalid-feedback"><?= e($errors[$key]) ?></div><?php endif; ?>
                         <?php else: ?>
-                            <input class="form-control" id="setting-<?= e($key) ?>" name="settings[<?= e($key) ?>]" type="text"
+                            <input class="form-control <?= isset($errors[$key]) ? 'is-invalid' : '' ?>"
+                                   id="setting-<?= e($key) ?>" name="settings[<?= e($key) ?>]" type="text"
                                    value="<?= e($value) ?>">
+                            <?php if (isset($errors[$key])): ?><div class="invalid-feedback"><?= e($errors[$key]) ?></div><?php endif; ?>
                         <?php endif; ?>
                         <p class="form-hint">键名：<code><?= e($key) ?></code> · 类型：<?= e($setting['type']) ?></p>
                     </div>
@@ -55,9 +57,9 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
     <?php endforeach; ?>
 
     <div class="admin-savebar">
-        <span class="text-muted">设置保存后缓存 5 分钟；接口接入后生效。</span>
+        <span class="text-muted">保存后立即写入数据库；前台公开配置随页面读取。</span>
         <div class="d-flex gap-2">
-            <a class="btn btn-outline-secondary" href="<?= e(url('admin/settings')) ?>">恢复默认值</a>
+            <a class="btn btn-outline-secondary" href="<?= e(url('admin/settings')) ?>">取消修改</a>
             <button class="btn btn-primary" type="submit">保存设置</button>
         </div>
     </div>

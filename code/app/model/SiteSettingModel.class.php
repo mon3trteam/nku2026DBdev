@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 final class SiteSettingModel
 {
+    /** @var array<string, string>|null */
+    private static ?array $publicCache = null;
+
     private const GROUPS = [
         'general' => '常规',
         'seo'     => 'SEO',
@@ -49,6 +52,30 @@ final class SiteSettingModel
     }
 
     /**
+     * 前台可公开的配置键值对，单次请求内缓存，供布局页脚与 SEO 使用。
+     *
+     * @return array<string, string>
+     */
+    public static function publicValues(): array
+    {
+        if (self::$publicCache !== null) {
+            return self::$publicCache;
+        }
+
+        $rows = Db::fetchAll(
+            'SELECT setting_key, setting_value FROM site_settings WHERE is_public = 1'
+        );
+        $values = [];
+        foreach ($rows as $row) {
+            $values[(string) $row['setting_key']] = (string) ($row['setting_value'] ?? '');
+        }
+
+        self::$publicCache = $values;
+
+        return $values;
+    }
+
+    /**
      * 按分组返回，供后台表单分块渲染。
      */
     public static function grouped(): array
@@ -62,15 +89,43 @@ final class SiteSettingModel
     }
 
     /**
+     * 批量保存配置值。控制器已按数据库中的键名与类型校验。
+     *
+     * @param array<string, string> $values setting_key => setting_value
+     */
+    public static function updateMany(array $values, int $actorId): void
+    {
+        $allowed = array_fill_keys(array_column(self::all(), 'key'), true);
+
+        Db::transaction(static function () use ($values, $actorId, $allowed): void {
+            foreach ($values as $key => $value) {
+                if (!isset($allowed[$key])) {
+                    continue;
+                }
+
+                Db::execute(
+                    'UPDATE site_settings
+                     SET setting_value = :value, updated_by = :updated_by
+                     WHERE setting_key = :key',
+                    [
+                        'value'      => $value,
+                        'updated_by' => $actorId > 0 ? $actorId : null,
+                        'key'        => $key,
+                    ]
+                );
+            }
+        });
+
+        self::$publicCache = null;
+    }
+
+    /**
      * 读取单个公开配置，前台页脚/SEO 使用。
      */
     public static function get(string $key, string $default = ''): string
     {
-        $value = Db::fetchValue(
-            'SELECT setting_value FROM site_settings WHERE setting_key = :key AND is_public = 1 LIMIT 1',
-            ['key' => $key]
-        );
+        $values = self::publicValues();
 
-        return $value === null ? $default : (string) $value;
+        return array_key_exists($key, $values) ? $values[$key] : $default;
     }
 }

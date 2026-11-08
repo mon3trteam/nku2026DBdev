@@ -9,8 +9,12 @@
 
 $pageTitle = $pageTitle ?? '管理后台';
 $adminNav = $adminNav ?? 'dashboard';
+$adminPageLabel = $adminPageLabel ?? null;
 $toastMessage = $toastMessage ?? '';
 $toastType = $toastType ?? 'success';
+$siteIdentity = site_identity();
+$siteName = $siteIdentity['name'];
+$siteLogo = $siteIdentity['logo'];
 $adminItems = [
     'dashboard' => '数据看板',
     'team' => '团队资料',
@@ -55,6 +59,7 @@ $adminItems = array_filter(
 );
 $currentUser = Auth::user() ?? [];
 $displayName = (string) ($currentUser['display_name'] ?? '访客');
+$adminPageLabel = $adminPageLabel ?? ($adminItems[$adminNav] ?? '数据看板');
 ?>
 <!doctype html>
 <html lang="zh-CN">
@@ -73,8 +78,8 @@ $displayName = (string) ($currentUser['display_name'] ?? '访客');
 <div class="admin-shell">
     <aside class="admin-sidebar" aria-label="后台导航">
         <a class="admin-brand" href="<?= e(url('admin/dashboard')) ?>">
-            <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="32" height="32">
-            <span>数聚 TeamHub<small>ADMIN</small></span>
+            <img src="<?= e(asset($siteLogo)) ?>" alt="" width="32" height="32">
+            <span><?= e($siteName) ?><small>ADMIN</small></span>
         </a>
         <nav class="admin-nav">
             <?php foreach ($adminItems as $key => $label): ?>
@@ -93,12 +98,13 @@ $displayName = (string) ($currentUser['display_name'] ?? '访客');
     <div class="admin-main">
         <header class="admin-topbar">
             <div>
-                <p class="admin-breadcrumb">管理后台 / <?= e($adminItems[$adminNav] ?? '数据看板') ?></p>
-                <h1 class="admin-page-title"><?= e($adminItems[$adminNav] ?? '数据看板') ?></h1>
+                <p class="admin-breadcrumb">管理后台 / <?= e($adminPageLabel) ?></p>
+                <h1 class="admin-page-title"><?= e($adminPageLabel) ?></h1>
             </div>
             <div class="admin-user">
                 <span class="admin-user__avatar" aria-hidden="true"><?= e(mb_substr($displayName, 0, 1, 'UTF-8')) ?></span>
                 <span><?= e($displayName) ?></span>
+                <a class="admin-user__logout ms-2" href="<?= e(url('admin/security')) ?>">账号安全</a>
                 <a class="admin-user__logout ms-2" href="<?= e(url('auth/logout')) ?>">退出</a>
             </div>
         </header>

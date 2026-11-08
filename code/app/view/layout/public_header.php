@@ -7,9 +7,18 @@
  * 所属模块：公共布局
  */
 
-$pageTitle = $pageTitle ?? '数聚 TeamHub';
+$siteIdentity = site_identity();
+$siteSettings = $siteIdentity['settings'];
+$siteTeam = (isset($team) && is_array($team)) ? $team : $siteIdentity['team'];
+$siteName = $siteIdentity['name'];
+$siteDescription = $siteIdentity['description'];
+$siteLogo = $siteIdentity['logo'];
+
+$pageTitle = $pageTitle ?? $siteName;
 $activeNav = $activeNav ?? '';
-$metaDescription = $metaDescription ?? '数聚 TeamHub：团队展示、成员主页、公告与课程作业下载。';
+$metaDescription = $metaDescription ?? ($siteDescription !== ''
+    ? $siteDescription
+    : $siteName . '：团队展示、成员主页、公告与课程作业下载。');
 $ogType = $ogType ?? 'website';
 $ogImage = $ogImage ?? asset('img/placeholder-cover.svg');
 $currentUrl = (string) ($_SERVER['REQUEST_URI'] ?? (APP_BASE . '/index.php'));
@@ -44,8 +53,8 @@ $toastType = $toastType ?? 'success';
     <nav class="navbar navbar-expand-lg" aria-label="主导航">
         <div class="container">
             <a class="navbar-brand" href="<?= e(url('home/index')) ?>">
-                <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="34" height="34">
-                <span>数聚 TeamHub</span>
+                <img src="<?= e(asset($siteLogo)) ?>" alt="" width="34" height="34">
+                <span><?= e($siteName) ?></span>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

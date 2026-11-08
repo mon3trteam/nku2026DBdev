@@ -7,14 +7,33 @@
  * 所属模块：公共布局
  */
 ?>
+<?php
+$footerEmail = trim((string) ($siteSettings['contact.email'] ?? ''));
+if ($footerEmail === '') {
+    $footerEmail = trim((string) ($siteTeam['email'] ?? ''));
+}
+$footerLocation = trim((string) ($siteSettings['contact.location'] ?? ''));
+if ($footerLocation === '') {
+    $footerLocation = trim((string) ($siteTeam['location'] ?? ''));
+}
+$footerSlogan = trim((string) ($siteTeam['slogan'] ?? ''));
+if ($footerSlogan === '') {
+    $footerSlogan = $siteDescription !== '' ? $siteDescription : '把团队的每一次协作，变成看得见的作品。';
+}
+$footerCopyright = trim((string) ($siteSettings['footer.copyright'] ?? ''));
+if ($footerCopyright === '') {
+    $footerCopyright = '© ' . date('Y') . ' ' . $siteName . ' · 课程设计演示';
+}
+$footerIcp = trim((string) ($siteSettings['footer.icp'] ?? ''));
+?>
 </main>
 
 <footer class="site-footer">
     <div class="container">
         <div class="row gy-4">
             <div class="col-lg-5">
-                <div class="footer-brand">数聚 TeamHub</div>
-                <p class="footer-desc">把团队的每一次协作，变成看得见的作品。</p>
+                <div class="footer-brand"><?= e($siteName) ?></div>
+                <p class="footer-desc"><?= e($footerSlogan) ?></p>
             </div>
             <div class="col-6 col-lg-3">
                 <div class="footer-title">浏览</div>
@@ -30,14 +49,17 @@
             <div class="col-6 col-lg-4">
                 <div class="footer-title">联系</div>
                 <ul class="footer-links">
-                    <li><a href="mailto:team@example.com">team@example.com</a></li>
+                    <?php if ($footerEmail !== ''): ?>
+                        <li><a href="mailto:<?= e($footerEmail) ?>"><?= e($footerEmail) ?></a></li>
+                    <?php endif; ?>
                     <li>南开大学 · 互联网数据库开发</li>
-                    <li>天津</li>
+                    <?php if ($footerLocation !== ''): ?><li><?= e($footerLocation) ?></li><?php endif; ?>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>© 2026 数聚 TeamHub · 课程设计演示</span>
+            <span><?= e($footerCopyright) ?></span>
+            <?php if ($footerIcp !== ''): ?><span><?= e($footerIcp) ?></span><?php endif; ?>
             <span class="d-flex gap-3">
                 <a href="<?= e(url('me/index')) ?>">成员中心</a>
                 <a href="<?= e(url('auth/login')) ?>">管理入口</a>

@@ -130,12 +130,50 @@ final class MeController
             return;
         }
 
+        $avatarMediaId = (int) ($member['avatar_media_id'] ?? 0);
+        $coverMediaId = (int) ($member['cover_media_id'] ?? 0);
+        $oldAvatarId = $avatarMediaId;
+        $oldCoverId = $coverMediaId;
+        $uploadedIds = [];
+
+        foreach ([['avatar', 2, '头像'], ['cover', 5, '封面']] as [$field, $maxMb, $label]) {
+            $file = $_FILES[$field] ?? null;
+            if (!is_array($file) || (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+                continue;
+            }
+
+            try {
+                $media = MediaModel::storeImage($file, Auth::id(), $maxMb * 1024 * 1024);
+                $uploadedIds[] = $media['id'];
+                if ($field === 'avatar') {
+                    $avatarMediaId = $media['id'];
+                } else {
+                    $coverMediaId = $media['id'];
+                }
+            } catch (RuntimeException $e) {
+                $errors[$field] = $label . '上传失败：' . $e->getMessage();
+            }
+        }
+
+        if ($errors !== []) {
+            foreach ($uploadedIds as $mediaId) {
+                MediaModel::deleteIfUnused($mediaId);
+            }
+            $this->renderProfile($member, $selectedSkills, $errors, $input, false, 422);
+            return;
+        }
+
+        $input['avatar_media_id'] = $avatarMediaId;
+        $input['cover_media_id'] = $coverMediaId;
+
         // 完整度与详情页展示口径一致：9 个字段 + 技能项
         $filled = 0;
         foreach (['name', 'role_title', 'tagline', 'bio', 'email', 'github', 'website', 'location'] as $field) {
             $filled += $input[$field] !== '' ? 1 : 0;
         }
-        $filled++; // 头像当前使用占位图，按“已填”计
+        if ($avatarMediaId > 0) {
+            $filled++;
+        }
         $input['profile_completeness'] = (int) round(
             ($filled / 9) * 70 + min(1.0, count($selectedSkills) / 5) * 30
         );
@@ -147,6 +185,12 @@ final class MeController
             (string) ($_POST['updated_at'] ?? '')
         );
 
+        if ($result === 'conflict' || $result === 'missing') {
+            foreach ($uploadedIds as $mediaId) {
+                MediaModel::deleteIfUnused($mediaId);
+            }
+        }
+
         if ($result === 'conflict') {
             $this->renderProfile($member, $selectedSkills, [], $input, true, 409);
             return;
@@ -156,6 +200,13 @@ final class MeController
             http_response_code(404);
             render('error_404', ['pageTitle' => '成员档案不存在']);
             return;
+        }
+
+        if ($oldAvatarId > 0 && $oldAvatarId !== $avatarMediaId) {
+            MediaModel::deleteIfUnused($oldAvatarId);
+        }
+        if ($oldCoverId > 0 && $oldCoverId !== $coverMediaId) {
+            MediaModel::deleteIfUnused($oldCoverId);
         }
 
         AuthModel::audit('update', 'member', (int) $member['id'], '成员更新个人资料：' . $input['name']);
@@ -172,9 +223,56 @@ final class MeController
             'meNav' => 'projects',
             'member' => $member,
             'projects' => MemberModel::projectsOf($member['slug']),
-            'toastMessage' => '',
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '我的分工已保存。' : '',
             'toastType' => 'success',
         ]);
+    }
+
+    /**
+     * 成员维护自己在项目中的角色与贡献说明。
+     */
+    public function updateContribution(): void
+    {
+        $this->requirePost();
+        $member = $this->currentMember();
+
+        $projectId = (int) ($_POST['project_id'] ?? 0);
+        $roleName = trim((string) ($_POST['role_name'] ?? ''));
+        $contribution = trim((string) ($_POST['contribution'] ?? ''));
+
+        $errors = [];
+        if ($roleName === '' || mb_strlen($roleName, 'UTF-8') > 50) {
+            $errors[] = '项目角色需要 1—50 字。';
+        }
+        if (mb_strlen($contribution, 'UTF-8') > 255) {
+            $errors[] = '贡献说明不超过 255 字。';
+        }
+
+        if ($errors !== []) {
+            redirect(url('me/projects', ['state' => 'invalid']));
+        }
+
+        $updated = MemberModel::updateMyProjectAssignment(
+            $projectId,
+            (int) $member['id'],
+            $roleName,
+            $contribution
+        );
+        if (!$updated) {
+            http_response_code(404);
+            render('error_request', [
+                'pageTitle' => '项目不存在 · ' . site_name(),
+                'metaDescription' => '你不在该项目的成员列表中。',
+                'activeNav' => '',
+                'errorCode' => 404,
+                'errorTitle' => '项目不存在',
+                'errorMessage' => '该项目不存在，或你不在该项目的成员列表中。',
+            ]);
+            return;
+        }
+
+        AuthModel::audit('update', 'project', $projectId, '成员更新项目分工：' . $member['name']);
+        redirect(url('me/projects', ['saved' => '1']));
     }
 
     public function security(): void
@@ -214,7 +312,7 @@ final class MeController
 
         if (mb_strlen($new, 'UTF-8') < 10) {
             $errors['new_password'] = '新密码至少 10 位。';
-        } elseif ($this->passwordClassCount($new) < 3) {
+        } elseif (AuthModel::passwordClassCount($new) < 3) {
             $errors['new_password'] = '新密码需包含大写、小写、数字、符号中的至少三类。';
         } elseif ($new === $current) {
             $errors['new_password'] = '新密码不能与当前密码相同。';
@@ -301,7 +399,7 @@ final class MeController
     {
         http_response_code($code);
         render('error_request', [
-            'pageTitle' => $title . ' · 数聚 TeamHub',
+            'pageTitle' => $title . ' · ' . site_name(),
             'metaDescription' => $message,
             'activeNav' => '',
             'errorCode' => $code,
@@ -320,7 +418,7 @@ final class MeController
         if ($member === null) {
             http_response_code(403);
             render('error_request', [
-                'pageTitle' => '未绑定成员档案 · 数聚 TeamHub',
+                'pageTitle' => '未绑定成员档案 · ' . site_name(),
                 'metaDescription' => '当前账号没有绑定成员档案。',
                 'activeNav' => '',
                 'errorCode' => 403,
@@ -335,16 +433,19 @@ final class MeController
 
     private function completeness(array $member): int
     {
-        $fields = ['name', 'role_title', 'tagline', 'bio', 'email', 'github', 'website', 'location', 'avatar'];
+        $fields = ['name', 'role_title', 'tagline', 'bio', 'email', 'github', 'website', 'location'];
         $filled = 0;
         foreach ($fields as $field) {
             if ((string) ($member[$field] ?? '') !== '') {
                 $filled++;
             }
         }
+        if ((int) ($member['avatar_media_id'] ?? 0) > 0) {
+            $filled++;
+        }
 
         $skillRatio = min(1.0, count($member['skills'] ?? []) / 5);
-        return (int) round(($filled / count($fields)) * 70 + $skillRatio * 30);
+        return (int) round(($filled / 9) * 70 + $skillRatio * 30);
     }
 
     /**
@@ -374,17 +475,6 @@ final class MeController
             'website' => $member['website'],
             'location' => $member['location'],
         ];
-    }
-
-    private function passwordClassCount(string $password): int
-    {
-        $count = 0;
-        $count += preg_match('/[A-Z]/', $password) === 1 ? 1 : 0;
-        $count += preg_match('/[a-z]/', $password) === 1 ? 1 : 0;
-        $count += preg_match('/\d/', $password) === 1 ? 1 : 0;
-        $count += preg_match('/[^A-Za-z0-9]/', $password) === 1 ? 1 : 0;
-
-        return $count;
     }
 
     private function loginLogs(): array

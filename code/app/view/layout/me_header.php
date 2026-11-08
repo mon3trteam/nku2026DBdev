@@ -7,8 +7,11 @@
  * 所属模块：成员中心布局
  */
 
+$siteIdentity = site_identity();
+$siteName = $siteIdentity['name'];
+$siteLogo = $siteIdentity['logo'];
 $pageTitle = $pageTitle ?? '成员中心';
-$metaDescription = $metaDescription ?? '数聚 TeamHub 成员中心。';
+$metaDescription = $metaDescription ?? ($siteName . ' 成员中心。');
 $meNav = $meNav ?? 'overview';
 $member = $member ?? [];
 $toastMessage = $toastMessage ?? '';
@@ -46,8 +49,8 @@ $meRoutes = [
 <div class="me-shell">
     <aside class="me-sidebar" aria-label="成员中心导航">
         <a class="me-brand" href="<?= e(url('home/index')) ?>">
-            <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="32" height="32">
-            <span>数聚 TeamHub<small>MEMBER</small></span>
+            <img src="<?= e(asset($siteLogo)) ?>" alt="" width="32" height="32">
+            <span><?= e($siteName) ?><small>MEMBER</small></span>
         </a>
 
         <nav class="me-nav">

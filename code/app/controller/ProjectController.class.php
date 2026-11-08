@@ -18,8 +18,8 @@ final class ProjectController
         $projects = MemberModel::allProjects();
 
         render('public/project_list', [
-            'pageTitle' => '项目作品 · 数聚 TeamHub',
-            'metaDescription' => '数聚 TeamHub 的项目作品：团队主页、校园二手书平台与课程作业下载中心。',
+            'pageTitle' => '项目作品 · ' . site_name(),
+            'metaDescription' => site_name() . ' 的项目作品：团队主页、校园二手书平台与课程作业下载中心。',
             'activeNav' => 'project',
             'projects' => $projects,
         ]);

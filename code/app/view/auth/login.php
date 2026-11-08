@@ -13,14 +13,19 @@ $stateType = $stateType ?? '';
 $stateMessage = $stateMessage ?? '';
 $disabled = $disabled ?? false;
 $oldLogin = $oldLogin ?? '';
+$siteIdentity = site_identity();
+$siteName = $siteIdentity['name'];
+$siteLogo = $siteIdentity['logo'];
+$pageTitle = $pageTitle ?? ('成员登录 · ' . $siteName);
+$metaDescription = $metaDescription ?? ($siteName . ' 成员登录入口。');
 ?>
 <!doctype html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($pageTitle ?? '成员登录 · 数聚 TeamHub') ?></title>
-    <meta name="description" content="<?= e($metaDescription ?? '数聚 TeamHub 成员登录入口。') ?>">
+    <title><?= e($pageTitle) ?></title>
+    <meta name="description" content="<?= e($metaDescription) ?>">
     <link rel="stylesheet" href="<?= e(asset('vendor/bootstrap/5.3.8/bootstrap.min.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/tokens.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/base.css')) ?>">
@@ -31,8 +36,8 @@ $oldLogin = $oldLogin ?? '';
 <body class="auth-body"<?= $state === 'logout' ? ' data-toast="已安全退出" data-toast-type="success"' : '' ?>>
 <main class="auth-shell">
     <a class="auth-brand" href="<?= e(url('home/index')) ?>">
-        <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="40" height="40">
-        <span>数聚 TeamHub</span>
+        <img src="<?= e(asset($siteLogo)) ?>" alt="" width="40" height="40">
+        <span><?= e($siteName) ?></span>
     </a>
 
     <section class="auth-card" aria-labelledby="login-title">

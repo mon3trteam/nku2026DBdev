@@ -13,20 +13,30 @@ declare(strict_types=1);
 date_default_timezone_set('Asia/Shanghai');
 
 define('APP_ROOT', dirname(__DIR__));   // code/
-define('APP_DEBUG', true);              // 上线前改为 false
-define('APP_BASE', '/public');          // 站点根未指向 public/ 前的访问前缀；vhost 修好后改为 ''
+// 生产环境默认关闭调试；本地排障可设 APP_DEBUG=true
+define('APP_DEBUG', filter_var(getenv('APP_DEBUG') ?: 'false', FILTER_VALIDATE_BOOLEAN));
+// 站点根可能指向 public/（SCRIPT_NAME=/index.php），也可能仍指向 code/
+//（SCRIPT_NAME=/public/index.php）。未显式设置 APP_BASE 时按入口路径自动判断，
+// 兼容新旧两种 Apache 配置；部署在子目录时用 APP_BASE=/teamhub 覆盖。
+$scriptName = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+$detectedBase = '';
+if (preg_match('#^(.*)/public/index\.php$#', $scriptName, $matches) === 1) {
+    $detectedBase = $matches[1];
+}
+define('APP_BASE', rtrim((string) (getenv('APP_BASE') ?: $detectedBase), '/'));
 define('ASSET_VERSION', '20261105');
 
 require_once APP_ROOT . '/app/helpers.php';
 require_once APP_ROOT . '/app/core/Db.class.php';
 require_once APP_ROOT . '/app/core/Auth.class.php';
+require_once APP_ROOT . '/app/model/AnalyticsModel.class.php';
 
 // 会话必须在任何输出之前启动；随后初始化 CSRF token 并检查空闲超时
 Auth::boot();
 
 // ---- 简易路由：index.php?r=控制器/动作&参数=值 ----
 // 约定：控制器文件 app/controller/{Xxx}Controller.class.php，动作即方法名。
-$route  = $_GET['r'] ?? 'home/index';   // 默认前台首页
+$route  = is_string($_GET['r'] ?? null) ? $_GET['r'] : 'home/index';   // 默认前台首页
 $parts  = explode('/', $route);
 $ctrl   = ucfirst(strtolower($parts[0] ?? 'home'));
 $action = $parts[1] ?? 'index';
@@ -50,6 +60,13 @@ if (!class_exists($controllerClass) || !method_exists($controllerClass, $action)
     exit;
 }
 
+// 前台页面匿名访问统计；写入失败只记日志，不影响页面响应。
+try {
+    AnalyticsModel::track(strtolower((string) ($parts[0] ?? 'home')), $action);
+} catch (Throwable $e) {
+    error_log('[analytics] ' . $e->getMessage());
+}
+
 ob_start();
 try {
     (new $controllerClass())->$action();
@@ -69,7 +86,7 @@ try {
     ));
 
     render('error_500', [
-        'pageTitle' => '服务暂时不可用 · 数聚 TeamHub',
+        'pageTitle' => '服务暂时不可用 · ' . site_name(),
         'metaDescription' => '服务暂时不可用，请稍后重试。',
     ]);
 }

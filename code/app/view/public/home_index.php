@@ -13,11 +13,12 @@ require APP_ROOT . '/app/view/layout/public_header.php';
     <div class="container">
         <div class="row align-items-center gy-5">
             <div class="col-lg-7">
-                <p class="eyebrow">数据库 × 全栈 × 协作</p>
-                <h1 class="hero__title">
-                    把团队的每一次协作，<br>
-                    变成<span class="text-accent">看得见的作品</span>。
-                </h1>
+                <p class="eyebrow">
+                    <?= e($team['name']) ?><?php if (trim((string) ($team['english_name'] ?? '')) !== ''): ?> · <?= e($team['english_name']) ?><?php endif; ?>
+                </p>
+                <h1 class="hero__title"><?= e(trim((string) ($team['slogan'] ?? '')) !== ''
+                    ? $team['slogan']
+                    : '把团队的每一次协作，变成看得见的作品。') ?></h1>
                 <p class="hero__lead"><?= e($team['short_intro']) ?></p>
                 <div class="hero__actions">
                     <a class="btn btn-primary btn-lg" href="<?= e(url('team/index')) ?>">认识我们 <span aria-hidden="true">→</span></a>
@@ -28,7 +29,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                 <div class="hero__visual" aria-hidden="true">
                     <div class="hero__visual-card hero__visual-card--back"></div>
                     <div class="hero__visual-card hero__visual-card--front">
-                        <span class="hero__visual-label">TeamHub</span>
+                        <span class="hero__visual-label"><?= e(trim((string) ($team['english_name'] ?? '')) !== '' ? $team['english_name'] : $siteName) ?></span>
                         <span class="hero__visual-dots"></span>
                     </div>
                 </div>

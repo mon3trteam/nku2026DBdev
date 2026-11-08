@@ -376,16 +376,28 @@
 
 .member-role-card {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-2);
+    flex-direction: column;
+    gap: 2px;
     padding: var(--space-3) var(--space-4);
     background: var(--c-bg);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-control);
 }
 
+.member-role-card__main {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
 .member-role-card span {
+    color: var(--c-muted);
+    font-size: 12px;
+}
+
+.member-role-card__contribution {
+    margin: 0;
     color: var(--c-muted);
     font-size: 12px;
 }

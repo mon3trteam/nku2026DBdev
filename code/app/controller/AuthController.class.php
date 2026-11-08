@@ -26,7 +26,7 @@ final class AuthController
         }
 
         if (Auth::check()) {
-            redirect(Auth::homeForRole(Auth::role()));
+            redirect(Auth::mustChangePassword() ? Auth::passwordChangeUrl() : Auth::homeForRole(Auth::role()));
         }
 
         $state = (string) ($_GET['state'] ?? '');
@@ -145,6 +145,11 @@ final class AuthController
 
         Auth::login($user);
 
+        // 密码被管理员重置后，先强制改密，忽略回跳地址
+        if (Auth::mustChangePassword()) {
+            redirect(Auth::passwordChangeUrl());
+        }
+
         redirect($next !== '' ? $next : Auth::homeForRole((string) $user['role_code']));
     }
 
@@ -166,8 +171,8 @@ final class AuthController
         http_response_code($status);
 
         render('auth/login', [
-            'pageTitle' => '成员登录 · 数聚 TeamHub',
-            'metaDescription' => '数聚 TeamHub 成员登录入口。账号由管理员创建，不开放公开注册。',
+            'pageTitle' => '成员登录 · ' . site_name(),
+            'metaDescription' => site_name() . ' 成员登录入口。账号由管理员创建，不开放公开注册。',
             'activeNav' => '',
             'next' => $next,
             'state' => $state,

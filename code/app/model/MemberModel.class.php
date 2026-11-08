@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+require_once APP_ROOT . '/app/model/MediaModel.class.php';
+
 final class MemberModel
 {
     private const AVATAR_FALLBACK = 'img/placeholder-avatar.svg';
@@ -35,6 +37,102 @@ final class MemberModel
         $rows = Db::fetchAll('SELECT * FROM members ORDER BY sort_order ASC, id ASC');
 
         return self::hydrateMembers($rows);
+    }
+
+    /**
+     * 后台成员编辑：返回原始行与技能数量。
+     */
+    public static function findForAdmin(int $id): ?array
+    {
+        $row = Db::fetchOne('SELECT * FROM members WHERE id = :id LIMIT 1', ['id' => $id]);
+        if ($row === null) {
+            return null;
+        }
+
+        $row['skill_count'] = (int) Db::fetchValue(
+            'SELECT COUNT(*) FROM member_skills WHERE member_id = :id',
+            ['id' => $id]
+        );
+        $row['avatar'] = MediaModel::pathForId((int) ($row['avatar_media_id'] ?? 0)) ?? self::AVATAR_FALLBACK;
+        $row['cover'] = MediaModel::pathForId((int) ($row['cover_media_id'] ?? 0)) ?? self::COVER_FALLBACK;
+
+        return $row;
+    }
+
+    /**
+     * 后台更新公开档案字段；传入技能数组时在同一事务内同步技能关联。
+     *
+     * @param array<string, int>|null $skills 技能名 => 熟练度；null 表示不修改技能
+     */
+    public static function updateForAdmin(int $id, array $data, ?array $skills = null): bool
+    {
+        return Db::transaction(static function () use ($id, $data, $skills): bool {
+            $nullable = static fn (string $value): ?string => $value === '' ? null : $value;
+
+            $affected = Db::execute(
+                'UPDATE members SET
+                    name = :name,
+                    english_name = :english_name,
+                    slug = :slug,
+                    role_title = :role_title,
+                    tagline = :tagline,
+                    bio = :bio,
+                    email = :email,
+                    github_url = :github_url,
+                    website_url = :website_url,
+                    location = :location,
+                    join_date = :join_date,
+                    sort_order = :sort_order,
+                    is_featured = :is_featured,
+                    is_visible = :is_visible,
+                    avatar_media_id = :avatar_media_id,
+                    cover_media_id = :cover_media_id,
+                    profile_completeness = :profile_completeness
+                 WHERE id = :id',
+                [
+                    'name' => $data['name'],
+                    'english_name' => $nullable($data['english_name']),
+                    'slug' => $data['slug'],
+                    'role_title' => $data['role_title'],
+                    'tagline' => $nullable($data['tagline']),
+                    'bio' => $nullable($data['bio']),
+                    'email' => $nullable($data['email']),
+                    'github_url' => $nullable($data['github_url']),
+                    'website_url' => $nullable($data['website_url']),
+                    'location' => $nullable($data['location']),
+                    'join_date' => $data['join_date'],
+                    'sort_order' => $data['sort_order'],
+                    'is_featured' => $data['is_featured'],
+                    'is_visible' => $data['is_visible'],
+                    'avatar_media_id' => !empty($data['avatar_media_id']) ? (int) $data['avatar_media_id'] : null,
+                    'cover_media_id' => !empty($data['cover_media_id']) ? (int) $data['cover_media_id'] : null,
+                    'profile_completeness' => $data['profile_completeness'],
+                    'id' => $id,
+                ]
+            );
+
+            if ($skills !== null) {
+                self::replaceSkills($id, $skills);
+            }
+
+            return $affected > 0;
+        });
+    }
+
+    public static function setVisibility(int $id, bool $visible): void
+    {
+        Db::execute(
+            'UPDATE members SET is_visible = :visible WHERE id = :id',
+            ['visible' => $visible ? 1 : 0, 'id' => $id]
+        );
+    }
+
+    public static function setFeatured(int $id, bool $featured): void
+    {
+        Db::execute(
+            'UPDATE members SET is_featured = :featured WHERE id = :id',
+            ['featured' => $featured ? 1 : 0, 'id' => $id]
+        );
     }
 
     /**
@@ -144,6 +242,8 @@ final class MemberModel
                      github_url = :github_url,
                      website_url = :website_url,
                      location = :location,
+                     avatar_media_id = :avatar_media_id,
+                     cover_media_id = :cover_media_id,
                      profile_completeness = :profile_completeness,
                      updated_at = NOW()
                  WHERE id = :id',
@@ -158,38 +258,76 @@ final class MemberModel
                     'github_url'    => $nullable($data['github']),
                     'website_url'   => $nullable($data['website']),
                     'location'      => $nullable($data['location']),
+                    'avatar_media_id' => !empty($data['avatar_media_id']) ? (int) $data['avatar_media_id'] : null,
+                    'cover_media_id' => !empty($data['cover_media_id']) ? (int) $data['cover_media_id'] : null,
                     'profile_completeness' => max(0, min(100, (int) ($data['profile_completeness'] ?? 0))),
                     'id'            => $memberId,
                 ]
             );
 
-            // 先清空再写入，保证取消勾选的技能会真正删除
-            Db::execute('DELETE FROM member_skills WHERE member_id = :member_id', ['member_id' => $memberId]);
-
-            if ($skills !== []) {
-                $names = array_keys($skills);
-                $placeholders = implode(',', array_fill(0, count($names), '?'));
-                $skillRows = Db::fetchAll(
-                    "SELECT id, name FROM skills WHERE name IN ({$placeholders})",
-                    $names
-                );
-
-                foreach ($skillRows as $skillRow) {
-                    $proficiency = max(1, min(5, (int) ($skills[(string) $skillRow['name']] ?? 3)));
-                    Db::execute(
-                        'INSERT INTO member_skills (member_id, skill_id, proficiency)
-                         VALUES (:member_id, :skill_id, :proficiency)',
-                        [
-                            'member_id'   => $memberId,
-                            'skill_id'    => (int) $skillRow['id'],
-                            'proficiency' => $proficiency,
-                        ]
-                    );
-                }
-            }
+            self::replaceSkills($memberId, $skills);
 
             return 'ok';
         });
+    }
+
+    /**
+     * 指定成员的技能与熟练度，供后台编辑表单回填。
+     *
+     * @return array<string, int> 技能名 => 熟练度
+     */
+    public static function skillMapForMember(int $memberId): array
+    {
+        $rows = Db::fetchAll(
+            'SELECT s.name, ms.proficiency
+             FROM member_skills ms
+             JOIN skills s ON s.id = ms.skill_id
+             WHERE ms.member_id = :member_id
+             ORDER BY s.sort_order ASC, s.name ASC',
+            ['member_id' => $memberId]
+        );
+
+        $map = [];
+        foreach ($rows as $row) {
+            $map[(string) $row['name']] = (int) $row['proficiency'];
+        }
+
+        return $map;
+    }
+
+    /**
+     * 用给定集合替换成员技能；必须在事务内调用。
+     *
+     * @param array<string, int> $skills 技能名 => 熟练度
+     */
+    private static function replaceSkills(int $memberId, array $skills): void
+    {
+        // 先清空再写入，保证取消勾选的技能会真正删除
+        Db::execute('DELETE FROM member_skills WHERE member_id = :member_id', ['member_id' => $memberId]);
+
+        if ($skills === []) {
+            return;
+        }
+
+        $names = array_keys($skills);
+        $placeholders = implode(',', array_fill(0, count($names), '?'));
+        $skillRows = Db::fetchAll(
+            "SELECT id, name FROM skills WHERE name IN ({$placeholders})",
+            $names
+        );
+
+        foreach ($skillRows as $skillRow) {
+            $proficiency = max(1, min(5, (int) ($skills[(string) $skillRow['name']] ?? 3)));
+            Db::execute(
+                'INSERT INTO member_skills (member_id, skill_id, proficiency)
+                 VALUES (:member_id, :skill_id, :proficiency)',
+                [
+                    'member_id'   => $memberId,
+                    'skill_id'    => (int) $skillRow['id'],
+                    'proficiency' => $proficiency,
+                ]
+            );
+        }
     }
 
     /**
@@ -301,6 +439,40 @@ final class MemberModel
     }
 
     /**
+     * 成员更新自己在某个项目中的角色与贡献说明；只能修改已关联的项目。
+     */
+    public static function updateMyProjectAssignment(
+        int $projectId,
+        int $memberId,
+        string $roleName,
+        string $contribution
+    ): bool {
+        $exists = Db::fetchValue(
+            'SELECT COUNT(*) FROM project_members WHERE project_id = :project_id AND member_id = :member_id',
+            ['project_id' => $projectId, 'member_id' => $memberId]
+        );
+        if ((int) $exists === 0) {
+            return false;
+        }
+
+        $nullable = static fn (string $value): ?string => $value === '' ? null : $value;
+
+        Db::execute(
+            'UPDATE project_members
+             SET role_name = :role_name, contribution = :contribution
+             WHERE project_id = :project_id AND member_id = :member_id',
+            [
+                'role_name' => $nullable($roleName),
+                'contribution' => $nullable($contribution),
+                'project_id' => $projectId,
+                'member_id' => $memberId,
+            ]
+        );
+
+        return true;
+    }
+
+    /**
      * 公开项目列表。
      */
     public static function allProjects(): array
@@ -310,6 +482,16 @@ final class MemberModel
         );
 
         return self::hydrateProjects($rows);
+    }
+
+    /**
+     * 公开项目总数，供首页统计卡使用。
+     */
+    public static function countVisibleProjects(): int
+    {
+        return (int) Db::fetchValue(
+            'SELECT COUNT(*) FROM projects WHERE is_visible = 1'
+        );
     }
 
     /**
@@ -432,8 +614,12 @@ final class MemberModel
 
         $members = [];
         foreach ($rows as $row) {
-            $row['avatar'] = self::AVATAR_FALLBACK;
-            $row['cover'] = self::COVER_FALLBACK;
+            $avatarId = (int) ($row['avatar_media_id'] ?? 0);
+            $coverId = (int) ($row['cover_media_id'] ?? 0);
+            $row['avatar_media_id'] = $avatarId;
+            $row['cover_media_id'] = $coverId;
+            $row['avatar'] = MediaModel::pathForId($avatarId) ?? self::AVATAR_FALLBACK;
+            $row['cover'] = MediaModel::pathForId($coverId) ?? self::COVER_FALLBACK;
             $row['email'] = (string) ($row['email'] ?? '');
             $row['github'] = (string) ($row['github_url'] ?? '');
             $row['website'] = (string) ($row['website_url'] ?? '');
@@ -459,7 +645,7 @@ final class MemberModel
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
         $memberRows = Db::fetchAll(
-            "SELECT pm.project_id, m.name, pm.role_name
+            "SELECT pm.project_id, m.name, pm.role_name, pm.contribution
              FROM project_members pm
              JOIN members m ON m.id = pm.member_id
              WHERE pm.project_id IN ({$placeholders})
@@ -472,13 +658,15 @@ final class MemberModel
             $membersByProject[(int) $member['project_id']][] = [
                 'name'      => (string) $member['name'],
                 'role_name' => (string) ($member['role_name'] ?? ''),
+                'contribution' => (string) ($member['contribution'] ?? ''),
             ];
         }
 
         $projects = [];
         foreach ($rows as $row) {
             $row['description_html'] = markdown_lite((string) ($row['description'] ?? ''));
-            $row['cover'] = self::COVER_FALLBACK;
+            $row['cover_media_id'] = (int) ($row['cover_media_id'] ?? 0);
+            $row['cover'] = MediaModel::pathForId($row['cover_media_id']) ?? self::COVER_FALLBACK;
             $row['featured'] = (int) $row['is_featured'];
             $row['status_label'] = self::projectStatusLabel((string) $row['status']);
             $row['start_date'] = (string) ($row['start_date'] ?? '');

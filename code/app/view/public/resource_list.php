@@ -27,8 +27,8 @@ $renderGroup = static function (string $label, array $items): void {
                         </p>
                     </div>
                     <div class="resource-item__action">
-                        <button class="btn btn-sm btn-primary" type="button"
-                                data-bs-toggle="modal" data-bs-target="#resourceModal">下载</button>
+                        <a class="btn btn-sm btn-primary"
+                           href="<?= e(url('resource/download', ['id' => $resource['id']])) ?>">下载</a>
                     </div>
                 </article>
             <?php endforeach; ?>
@@ -48,7 +48,7 @@ $renderGroup = static function (string $label, array $items): void {
 <section class="section">
     <div class="container">
         <div class="alert alert-info" role="note">
-            当前为演示数据。真实文件放入 <code>code/data/team/</code> 与 <code>code/data/personal/</code> 后，由下载控制器输出并计数。
+            文件由下载控制器校验后输出，并记录下载次数。若提示“文件尚未上传”，请联系管理员补充文件。
         </div>
 
         <div class="filter-bar" role="group" aria-label="按分类筛选">
@@ -74,13 +74,4 @@ $renderGroup = static function (string $label, array $items): void {
     </div>
 </section>
 
-<?php
-$modalId = 'resourceModal';
-$modalTitle = '演示环境说明';
-$modalBody = '资源文件尚未放入 code/data/team 或 code/data/personal。接入下载控制器后，这里会返回文件并记录下载次数。';
-$modalConfirmText = '知道了';
-$modalDanger = false;
-$modalConfirmDisabled = false;
-require APP_ROOT . '/app/view/partial/modal_confirm.php';
-require APP_ROOT . '/app/view/layout/public_footer.php';
-?>
+<?php require APP_ROOT . '/app/view/layout/public_footer.php'; ?>

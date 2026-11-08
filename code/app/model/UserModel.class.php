@@ -20,9 +20,11 @@ final class UserModel
         $rows = Db::fetchAll(
             'SELECT u.id, u.username, u.display_name, u.email, u.status,
                     u.must_change_password, u.last_login_at,
-                    r.code AS role_code, r.name AS role_name
+                    r.code AS role_code, r.name AS role_name,
+                    m.name AS member_name
              FROM users u
              JOIN roles r ON r.id = u.role_id
+             LEFT JOIN members m ON m.user_id = u.id
              ORDER BY u.id ASC'
         );
 
@@ -86,5 +88,154 @@ final class UserModel
              LIMIT 1',
             ['id' => $id]
         );
+    }
+
+    /**
+     * 后台编辑账号所需的完整资料（不含口令）。
+     */
+    public static function findForAdmin(int $id): ?array
+    {
+        return Db::fetchOne(
+            'SELECT u.id, u.username, u.display_name, u.email, u.role_id, u.status,
+                    u.must_change_password, u.last_login_at,
+                    r.code AS role_code, r.name AS role_name,
+                    m.id AS member_id, m.name AS member_name
+             FROM users u
+             JOIN roles r ON r.id = u.role_id
+             LEFT JOIN members m ON m.user_id = u.id
+             WHERE u.id = :id
+             LIMIT 1',
+            ['id' => $id]
+        );
+    }
+
+    /**
+     * 尚未绑定账号的成员档案，供新建账号时选择。
+     */
+    public static function unboundMembers(): array
+    {
+        return Db::fetchAll(
+            'SELECT id, name, role_title
+             FROM members
+             WHERE user_id IS NULL
+             ORDER BY sort_order ASC, id ASC'
+        );
+    }
+
+    public static function usernameExists(string $username, int $excludeId = 0): bool
+    {
+        return (int) Db::fetchValue(
+            'SELECT COUNT(*) FROM users WHERE username = :username AND id <> :id',
+            ['username' => $username, 'id' => $excludeId]
+        ) > 0;
+    }
+
+    public static function emailExists(string $email, int $excludeId = 0): bool
+    {
+        return (int) Db::fetchValue(
+            'SELECT COUNT(*) FROM users WHERE email = :email AND id <> :id',
+            ['email' => $email, 'id' => $excludeId]
+        ) > 0;
+    }
+
+    public static function roleExists(int $roleId): bool
+    {
+        return (int) Db::fetchValue('SELECT COUNT(*) FROM roles WHERE id = :id', ['id' => $roleId]) > 0;
+    }
+
+    /**
+     * 新建账号并可同时绑定一个未使用的成员档案。
+     */
+    public static function create(array $data, int $memberId = 0): int
+    {
+        return (int) Db::transaction(static function () use ($data, $memberId): int {
+            Db::execute(
+                'INSERT INTO users
+                    (role_id, username, email, password_hash, display_name, status,
+                     must_change_password, password_changed_at)
+                 VALUES
+                    (:role_id, :username, :email, :password_hash, :display_name, :status,
+                     1, NOW())',
+                [
+                    'role_id' => $data['role_id'],
+                    'username' => $data['username'],
+                    'email' => $data['email'],
+                    'password_hash' => $data['password_hash'],
+                    'display_name' => $data['display_name'],
+                    'status' => $data['status'],
+                ]
+            );
+
+            $id = Db::lastInsertId();
+            if ($memberId > 0) {
+                Db::execute(
+                    'UPDATE members SET user_id = :user_id WHERE id = :member_id AND user_id IS NULL',
+                    ['user_id' => $id, 'member_id' => $memberId]
+                );
+            }
+
+            return $id;
+        });
+    }
+
+    public static function updateAccount(int $id, array $data): void
+    {
+        Db::execute(
+            'UPDATE users SET
+                role_id = :role_id,
+                username = :username,
+                email = :email,
+                display_name = :display_name
+             WHERE id = :id',
+            [
+                'role_id' => $data['role_id'],
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'display_name' => $data['display_name'],
+                'id' => $id,
+            ]
+        );
+    }
+
+    /**
+     * 启用 / 禁用账号；启用时顺带清除失败次数与锁定。
+     */
+    public static function setStatus(int $id, int $status): void
+    {
+        Db::execute(
+            'UPDATE users SET status = :status, failed_login_count = 0, locked_until = NULL WHERE id = :id',
+            ['status' => $status, 'id' => $id]
+        );
+    }
+
+    /**
+     * 重置为临时密码，并使该账号所有旧会话失效。
+     */
+    public static function resetPassword(int $id, string $passwordHash): void
+    {
+        Db::execute(
+            'UPDATE users SET
+                password_hash = :password_hash,
+                must_change_password = 1,
+                failed_login_count = 0,
+                locked_until = NULL,
+                password_changed_at = NOW()
+             WHERE id = :id',
+            ['password_hash' => $passwordHash, 'id' => $id]
+        );
+    }
+
+    /**
+     * 目标账号之外是否还有其他启用中的超级管理员。
+     */
+    public static function hasOtherActiveSuperAdmin(int $excludeId): bool
+    {
+        return (int) Db::fetchValue(
+            "SELECT COUNT(*)
+             FROM users u
+             JOIN roles r ON r.id = u.role_id
+             WHERE r.code = 'super_admin' AND u.status = 1 AND u.id <> :id",
+            ['id' => $excludeId]
+        ) > 0;
     }
 }

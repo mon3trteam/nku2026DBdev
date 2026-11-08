@@ -117,6 +117,20 @@ final class AuthModel
     }
 
     /**
+     * 密码字符类别数：大写、小写、数字、符号。
+     */
+    public static function passwordClassCount(string $password): int
+    {
+        $count = 0;
+        $count += preg_match('/[A-Z]/', $password) === 1 ? 1 : 0;
+        $count += preg_match('/[a-z]/', $password) === 1 ? 1 : 0;
+        $count += preg_match('/\d/', $password) === 1 ? 1 : 0;
+        $count += preg_match('/[^A-Za-z0-9]/', $password) === 1 ? 1 : 0;
+
+        return $count;
+    }
+
+    /**
      * 写操作审计。actor_id 取当前登录用户，未登录写 NULL。
      */
     public static function audit(string $action, string $entityType, ?int $entityId = null, string $summary = ''): void

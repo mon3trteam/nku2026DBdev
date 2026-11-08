@@ -21,8 +21,8 @@ final class AnnouncementController
         $announcements = AnnouncementModel::all($category);
 
         render('public/announcement_list', [
-            'pageTitle' => '公告中心 · 数聚 TeamHub',
-            'metaDescription' => '数聚 TeamHub 的团队动态、项目通知与功能预告。置顶公告优先展示。',
+            'pageTitle' => '公告中心 · ' . site_name(),
+            'metaDescription' => site_name() . ' 的团队动态、项目通知与功能预告。置顶公告优先展示。',
             'activeNav' => 'announcement',
             'announcements' => $announcements,
             'categories' => $categories,
