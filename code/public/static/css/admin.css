@@ -254,6 +254,12 @@
     font-size: 12px;
 }
 
+/* ---------- ECharts 动态图表容器 ---------- */
+.echarts-box {
+    width: 100%;
+    padding-top: var(--space-3, 12px);
+}
+
 /* ---------- 柱状图占位 ---------- */
 .bar-chart {
     display: flex;

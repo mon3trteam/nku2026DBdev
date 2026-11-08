@@ -25,7 +25,7 @@ if (preg_match('#^(.*)/public/index\.php$#', $scriptName, $matches) === 1) {
     $detectedBase = $matches[1];
 }
 define('APP_BASE', rtrim((string) (getenv('APP_BASE') ?: $detectedBase), '/'));
-define('ASSET_VERSION', '20261105');
+define('ASSET_VERSION', '20261108');
 
 require_once APP_ROOT . '/app/helpers.php';
 require_once APP_ROOT . '/app/core/Db.class.php';

@@ -1,10 +1,11 @@
 <?php
 /**
  * 文件名：dashboard.php
- * 功能：管理后台数据看板（KPI、访问趋势、技能分布、待审核留言）
+ * 功能：管理后台数据看板（KPI、访问趋势、技能分布、待审核留言、ECharts 动态图表）
  * 作者：杨斯源（学号待填）
  * 创建日期：2026-11-05
  * 修改：金暄琛（2411672）接入数据库统计并启用快捷审核（2026-11-08）
+ * 修改：黄浩天（2413421）接入本地 ECharts 动态图表，保留 CSS 条图作为无 JS 降级（2026-11-08）
  * 所属模块：管理后台 / 数据看板
  */
 
@@ -14,7 +15,27 @@ $maxViews = max(1, ...array_column($trend, 'views'));
 $maxSkill = max(1, ...array_column($skills, 'count'));
 $maxMessage = max(1, ...array_column($messageStatus, 'count'));
 $maxProject = max(1, ...array_column($projectStatus, 'count'));
+
+// 传给 ECharts 的数据（JSON_HEX_TAG 防止 </script> 提前闭合标签）
+$chartPayload = [
+    'trend' => array_map(static fn(array $p): array => [
+        'date' => (string) $p['date'],
+        'views' => (int) $p['views'],
+        'visitors' => (int) $p['visitors'],
+    ], $trend),
+    'skills' => array_map(static fn(array $s): array => [
+        'name' => (string) $s['name'],
+        'count' => (int) $s['count'],
+    ], $skills),
+    'messages' => array_map(static fn(array $m): array => [
+        'label' => (string) $m['label'],
+        'count' => (int) $m['count'],
+    ], $messageStatus),
+];
 ?>
+<script>
+window.TEAMHUB_DASHBOARD = <?= json_encode($chartPayload, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+</script>
 <section class="kpi-grid" aria-label="关键指标">
     <a class="kpi-card" href="<?= e(url('admin/members')) ?>">
         <span class="kpi-card__label">成员总数</span>
@@ -43,9 +64,11 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
         <div class="admin-card__head">
             <div>
                 <h2>近 14 天访问趋势</h2>
-                <p>按日统计前台页面访问量；柱高按 14 天最大值归一化。</p>
+                <p>按日统计前台页面访问量；支持切换查看访客数。</p>
             </div>
         </div>
+        <div id="chart-trend" class="echarts-box" style="height:300px" hidden></div>
+        <div class="chart-fallback">
         <div class="bar-chart" role="img" aria-label="近 14 天访问趋势柱状图">
             <?php foreach ($trend as $point): ?>
                 <div class="bar-chart__item">
@@ -54,6 +77,7 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
                     <span class="bar-chart__label"><?= e($point['date']) ?></span>
                 </div>
             <?php endforeach; ?>
+        </div>
         </div>
         <table class="visually-hidden">
             <caption>近 14 天访问趋势数据</caption>
@@ -81,6 +105,8 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
         <?php if ($skills === []): ?>
             <p class="admin-hint">暂无技能数据。</p>
         <?php else: ?>
+            <div id="chart-skills" class="echarts-box" style="height:240px" hidden></div>
+            <div class="chart-fallback">
             <div class="skill-dist">
                 <?php foreach ($skills as $skill): ?>
                     <div class="skill-dist__row">
@@ -89,6 +115,7 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
                         <span class="skill-dist__num"><?= e($skill['count']) ?></span>
                     </div>
                 <?php endforeach; ?>
+            </div>
             </div>
         <?php endif; ?>
     </section>
@@ -163,6 +190,8 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
                 <p>待审核 / 已通过 / 已拒绝 / 垃圾。</p>
             </div>
         </div>
+        <div id="chart-messages" class="echarts-box" style="height:240px" hidden></div>
+        <div class="chart-fallback">
         <div class="status-bars">
             <?php foreach ($messageStatus as $item): ?>
                 <div class="status-bar">
@@ -173,6 +202,7 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
                     <span class="status-bar__num"><?= e($item['count']) ?></span>
                 </div>
             <?php endforeach; ?>
+        </div>
         </div>
     </section>
 
@@ -210,5 +240,95 @@ $maxProject = max(1, ...array_column($projectStatus, 'count'));
         </ul>
     </section>
 </div>
+
+<?php // ECharts 动态图表（本地 vendor，无外部 CDN 依赖）；初始化失败时保留 CSS 降级图 ?>
+<script defer src="<?= e(asset('vendor/echarts/5.6.0/echarts.min.js')) ?>"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+    var data = window.TEAMHUB_DASHBOARD || {};
+    if (typeof window.echarts !== 'object') { return; }
+
+    var INK = '#16324a';
+    var TEAL = '#0f766e';
+    var TEAL_LIGHT = '#5ea8a2';
+    var GOLD = '#c8973b';
+    var GRID = { left: 8, right: 12, top: 28, bottom: 0, containLabel: true };
+
+    function mount(id) {
+        var el = document.getElementById(id);
+        if (!el) return null;
+        var fallback = el.parentNode.querySelector('.chart-fallback');
+        if (fallback) { fallback.hidden = true; }
+        el.hidden = false;
+        return window.echarts.init(el);
+    }
+
+    // 图1：近 14 天访问趋势（折线面积图，图例可切换访问量/访客数）
+    var trendEl = mount('chart-trend');
+    if (trendEl && data.trend && data.trend.length) {
+        trendEl.setOption({
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['访问量', '访客数'], top: 0 },
+            grid: GRID,
+            xAxis: { type: 'category', data: data.trend.map(function (p) { return p.date; }) },
+            yAxis: { type: 'value', minInterval: 1 },
+            series: [
+                {
+                    name: '访问量', type: 'line', smooth: true,
+                    data: data.trend.map(function (p) { return p.views; }),
+                    itemStyle: { color: TEAL },
+                    lineStyle: { color: TEAL, width: 2 },
+                    areaStyle: { color: 'rgba(15,118,110,.14)' }
+                },
+                {
+                    name: '访客数', type: 'line', smooth: true,
+                    data: data.trend.map(function (p) { return p.visitors; }),
+                    itemStyle: { color: GOLD },
+                    lineStyle: { color: GOLD, width: 2, type: 'dashed' }
+                }
+            ]
+        });
+    }
+
+    // 图2：成员技能分布（横向条形图）
+    var skillEl = mount('chart-skills');
+    if (skillEl && data.skills && data.skills.length) {
+        skillEl.setOption({
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+            grid: { left: 8, right: 24, top: 8, bottom: 0, containLabel: true },
+            xAxis: { type: 'value', minInterval: 1 },
+            yAxis: { type: 'category', data: data.skills.map(function (s) { return s.name; }), inverse: true },
+            series: [{
+                name: '成员数', type: 'bar', barMaxWidth: 18,
+                data: data.skills.map(function (s) { return s.count; }),
+                itemStyle: { color: TEAL_LIGHT, borderRadius: [0, 6, 6, 0] },
+                label: { show: true, position: 'right', color: INK }
+            }]
+        });
+    }
+
+    // 图3：留言状态分布（环形图）
+    var msgEl = mount('chart-messages');
+    if (msgEl && data.messages && data.messages.length) {
+        msgEl.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { bottom: 0, icon: 'circle' },
+            series: [{
+                name: '留言状态', type: 'pie', radius: ['42%', '68%'], center: ['50%', '44%'],
+                data: data.messages.map(function (m, i) {
+                    return { name: m.label, value: m.count,
+                        itemStyle: { color: [GOLD, TEAL, '#b3554e', '#8a8f98'][i % 4] } };
+                }),
+                label: { color: INK, formatter: '{b}: {c}' }
+            }]
+        });
+    }
+
+    window.addEventListener('resize', function () {
+        [trendEl, skillEl, msgEl].forEach(function (c) { if (c) c.resize(); });
+    });
+});
+</script>
 
 <?php require APP_ROOT . '/app/view/layout/admin_footer.php'; ?>
