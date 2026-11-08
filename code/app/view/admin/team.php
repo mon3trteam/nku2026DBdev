@@ -14,7 +14,7 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
 <?php endif; ?>
 
 <form class="admin-form" action="<?= e(url('admin/updateTeam')) ?>" method="post" enctype="multipart/form-data" novalidate>
-    <input type="hidden" name="_token" value="">
+    <?= csrf_field() ?>
 
     <section class="admin-card">
         <div class="admin-card__head">

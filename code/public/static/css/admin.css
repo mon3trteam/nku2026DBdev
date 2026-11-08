@@ -134,6 +134,15 @@
     font-size: 13px;
 }
 
+.admin-user__logout {
+    color: var(--c-muted);
+    text-decoration: none;
+}
+
+.admin-user__logout:hover {
+    color: var(--c-accent-600);
+}
+
 .admin-user__avatar {
     display: inline-flex;
     align-items: center;

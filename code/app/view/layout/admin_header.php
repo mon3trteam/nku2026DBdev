@@ -35,6 +35,26 @@ $adminRoutes = [
     'settings' => 'admin/settings',
     'logs' => 'admin/logs',
 ];
+$adminPermissions = [
+    'dashboard' => 'dashboard.view',
+    'team' => 'team.edit',
+    'members' => 'member.manage',
+    'projects' => 'content.manage',
+    'announcements' => 'content.manage',
+    'messages' => 'message.moderate',
+    'resources' => 'resource.manage',
+    'users' => 'user.manage',
+    'settings' => 'setting.manage',
+    'logs' => 'log.view',
+];
+// 无权限的菜单不渲染，避免成员误点后进入 403
+$adminItems = array_filter(
+    $adminItems,
+    static fn (string $key): bool => Auth::can($adminPermissions[$key] ?? ''),
+    ARRAY_FILTER_USE_KEY
+);
+$currentUser = Auth::user() ?? [];
+$displayName = (string) ($currentUser['display_name'] ?? '访客');
 ?>
 <!doctype html>
 <html lang="zh-CN">
@@ -77,8 +97,9 @@ $adminRoutes = [
                 <h1 class="admin-page-title"><?= e($adminItems[$adminNav] ?? '数据看板') ?></h1>
             </div>
             <div class="admin-user">
-                <span class="admin-user__avatar" aria-hidden="true">管</span>
-                <span>管理员</span>
+                <span class="admin-user__avatar" aria-hidden="true"><?= e(mb_substr($displayName, 0, 1, 'UTF-8')) ?></span>
+                <span><?= e($displayName) ?></span>
+                <a class="admin-user__logout ms-2" href="<?= e(url('auth/logout')) ?>">退出</a>
             </div>
         </header>
         <div class="admin-content">

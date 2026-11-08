@@ -12,6 +12,7 @@ $state = $state ?? '';
 $stateType = $stateType ?? '';
 $stateMessage = $stateMessage ?? '';
 $disabled = $disabled ?? false;
+$oldLogin = $oldLogin ?? '';
 ?>
 <!doctype html>
 <html lang="zh-CN">
@@ -27,7 +28,7 @@ $disabled = $disabled ?? false;
     <link rel="stylesheet" href="<?= e(asset('css/auth.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/enhancements.css')) ?>">
 </head>
-<body class="auth-body"<?= $state === 'success' ? ' data-toast="登录成功（演示）" data-toast-type="success"' : '' ?>>
+<body class="auth-body"<?= $state === 'logout' ? ' data-toast="已安全退出" data-toast-type="success"' : '' ?>>
 <main class="auth-shell">
     <a class="auth-brand" href="<?= e(url('home/index')) ?>">
         <img src="<?= e(asset('img/logo.svg')) ?>" alt="" width="40" height="40">
@@ -37,18 +38,18 @@ $disabled = $disabled ?? false;
     <section class="auth-card" aria-labelledby="login-title">
         <p class="eyebrow">Member access</p>
         <h1 id="login-title" class="auth-card__title">成员登录</h1>
-        <p class="auth-card__lead">使用管理员创建的账号登录。首次登录需要修改临时密码。</p>
+        <p class="auth-card__lead">使用管理员创建的账号登录。拿到临时密码后请尽快修改。</p>
 
         <?php if ($stateMessage !== ''): ?>
             <div class="alert alert-<?= e($stateType) ?>" role="alert"><?= e($stateMessage) ?></div>
         <?php else: ?>
             <div class="alert alert-info" role="note">
-                当前为演示界面，认证逻辑由后端接入后生效。
+                请使用管理员创建的账号登录；连续 5 次密码错误将锁定 15 分钟。
             </div>
         <?php endif; ?>
 
-        <form action="" method="post" novalidate>
-            <input type="hidden" name="_token" value="">
+        <form action="<?= e(url('auth/login')) ?>" method="post" novalidate>
+            <?= csrf_field() ?>
             <input type="hidden" name="next" value="<?= e($next) ?>">
 
             <div class="mb-3">
@@ -56,6 +57,7 @@ $disabled = $disabled ?? false;
                 <input class="form-control <?= $state === 'error' ? 'is-invalid' : '' ?>"
                        id="login" name="login" type="text" autocomplete="username"
                        required maxlength="50" placeholder="请输入用户名或邮箱" autofocus
+                       value="<?= e($oldLogin) ?>"
                        <?= $state === 'error' ? 'aria-describedby="login-error"' : '' ?>>
                 <?php if ($state === 'error'): ?>
                     <div class="invalid-feedback" id="login-error">用户名或密码不正确。</div>
@@ -82,16 +84,7 @@ $disabled = $disabled ?? false;
             </button>
         </form>
 
-        <p class="auth-help">忘记密码请联系管理员重置临时密码。本系统不开放公开注册。</p>
-
-        <div class="auth-demo" aria-label="演示状态">
-            <span>演示状态：</span>
-            <a href="<?= e(url('auth/login', ['state' => 'error'])) ?>">凭据错误</a>
-            <a href="<?= e(url('auth/login', ['state' => 'locked'])) ?>">账号锁定</a>
-            <a href="<?= e(url('auth/login', ['state' => 'rate'])) ?>">限流</a>
-            <a href="<?= e(url('auth/login', ['state' => 'success'])) ?>">成功</a>
-            <a href="<?= e(url('me/index')) ?>">进入成员中心</a>
-        </div>
+        <p class="auth-help">忘记密码请联系管理员重置临时密码。本系统不开放公开注册，登录状态 30 分钟无操作后自动失效。</p>
     </section>
 
     <p class="auth-back"><a href="<?= e(url('home/index')) ?>">← 返回首页</a></p>

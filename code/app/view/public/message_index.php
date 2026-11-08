@@ -90,7 +90,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                         <div class="alert alert-danger" role="alert">请检查标红字段后重试。</div>
                     <?php endif; ?>
 
-                    <input type="hidden" name="_token" value="">
+                    <?= csrf_field() ?>
 
                     <div class="mb-3">
                         <label class="form-label" for="author_name">昵称 <span class="required">*</span></label>

@@ -78,7 +78,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                     <form class="message-form" action="<?= e(url('message/store')) ?>" method="post" novalidate>
                         <h3 class="form-title">给 <?= e($member['name']) ?> 留言</h3>
                         <p class="form-hint">留言需要审核后才会公开，邮箱不会公开。当前为演示表单，提交不会入库。</p>
-                        <input type="hidden" name="_token" value="">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="member_slug" value="<?= e($member['slug']) ?>">
                         <input type="hidden" name="member_id" value="<?= e($member['id']) ?>">
                         <div class="hp-field" aria-hidden="true">

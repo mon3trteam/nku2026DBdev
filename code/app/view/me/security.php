@@ -23,7 +23,7 @@ require APP_ROOT . '/app/view/layout/me_header.php';
             <div class="me-card__head">
                 <div>
                     <h2>修改密码</h2>
-                    <p>当前为演示表单，提交不会入库。</p>
+                    <p>需要验证当前密码；修改成功后其他设备上的旧会话失效。</p>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@ require APP_ROOT . '/app/view/layout/me_header.php';
             <?php endif; ?>
 
             <form action="<?= e(url('me/updatePassword')) ?>" method="post" novalidate>
-                <input type="hidden" name="_token" value="">
+                <?= csrf_field() ?>
 
                 <div class="mb-3">
                     <label class="form-label" for="current_password">当前密码 <span class="required">*</span></label>
@@ -125,7 +125,7 @@ require APP_ROOT . '/app/view/layout/me_header.php';
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-outline-danger btn-sm mt-2" type="button" disabled>退出所有设备（接口接入后启用）</button>
+            <p class="form-hint mt-2 mb-0">IP 仅保存 HMAC 哈希，无法还原为明文地址。</p>
         </section>
     </div>
 </div>

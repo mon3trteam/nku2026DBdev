@@ -20,7 +20,7 @@ $errorText = static function (string $key, array $errors): string {
     <div>
         <p class="eyebrow">Profile</p>
         <h2 class="section-title">编辑个人资料</h2>
-        <p class="text-muted mb-0">修改会同步到公开成员主页。当前为演示表单，提交不会入库。</p>
+        <p class="text-muted mb-0">修改会同步到公开成员主页；技能勾选与熟练度会一并保存。</p>
     </div>
     <div class="me-profile-head__actions">
         <span class="completeness__badge">完整度 <?= e($completeness) ?>%</span>
@@ -39,7 +39,7 @@ $errorText = static function (string $key, array $errors): string {
 <?php endif; ?>
 
 <form class="me-form" action="<?= e(url('me/updateProfile')) ?>" method="post" enctype="multipart/form-data" novalidate>
-    <input type="hidden" name="_token" value="">
+    <?= csrf_field() ?>
     <input type="hidden" name="updated_at" value="<?= e($member['updated_at'] ?? '') ?>">
 
     <section class="me-card">
@@ -142,7 +142,7 @@ $errorText = static function (string $key, array $errors): string {
                     <label class="btn btn-outline-secondary btn-sm" for="avatar">更换头像</label>
                     <input class="visually-hidden" id="avatar" name="avatar" type="file" accept="image/*"
                            data-preview="avatarPreview" data-max-mb="2">
-                    <p class="form-hint">建议 400×400，单文件 ≤ 2 MB。</p>
+                    <p class="form-hint">建议 400×400，单文件 ≤ 2 MB。媒体上传模块接入前，头像仍使用占位图。</p>
                 </div>
             </div>
             <div class="col-md-8">
@@ -151,7 +151,7 @@ $errorText = static function (string $key, array $errors): string {
                     <label class="btn btn-outline-secondary btn-sm" for="cover">更换封面</label>
                     <input class="visually-hidden" id="cover" name="cover" type="file" accept="image/*"
                            data-preview="coverPreview" data-max-mb="5">
-                    <p class="form-hint">建议 1600×900，单文件 ≤ 5 MB。上传后由后端生成缩略图。</p>
+                    <p class="form-hint">建议 1600×900，单文件 ≤ 5 MB。媒体上传模块接入前，封面仍使用占位图。</p>
                 </div>
             </div>
         </div>

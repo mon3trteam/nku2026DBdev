@@ -10,9 +10,17 @@
 declare(strict_types=1);
 
 require_once APP_ROOT . '/app/model/MemberModel.class.php';
+require_once APP_ROOT . '/app/model/LogModel.class.php';
+require_once APP_ROOT . '/app/model/AuthModel.class.php';
 
 final class MeController
 {
+    public function __construct()
+    {
+        Auth::requireLogin();
+        Auth::requirePermission('member.edit');
+    }
+
     public function index(): void
     {
         $member = $this->currentMember();
@@ -48,14 +56,16 @@ final class MeController
             'old' => $this->memberToOld($member),
             'conflict' => $conflict,
             'completeness' => $this->completeness($member),
-            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '资料已保存（演示）。' : '',
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '资料已保存。' : '',
             'toastType' => 'success',
         ]);
     }
 
     public function updateProfile(): void
     {
+        $this->requirePost();
         $member = $this->currentMember();
+
         $input = [
             'name' => trim((string) ($_POST['name'] ?? '')),
             'english_name' => trim((string) ($_POST['english_name'] ?? '')),
@@ -86,13 +96,8 @@ final class MeController
         }
         if (preg_match('/^[a-z0-9-]{3,60}$/', $input['slug']) !== 1) {
             $errors['slug'] = 'slug 只允许小写字母、数字和连字符，长度 3—60。';
-        } else {
-            foreach (MemberModel::allVisible() as $other) {
-                if ($other['id'] !== $member['id'] && $other['slug'] === $input['slug']) {
-                    $errors['slug'] = '该 slug 已被其他成员使用。';
-                    break;
-                }
-            }
+        } elseif (MemberModel::slugExists($input['slug'], (int) $member['id'])) {
+            $errors['slug'] = '该 slug 已被其他成员使用。';
         }
         if ($input['role_title'] === '' || mb_strlen($input['role_title'], 'UTF-8') > 60) {
             $errors['role_title'] = '团队角色必填，且不超过 60 字。';
@@ -113,47 +118,47 @@ final class MeController
         }
         if (count($selectedSkills) < 3 || count($selectedSkills) > 12) {
             $errors['skills'] = '技能需要 3—12 项。';
-        }
-        if (($input['slug'] ?? '') !== '' && isset($errors['slug']) === false
-            && (string) ($_POST['updated_at'] ?? '') !== (string) ($member['updated_at'] ?? '')) {
-            http_response_code(409);
-            render('me/profile', [
-                'pageTitle' => '个人资料 · 成员中心',
-                'metaDescription' => '编辑个人资料、头像与封面、技能标签。',
-                'meNav' => 'profile',
-                'member' => $member,
-                'skillCatalog' => MemberModel::skillCatalog(),
-                'selectedSkills' => $selectedSkills,
-                'errors' => [],
-                'old' => $input,
-                'conflict' => true,
-                'completeness' => $this->completeness($member),
-                'toastMessage' => '',
-                'toastType' => 'success',
-            ]);
-            return;
+        } else {
+            $catalogNames = array_column(MemberModel::skillCatalog(), 'name');
+            if (array_diff(array_keys($selectedSkills), $catalogNames) !== []) {
+                $errors['skills'] = '技能中包含不在技能库中的项，请刷新后重选。';
+            }
         }
 
         if ($errors !== []) {
-            http_response_code(422);
-            render('me/profile', [
-                'pageTitle' => '个人资料 · 成员中心',
-                'metaDescription' => '编辑个人资料、头像与封面、技能标签。',
-                'meNav' => 'profile',
-                'member' => $member,
-                'skillCatalog' => MemberModel::skillCatalog(),
-                'selectedSkills' => $selectedSkills,
-                'errors' => $errors,
-                'old' => $input,
-                'conflict' => false,
-                'completeness' => $this->completeness($member),
-                'toastMessage' => '',
-                'toastType' => 'success',
-            ]);
+            $this->renderProfile($member, $selectedSkills, $errors, $input, false, 422);
             return;
         }
 
-        // 演示：不落库；后端接入后在事务内更新 members / member_skills 并写审计。
+        // 完整度与详情页展示口径一致：9 个字段 + 技能项
+        $filled = 0;
+        foreach (['name', 'role_title', 'tagline', 'bio', 'email', 'github', 'website', 'location'] as $field) {
+            $filled += $input[$field] !== '' ? 1 : 0;
+        }
+        $filled++; // 头像当前使用占位图，按“已填”计
+        $input['profile_completeness'] = (int) round(
+            ($filled / 9) * 70 + min(1.0, count($selectedSkills) / 5) * 30
+        );
+
+        $result = MemberModel::updateProfile(
+            (int) $member['id'],
+            $input,
+            $selectedSkills,
+            (string) ($_POST['updated_at'] ?? '')
+        );
+
+        if ($result === 'conflict') {
+            $this->renderProfile($member, $selectedSkills, [], $input, true, 409);
+            return;
+        }
+
+        if ($result === 'missing') {
+            http_response_code(404);
+            render('error_404', ['pageTitle' => '成员档案不存在']);
+            return;
+        }
+
+        AuthModel::audit('update', 'member', (int) $member['id'], '成员更新个人资料：' . $input['name']);
         redirect(url('me/profile', ['saved' => '1']));
     }
 
@@ -184,13 +189,14 @@ final class MeController
             'errors' => [],
             'old' => ['current_password' => ''],
             'loginLogs' => $this->loginLogs(),
-            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '密码已修改（演示）。' : '',
+            'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '密码已修改，其他设备上的旧会话已失效。' : '',
             'toastType' => 'success',
         ]);
     }
 
     public function updatePassword(): void
     {
+        $this->requirePost();
         $member = $this->currentMember();
         $current = (string) ($_POST['current_password'] ?? '');
         $new = (string) ($_POST['new_password'] ?? '');
@@ -199,12 +205,23 @@ final class MeController
         $errors = [];
         if ($current === '') {
             $errors['current_password'] = '请输入当前密码。';
+        } else {
+            $storedHash = AuthModel::passwordHash(Auth::id());
+            if ($storedHash === null || !password_verify($current, $storedHash)) {
+                $errors['current_password'] = '当前密码不正确。';
+            }
         }
+
         if (mb_strlen($new, 'UTF-8') < 10) {
             $errors['new_password'] = '新密码至少 10 位。';
         } elseif ($this->passwordClassCount($new) < 3) {
             $errors['new_password'] = '新密码需包含大写、小写、数字、符号中的至少三类。';
+        } elseif ($new === $current) {
+            $errors['new_password'] = '新密码不能与当前密码相同。';
+        } elseif (strcasecmp($new, (string) (Auth::user()['username'] ?? '')) === 0) {
+            $errors['new_password'] = '新密码不能与用户名相同。';
         }
+
         if ($new !== $confirm) {
             $errors['confirm_password'] = '两次输入的新密码不一致。';
         }
@@ -217,7 +234,7 @@ final class MeController
                 'meNav' => 'security',
                 'member' => $member,
                 'errors' => $errors,
-                'old' => ['current_password' => $current],
+                'old' => ['current_password' => ''],
                 'loginLogs' => $this->loginLogs(),
                 'toastMessage' => '',
                 'toastType' => 'success',
@@ -225,16 +242,91 @@ final class MeController
             return;
         }
 
-        // 演示：不校验当前密码、不落库；后端接入后调用 AuthService 修改密码并使旧会话失效。
+        $newHash = password_hash($new, PASSWORD_BCRYPT, ['cost' => 10]);
+        if ($newHash === false) {
+            throw new RuntimeException('Unable to hash password.');
+        }
+
+        $changedAt = AuthModel::updatePassword(Auth::id(), $newHash);
+        Auth::refreshPasswordStamp($changedAt);
+        AuthModel::audit('update', 'user', Auth::id(), '成员修改登录密码');
+
         redirect(url('me/security', ['saved' => '1']));
     }
 
+    /**
+     * 个人资料表单的统一渲染入口（422 校验失败 / 409 乐观锁冲突）。
+     */
+    private function renderProfile(
+        array $member,
+        array $selectedSkills,
+        array $errors,
+        array $old,
+        bool $conflict,
+        int $status = 200
+    ): void {
+        http_response_code($status);
+        render('me/profile', [
+            'pageTitle' => '个人资料 · 成员中心',
+            'metaDescription' => '编辑个人资料、头像与封面、技能标签。',
+            'meNav' => 'profile',
+            'member' => $member,
+            'skillCatalog' => MemberModel::skillCatalog(),
+            'selectedSkills' => $selectedSkills,
+            'errors' => $errors,
+            'old' => $old,
+            'conflict' => $conflict,
+            'completeness' => $this->completeness($member),
+            'toastMessage' => '',
+            'toastType' => 'success',
+        ]);
+    }
+
+    /**
+     * 写操作统一检查：只接受 POST，且必须携带有效 CSRF token。
+     */
+    private function requirePost(): void
+    {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Allow: POST');
+            $this->abort(405, '请求方式不正确', '该地址只接受表单 POST 提交，请从成员中心页面操作。');
+        }
+
+        if (!Auth::verifyCsrf($_POST['_token'] ?? null)) {
+            $this->abort(400, '页面已过期', '安全令牌已失效，请返回上一页刷新后重新提交。');
+        }
+    }
+
+    private function abort(int $code, string $title, string $message): never
+    {
+        http_response_code($code);
+        render('error_request', [
+            'pageTitle' => $title . ' · 数聚 TeamHub',
+            'metaDescription' => $message,
+            'activeNav' => '',
+            'errorCode' => $code,
+            'errorTitle' => $title,
+            'errorMessage' => $message,
+        ]);
+        exit;
+    }
+
+    /**
+     * 当前登录账号绑定的成员档案；管理员/编辑账号没有成员档案时给出提示。
+     */
     private function currentMember(): array
     {
-        $member = MemberModel::findBySlug('lin-zhiyuan');
+        $member = MemberModel::findByUserId(Auth::id());
         if ($member === null) {
-            http_response_code(404);
-            render('error_404', ['pageTitle' => '成员不存在']);
+            http_response_code(403);
+            render('error_request', [
+                'pageTitle' => '未绑定成员档案 · 数聚 TeamHub',
+                'metaDescription' => '当前账号没有绑定成员档案。',
+                'activeNav' => '',
+                'errorCode' => 403,
+                'errorTitle' => '未绑定成员档案',
+                'errorMessage' => '当前账号是管理员或内容编辑，没有对应的成员公开主页。请使用成员账号登录，或到后台管理相关数据。',
+            ]);
             exit;
         }
 
@@ -297,12 +389,6 @@ final class MeController
 
     private function loginLogs(): array
     {
-        return [
-            ['time' => '2026-11-05 09:12', 'ip_hash' => 'a1b2c3d4', 'ua' => 'Edge / Windows 11', 'success' => true],
-            ['time' => '2026-11-04 21:40', 'ip_hash' => 'a1b2c3d4', 'ua' => 'Edge / Windows 11', 'success' => true],
-            ['time' => '2026-11-03 18:05', 'ip_hash' => '9f8e7d6c', 'ua' => 'Firefox / Windows 11', 'success' => true],
-            ['time' => '2026-11-02 10:22', 'ip_hash' => '9f8e7d6c', 'ua' => 'Firefox / Windows 11', 'success' => false],
-            ['time' => '2026-11-01 15:48', 'ip_hash' => 'a1b2c3d4', 'ua' => 'Edge / Windows 11', 'success' => true],
-        ];
+        return LogModel::loginLogsForUser(Auth::id());
     }
 }

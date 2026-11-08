@@ -60,7 +60,7 @@ $meRoutes = [
 
         <div class="me-sidebar__foot">
             <a href="<?= e(url('member/show', ['slug' => $member['slug'] ?? ''])) ?>">查看公开主页 ↗</a>
-            <a href="<?= e(url('auth/login')) ?>">退出登录</a>
+            <a href="<?= e(url('auth/logout')) ?>">退出登录</a>
         </div>
     </aside>
 

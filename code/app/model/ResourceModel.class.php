@@ -1,8 +1,9 @@
 <?php
 /**
  * 文件名：ResourceModel.class.php
- * 功能：资源下载演示数据；后端接入 resources/media 表后替换方法实现
+ * 功能：下载资源的数据访问；关联 media 表输出文件信息
  * 作者：杨斯源（学号待填）
+ * 修改：后端接入数据库（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 资源
  */
@@ -11,149 +12,102 @@ declare(strict_types=1);
 
 final class ResourceModel
 {
-    private static array $categories = [
-        'team' => '团队文档',
+    private const CATEGORIES = [
+        'team'     => '团队文档',
         'personal' => '个人作业',
-        'design' => '设计资料',
-        'doc' => '部署资料',
-        'other' => '其他',
-    ];
-
-    private static array $resources = [
-        [
-            'id' => 1,
-            'title' => '团队需求文档',
-            'category' => 'team',
-            'description' => '功能需求、用例、业务规则与验收标准。',
-            'file_name' => 'M3_需求文档.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '1.8 MB',
-            'updated_at' => '2026-10-28',
-            'download_count' => 36,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 2,
-            'title' => '团队设计文档',
-            'category' => 'team',
-            'description' => '架构、21 张表的数据字典、接口与页面设计。',
-            'file_name' => 'M3_设计文档.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '3.2 MB',
-            'updated_at' => '2026-10-28',
-            'download_count' => 41,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 3,
-            'title' => '部署文档',
-            'category' => 'doc',
-            'description' => 'Docker Compose 一键部署、备份与还原流程。',
-            'file_name' => 'M3_部署文档.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '980 KB',
-            'updated_at' => '2026-11-02',
-            'download_count' => 18,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 4,
-            'title' => '个人作业 1（学号_姓名）',
-            'category' => 'personal',
-            'description' => 'Web 前端初探：抓包、jQuery 事件与浏览器插件。',
-            'file_name' => '作业1(学号_姓名).zip',
-            'file_type' => 'ZIP',
-            'size_text' => '4.6 MB',
-            'updated_at' => '2026-10-20',
-            'download_count' => 12,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 5,
-            'title' => '个人作业 2（学号_姓名）',
-            'category' => 'personal',
-            'description' => '页面设计实践与响应式布局。',
-            'file_name' => '作业2(学号_姓名).zip',
-            'file_type' => 'ZIP',
-            'size_text' => '3.1 MB',
-            'updated_at' => '2026-10-27',
-            'download_count' => 9,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 6,
-            'title' => '个人作业 3（学号_姓名）',
-            'category' => 'personal',
-            'description' => 'WordPress 建站实践与内容运营。',
-            'file_name' => '作业3(学号_姓名).zip',
-            'file_type' => 'ZIP',
-            'size_text' => '5.4 MB',
-            'updated_at' => '2026-11-01',
-            'download_count' => 7,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 7,
-            'title' => 'E-R 图',
-            'category' => 'design',
-            'description' => '团队主页核心实体关系图。',
-            'file_name' => 'M3_ER图.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '620 KB',
-            'updated_at' => '2026-10-28',
-            'download_count' => 15,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 8,
-            'title' => '数据字典',
-            'category' => 'design',
-            'description' => '21 张表的字段、类型、索引与约束。',
-            'file_name' => 'M3_数据字典.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '1.1 MB',
-            'updated_at' => '2026-10-28',
-            'download_count' => 22,
-            'is_public' => 1,
-        ],
-        [
-            'id' => 9,
-            'title' => '演示环境说明',
-            'category' => 'other',
-            'description' => '本地 Docker 环境、初始账号与演示路径。',
-            'file_name' => 'M3_演示说明.pdf',
-            'file_type' => 'PDF',
-            'size_text' => '320 KB',
-            'updated_at' => '2026-11-03',
-            'download_count' => 5,
-            'is_public' => 1,
-        ],
+        'design'   => '设计资料',
+        'doc'      => '部署资料',
+        'other'    => '其他',
     ];
 
     public static function categories(): array
     {
-        return self::$categories;
+        return self::CATEGORIES;
     }
 
+    /**
+     * 公开资源列表，可按分类筛选。
+     */
     public static function all(string $category = ''): array
     {
-        if ($category === '' || !array_key_exists($category, self::$categories)) {
-            return self::$resources;
+        $sql = 'SELECT r.*, m.original_name, m.extension, m.size_bytes, m.storage_path
+                FROM resources r
+                JOIN media m ON m.id = r.media_id
+                WHERE r.is_public = 1';
+        $params = [];
+
+        if ($category !== '' && array_key_exists($category, self::CATEGORIES)) {
+            $sql .= ' AND r.category = :category';
+            $params['category'] = $category;
         }
 
-        return array_values(array_filter(
-            self::$resources,
-            static fn (array $resource): bool => $resource['category'] === $category
-        ));
+        $sql .= ' ORDER BY r.sort_order ASC, r.id ASC';
+
+        return array_map([self::class, 'hydrate'], Db::fetchAll($sql, $params));
     }
 
+    /**
+     * 后台资源列表：包含未公开资源。
+     */
+    public static function allForAdmin(): array
+    {
+        $rows = Db::fetchAll(
+            'SELECT r.*, m.original_name, m.extension, m.size_bytes, m.storage_path
+             FROM resources r
+             JOIN media m ON m.id = r.media_id
+             ORDER BY r.sort_order ASC, r.id ASC'
+        );
+
+        return array_map([self::class, 'hydrate'], $rows);
+    }
+
+    /**
+     * 按分类分组，供下载页一次渲染。
+     */
     public static function grouped(): array
     {
         $groups = [];
-        foreach (self::$resources as $resource) {
+        foreach (self::all() as $resource) {
             $groups[$resource['category']][] = $resource;
         }
 
         return $groups;
+    }
+
+    /**
+     * 按 ID 查找公开资源，供下载控制器使用。
+     */
+    public static function findPublic(int $id): ?array
+    {
+        $row = Db::fetchOne(
+            'SELECT r.*, m.original_name, m.extension, m.size_bytes, m.storage_path, m.mime_type
+             FROM resources r
+             JOIN media m ON m.id = r.media_id
+             WHERE r.id = :id AND r.is_public = 1
+             LIMIT 1',
+            ['id' => $id]
+        );
+
+        return $row === null ? null : self::hydrate($row);
+    }
+
+    /**
+     * 下载计数 +1。
+     */
+    public static function incrementDownload(int $id): void
+    {
+        Db::execute('UPDATE resources SET download_count = download_count + 1 WHERE id = :id', ['id' => $id]);
+    }
+
+    private static function hydrate(array $row): array
+    {
+        $row['file_name'] = (string) ($row['original_name'] ?? '');
+        $row['file_type'] = strtoupper((string) ($row['extension'] ?? 'FILE'));
+        $row['size_text'] = bytes_text((int) ($row['size_bytes'] ?? 0));
+        $row['updated_at'] = (string) ($row['updated_at'] ?? '');
+        $row['download_count'] = (int) ($row['download_count'] ?? 0);
+        $row['is_public'] = (int) ($row['is_public'] ?? 0);
+
+        return $row;
     }
 }

@@ -1,8 +1,9 @@
 <?php
 /**
  * 文件名：MemberModel.class.php
- * 功能：成员与项目的演示数据模型；后端接入数据库后替换方法内部实现即可
+ * 功能：成员、技能、项目与成员留言的数据访问；对外字段保持前端契约不变
  * 作者：杨斯源（学号待填）
+ * 修改：后端接入数据库（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 成员
  */
@@ -11,247 +12,234 @@ declare(strict_types=1);
 
 final class MemberModel
 {
+    private const AVATAR_FALLBACK = 'img/placeholder-avatar.svg';
+    private const COVER_FALLBACK  = 'img/placeholder-cover.svg';
+
     /**
-     * 演示数据（非真实成员）。字段与设计文档 members / projects 数据字典保持一致。
+     * 公开成员列表（is_visible=1），按 sort_order 排序。
      */
-    private static array $members = [
-        [
-            'id' => 1,
-            'slug' => 'lin-zhiyuan',
-            'name' => '林知远',
-            'english_name' => 'Lin Zhiyuan',
-            'role_title' => '前端开发 / 数据库设计',
-            'tagline' => '用数据与界面讲好团队故事。',
-            'bio' => '负责团队主页的前台与后台界面，关注信息架构、交互细节与可访问性。喜欢把复杂的数据整理成一眼能看懂的页面。',
-            'avatar' => 'img/placeholder-avatar.svg',
-            'cover' => 'img/placeholder-cover.svg',
-            'email' => 'lin@example.com',
-            'github' => 'https://github.com/example',
-            'website' => '',
-            'location' => '天津',
-            'join_date' => '2026-09-01',
-            'updated_at' => '2026-11-05 10:00:00',
-            'is_featured' => 1,
-            'skills' => [
-                ['name' => 'JavaScript', 'category' => 'tech', 'proficiency' => 5],
-                ['name' => 'PHP', 'category' => 'tech', 'proficiency' => 4],
-                ['name' => 'MySQL', 'category' => 'data', 'proficiency' => 4],
-                ['name' => 'UI Design', 'category' => 'design', 'proficiency' => 4],
-            ],
-        ],
-        [
-            'id' => 2,
-            'slug' => 'su-wanqing',
-            'name' => '苏晚晴',
-            'english_name' => 'Su Wanqing',
-            'role_title' => '后端开发 / 接口设计',
-            'tagline' => '让每一条请求都有清晰的去向。',
-            'bio' => '负责认证、会话与后台服务，关注接口边界、事务一致性与安全默认值。',
-            'avatar' => 'img/placeholder-avatar.svg',
-            'cover' => 'img/placeholder-cover.svg',
-            'email' => 'su@example.com',
-            'github' => 'https://github.com/example',
-            'website' => '',
-            'location' => '天津',
-            'join_date' => '2026-09-01',
-            'is_featured' => 1,
-            'skills' => [
-                ['name' => 'PHP', 'category' => 'tech', 'proficiency' => 5],
-                ['name' => 'MySQL', 'category' => 'data', 'proficiency' => 5],
-                ['name' => 'Docker', 'category' => 'tech', 'proficiency' => 3],
-            ],
-        ],
-        [
-            'id' => 3,
-            'slug' => 'chen-yiming',
-            'name' => '陈一鸣',
-            'english_name' => 'Chen Yiming',
-            'role_title' => '数据建模 / SQL',
-            'tagline' => '先想清楚关系，再写第一条 SQL。',
-            'bio' => '负责数据库设计、install.sql 与查询优化，喜欢用 EXPLAIN 找问题。',
-            'avatar' => 'img/placeholder-avatar.svg',
-            'cover' => 'img/placeholder-cover.svg',
-            'email' => 'chen@example.com',
-            'github' => 'https://github.com/example',
-            'website' => '',
-            'location' => '天津',
-            'join_date' => '2026-09-01',
-            'is_featured' => 1,
-            'skills' => [
-                ['name' => 'MySQL', 'category' => 'data', 'proficiency' => 5],
-                ['name' => 'PHP', 'category' => 'tech', 'proficiency' => 3],
-                ['name' => 'Git', 'category' => 'tool', 'proficiency' => 4],
-            ],
-        ],
-        [
-            'id' => 4,
-            'slug' => 'zhou-yuan',
-            'name' => '周予安',
-            'english_name' => 'Zhou Yuan',
-            'role_title' => '内容运营 / 视觉',
-            'tagline' => '把团队的故事讲得清楚、好看。',
-            'bio' => '负责团队介绍文案、视觉素材与内容发布，关注品牌一致性与阅读体验。',
-            'avatar' => 'img/placeholder-avatar.svg',
-            'cover' => 'img/placeholder-cover.svg',
-            'email' => 'zhou@example.com',
-            'github' => '',
-            'website' => 'https://example.com',
-            'location' => '天津',
-            'join_date' => '2026-09-15',
-            'is_featured' => 1,
-            'skills' => [
-                ['name' => 'UI Design', 'category' => 'design', 'proficiency' => 5],
-                ['name' => '写作', 'category' => 'soft', 'proficiency' => 5],
-                ['name' => 'Git', 'category' => 'tool', 'proficiency' => 3],
-            ],
-        ],
-    ];
-
-    private static array $projects = [
-        [
-            'slug' => 'teamhub',
-            'title' => '数聚 TeamHub 团队主页',
-            'summary' => '团队展示、成员主页、公告与作业下载一体化的课程设计项目。',
-            'description_html' => '<p>数聚 TeamHub 是本课程的团队主页项目，目标是做出一套可演示、可还原、可讲清楚的 PHP + MySQL 应用。</p>'
-                . '<p>前端包含公共门户、成员中心与管理后台三套布局；后端按 MVC 分层，数据库设计 21 张表。当前版本先完成公共门户的展示页面，后续接入认证、留言审核与内容发布。</p>',
-            'start_date' => '2026-10-28',
-            'end_date' => '',
-            'repo_url' => 'https://github.com/mon3trteam/nku2026DBdev',
-            'demo_url' => '',
-            'tech_stack' => 'PHP, MySQL, Bootstrap, ECharts',
-            'status' => 'ongoing',
-            'status_label' => '进行中',
-            'cover' => 'img/placeholder-cover.svg',
-            'featured' => 1,
-            'members' => [
-                ['name' => '林知远', 'role_name' => '前端 / 数据库设计'],
-                ['name' => '苏晚晴', 'role_name' => '后端 / 接口'],
-            ],
-        ],
-        [
-            'slug' => 'book-market',
-            'title' => '校园二手书交易平台',
-            'summary' => '面向校园的二手书发布、检索与留言系统，练习 CRUD 与权限控制。',
-            'description_html' => '<p>一个面向校园的二手书交易练习项目：用户可以发布书籍、按关键词检索，并在详情页留言。</p>'
-                . '<p>项目重点练习表单校验、权限边界与列表分页，为团队主页的成员与资源模块提供参考。</p>',
-            'start_date' => '2026-09-10',
-            'end_date' => '2026-10-20',
-            'repo_url' => '',
-            'demo_url' => '',
-            'tech_stack' => 'PHP, MySQL, JavaScript',
-            'status' => 'completed',
-            'status_label' => '已完成',
-            'cover' => 'img/placeholder-cover.svg',
-            'featured' => 1,
-            'members' => [
-                ['name' => '陈一鸣', 'role_name' => '数据建模'],
-                ['name' => '苏晚晴', 'role_name' => '后端'],
-            ],
-        ],
-        [
-            'slug' => 'download-center',
-            'title' => '课程作业下载中心',
-            'summary' => '按团队文档与个人作业分类的下载中心，包含权限校验与下载计数。',
-            'description_html' => '<p>下载中心读取 <code>data/team</code> 与 <code>data/personal</code> 目录，按团队文档与个人作业分类展示。</p>'
-                . '<p>公开资源直接下载并计数，私有资源需要登录；下载路径经过控制器校验，不暴露磁盘路径。</p>',
-            'start_date' => '2026-11-01',
-            'end_date' => '',
-            'repo_url' => '',
-            'demo_url' => '',
-            'tech_stack' => 'PHP, MySQL, Bootstrap',
-            'status' => 'planning',
-            'status_label' => '规划中',
-            'cover' => 'img/placeholder-cover.svg',
-            'featured' => 1,
-            'members' => [
-                ['name' => '周予安', 'role_name' => '内容 / 视觉'],
-            ],
-        ],
-    ];
-
-    private static array $messages = [
-        [
-            'id' => 1,
-            'author_name' => '一位访客',
-            'content' => '首页的结构很清楚，成员主页的技能条也很好读，期待看到项目详情页。',
-            'created_at' => '2026-11-02 20:15',
-        ],
-        [
-            'id' => 2,
-            'author_name' => '同班同学',
-            'content' => '请问下载中心会放团队文档的 PDF 吗？想参考一下设计文档的结构。',
-            'created_at' => '2026-11-03 09:40',
-        ],
-    ];
-
     public static function allVisible(): array
     {
-        return self::$members;
-    }
+        $rows = Db::fetchAll(
+            'SELECT * FROM members WHERE is_visible = 1 ORDER BY sort_order ASC, id ASC'
+        );
 
-    public static function featured(int $limit = 4): array
-    {
-        $list = array_values(array_filter(
-            self::$members,
-            static fn (array $member): bool => (int) $member['is_featured'] === 1
-        ));
-
-        return array_slice($list, 0, $limit);
-    }
-
-    public static function findBySlug(string $slug): ?array
-    {
-        foreach (self::$members as $member) {
-            if ($member['slug'] === $slug) {
-                return $member;
-            }
-        }
-
-        return null;
-    }
-
-    public static function skillOptions(): array
-    {
-        return array_column(self::skillCatalog(), 'name');
+        return self::hydrateMembers($rows);
     }
 
     /**
-     * 全局技能库（去重，按名称排序），用于成员资料页的技能选择。
+     * 后台成员列表：包含已隐藏档案。
+     */
+    public static function allForAdmin(): array
+    {
+        $rows = Db::fetchAll('SELECT * FROM members ORDER BY sort_order ASC, id ASC');
+
+        return self::hydrateMembers($rows);
+    }
+
+    /**
+     * 首页精选成员。
+     */
+    public static function featured(int $limit = 4): array
+    {
+        $limit = max(1, min(20, $limit));
+        $rows = Db::fetchAll(
+            "SELECT * FROM members
+             WHERE is_visible = 1 AND is_featured = 1
+             ORDER BY sort_order ASC, id ASC
+             LIMIT {$limit}"
+        );
+
+        return self::hydrateMembers($rows);
+    }
+
+    /**
+     * 按 slug 查找公开成员；不存在或已隐藏返回 null。
+     */
+    public static function findBySlug(string $slug): ?array
+    {
+        $row = Db::fetchOne(
+            'SELECT * FROM members WHERE slug = :slug AND is_visible = 1 LIMIT 1',
+            ['slug' => $slug]
+        );
+
+        if ($row === null) {
+            return null;
+        }
+
+        $members = self::hydrateMembers([$row]);
+
+        return $members[0];
+    }
+
+    /**
+     * 按登录账号查绑定成员档案，供成员中心使用（不限制 is_visible）。
+     */
+    public static function findByUserId(int $userId): ?array
+    {
+        $row = Db::fetchOne(
+            'SELECT * FROM members WHERE user_id = :user_id LIMIT 1',
+            ['user_id' => $userId]
+        );
+
+        if ($row === null) {
+            return null;
+        }
+
+        $members = self::hydrateMembers([$row]);
+
+        return $members[0];
+    }
+
+    /**
+     * slug 是否已被其他成员占用（包含未公开成员，避免唯一键冲突）。
+     */
+    public static function slugExists(string $slug, int $excludeId = 0): bool
+    {
+        $count = Db::fetchValue(
+            'SELECT COUNT(*) FROM members WHERE slug = :slug AND id <> :exclude_id',
+            ['slug' => $slug, 'exclude_id' => $excludeId]
+        );
+
+        return (int) ($count ?? 0) > 0;
+    }
+
+    /**
+     * 更新本人档案与技能关联。
+     *
+     * 返回 ok / conflict / missing：
+     *   - conflict 表示 updated_at 与页面打开时不一致（乐观锁，HTTP 409）；
+     *   - missing 表示档案已被删除。
+     *
+     * @param array<string, string> $data
+     * @param array<string, int>    $skills 技能名 => 熟练度
+     */
+    public static function updateProfile(int $memberId, array $data, array $skills, string $expectedUpdatedAt): string
+    {
+        return Db::transaction(static function () use ($memberId, $data, $skills, $expectedUpdatedAt): string {
+            $current = Db::fetchOne(
+                'SELECT updated_at FROM members WHERE id = :id FOR UPDATE',
+                ['id' => $memberId]
+            );
+
+            if ($current === null) {
+                return 'missing';
+            }
+
+            if ($expectedUpdatedAt !== '' && (string) $current['updated_at'] !== $expectedUpdatedAt) {
+                return 'conflict';
+            }
+
+            $nullable = static fn (string $value): ?string => $value === '' ? null : $value;
+
+            Db::execute(
+                'UPDATE members
+                 SET name = :name,
+                     english_name = :english_name,
+                     slug = :slug,
+                     role_title = :role_title,
+                     tagline = :tagline,
+                     bio = :bio,
+                     email = :email,
+                     github_url = :github_url,
+                     website_url = :website_url,
+                     location = :location,
+                     profile_completeness = :profile_completeness,
+                     updated_at = NOW()
+                 WHERE id = :id',
+                [
+                    'name'          => $data['name'],
+                    'english_name'  => $nullable($data['english_name']),
+                    'slug'          => $data['slug'],
+                    'role_title'    => $data['role_title'],
+                    'tagline'       => $nullable($data['tagline']),
+                    'bio'           => $nullable($data['bio']),
+                    'email'         => $nullable($data['email']),
+                    'github_url'    => $nullable($data['github']),
+                    'website_url'   => $nullable($data['website']),
+                    'location'      => $nullable($data['location']),
+                    'profile_completeness' => max(0, min(100, (int) ($data['profile_completeness'] ?? 0))),
+                    'id'            => $memberId,
+                ]
+            );
+
+            // 先清空再写入，保证取消勾选的技能会真正删除
+            Db::execute('DELETE FROM member_skills WHERE member_id = :member_id', ['member_id' => $memberId]);
+
+            if ($skills !== []) {
+                $names = array_keys($skills);
+                $placeholders = implode(',', array_fill(0, count($names), '?'));
+                $skillRows = Db::fetchAll(
+                    "SELECT id, name FROM skills WHERE name IN ({$placeholders})",
+                    $names
+                );
+
+                foreach ($skillRows as $skillRow) {
+                    $proficiency = max(1, min(5, (int) ($skills[(string) $skillRow['name']] ?? 3)));
+                    Db::execute(
+                        'INSERT INTO member_skills (member_id, skill_id, proficiency)
+                         VALUES (:member_id, :skill_id, :proficiency)',
+                        [
+                            'member_id'   => $memberId,
+                            'skill_id'    => (int) $skillRow['id'],
+                            'proficiency' => $proficiency,
+                        ]
+                    );
+                }
+            }
+
+            return 'ok';
+        });
+    }
+
+    /**
+     * 技能筛选下拉选项。
+     */
+    public static function skillOptions(): array
+    {
+        $rows = Db::fetchAll('SELECT name FROM skills ORDER BY sort_order ASC, name ASC');
+
+        return array_column($rows, 'name');
+    }
+
+    /**
+     * 全局技能库（名称 + 分类），用于成员资料页的技能选择。
      */
     public static function skillCatalog(): array
     {
-        $catalog = [];
-        foreach (self::$members as $member) {
-            foreach ($member['skills'] as $skill) {
-                $catalog[$skill['name']] = [
-                    'name' => $skill['name'],
-                    'category' => $skill['category'],
-                ];
-            }
-        }
+        $rows = Db::fetchAll(
+            'SELECT name, category FROM skills ORDER BY category ASC, sort_order ASC, name ASC'
+        );
 
-        ksort($catalog);
-        return array_values($catalog);
+        return array_map(
+            static fn (array $row): array => [
+                'name'     => (string) $row['name'],
+                'category' => (string) $row['category'],
+            ],
+            $rows
+        );
     }
 
+    /**
+     * 按技能名筛选公开成员。
+     */
     public static function filterBySkill(string $skill): array
     {
         if ($skill === '') {
             return self::allVisible();
         }
 
-        return array_values(array_filter(
-            self::$members,
-            static function (array $member) use ($skill): bool {
-                foreach ($member['skills'] as $item) {
-                    if ($item['name'] === $skill) {
-                        return true;
-                    }
-                }
+        $rows = Db::fetchAll(
+            'SELECT m.*
+             FROM members m
+             JOIN member_skills ms ON ms.member_id = m.id
+             JOIN skills s ON s.id = ms.skill_id
+             WHERE m.is_visible = 1 AND s.name = :skill
+             ORDER BY m.sort_order ASC, m.id ASC',
+            ['skill' => $skill]
+        );
 
-                return false;
-            }
-        ));
+        return self::hydrateMembers($rows);
     }
 
     /**
@@ -261,95 +249,258 @@ final class MemberModel
      */
     public static function search(string $keyword, string $skill, string $sort, int $page, int $perPage): array
     {
-        $list = self::filterBySkill($skill);
+        $where  = ['m.is_visible = 1'];
+        $params = [];
 
         if ($keyword !== '') {
-            $list = array_values(array_filter(
-                $list,
-                static function (array $member) use ($keyword): bool {
-                    $haystack = $member['name'] . ' ' . $member['english_name'] . ' '
-                        . $member['role_title'] . ' ' . $member['tagline'];
-                    return mb_stripos($haystack, $keyword, 0, 'UTF-8') !== false;
-                }
-            ));
+            $where[] = '(m.name LIKE ? OR m.english_name LIKE ? OR m.role_title LIKE ? OR m.tagline LIKE ?)';
+            $like = '%' . $keyword . '%';
+            array_push($params, $like, $like, $like, $like);
         }
 
-        if ($sort === 'name') {
-            usort($list, static fn (array $a, array $b): int => strcmp($a['name'], $b['name']));
-        } elseif ($sort === 'join_date') {
-            usort($list, static fn (array $a, array $b): int => strcmp($b['join_date'], $a['join_date']));
+        if ($skill !== '') {
+            $where[] = 'EXISTS (
+                SELECT 1
+                FROM member_skills ms
+                JOIN skills s ON s.id = ms.skill_id
+                WHERE ms.member_id = m.id AND s.name = ?
+            )';
+            $params[] = $skill;
         }
 
-        $total = count($list);
+        $sort = in_array($sort, ['name', 'join_date'], true) ? $sort : '';
+        $orderBy = match ($sort) {
+            'name'      => 'm.name ASC',
+            'join_date' => 'm.join_date DESC',
+            default     => 'm.sort_order ASC, m.id ASC',
+        };
+
+        $whereSql = implode(' AND ', $where);
+        $total = (int) Db::fetchValue("SELECT COUNT(*) FROM members m WHERE {$whereSql}", $params);
+
         $perPage = max(1, min(100, $perPage));
         $lastPage = max(1, (int) ceil($total / $perPage));
         $page = max(1, min($page, $lastPage));
         $offset = ($page - 1) * $perPage;
 
+        $rows = Db::fetchAll(
+            "SELECT m.* FROM members m
+             WHERE {$whereSql}
+             ORDER BY {$orderBy}
+             LIMIT {$perPage} OFFSET {$offset}",
+            $params
+        );
+
         return [
-            'items' => array_slice($list, $offset, $perPage),
-            'total' => $total,
-            'page' => $page,
-            'per_page' => $perPage,
+            'items'     => self::hydrateMembers($rows),
+            'total'     => $total,
+            'page'      => $page,
+            'per_page'  => $perPage,
             'last_page' => $lastPage,
         ];
     }
 
+    /**
+     * 公开项目列表。
+     */
     public static function allProjects(): array
     {
-        return self::$projects;
+        $rows = Db::fetchAll(
+            'SELECT * FROM projects WHERE is_visible = 1 ORDER BY sort_order ASC, id ASC'
+        );
+
+        return self::hydrateProjects($rows);
     }
 
+    /**
+     * 后台项目列表：包含已隐藏项目。
+     */
+    public static function allProjectsForAdmin(): array
+    {
+        $rows = Db::fetchAll('SELECT * FROM projects ORDER BY sort_order ASC, id ASC');
+
+        return self::hydrateProjects($rows);
+    }
+
+    /**
+     * 按 slug 查找公开项目。
+     */
     public static function findProjectBySlug(string $slug): ?array
     {
-        foreach (self::$projects as $project) {
-            if ($project['slug'] === $slug) {
-                return $project;
-            }
+        $row = Db::fetchOne(
+            'SELECT * FROM projects WHERE slug = :slug AND is_visible = 1 LIMIT 1',
+            ['slug' => $slug]
+        );
+
+        if ($row === null) {
+            return null;
         }
 
-        return null;
+        $projects = self::hydrateProjects([$row]);
+
+        return $projects[0];
     }
 
+    /**
+     * 某个成员参与的公开发项目。
+     */
     public static function projectsOf(string $slug): array
     {
-        return array_values(array_filter(
-            self::$projects,
-            static function (array $project) use ($slug): bool {
-                foreach ($project['members'] as $member) {
-                    if (self::slugOfName($member['name']) === $slug) {
-                        return true;
-                    }
-                }
+        $rows = Db::fetchAll(
+            'SELECT p.*
+             FROM projects p
+             JOIN project_members pm ON pm.project_id = p.id
+             JOIN members m ON m.id = pm.member_id
+             WHERE m.slug = :slug AND p.is_visible = 1
+             ORDER BY p.sort_order ASC, p.id ASC',
+            ['slug' => $slug]
+        );
 
-                return false;
-            }
-        ));
+        return self::hydrateProjects($rows);
     }
 
+    /**
+     * 首页精选项目。
+     */
     public static function featuredProjects(int $limit = 3): array
     {
-        $list = array_values(array_filter(
-            self::$projects,
-            static fn (array $project): bool => (int) $project['featured'] === 1
-        ));
+        $limit = max(1, min(20, $limit));
+        $rows = Db::fetchAll(
+            "SELECT * FROM projects
+             WHERE is_visible = 1 AND is_featured = 1
+             ORDER BY sort_order ASC, id ASC
+             LIMIT {$limit}"
+        );
 
-        return array_slice($list, 0, $limit);
+        return self::hydrateProjects($rows);
     }
 
+    /**
+     * 某个成员收到的公开留言（已审核通过）。
+     */
     public static function messagesOf(string $slug): array
     {
-        return self::$messages;
+        $rows = Db::fetchAll(
+            'SELECT m.id, m.author_name, m.content, m.created_at
+             FROM messages m
+             JOIN members mem ON mem.id = m.member_id
+             WHERE mem.slug = :slug AND m.status = \'approved\'
+             ORDER BY m.created_at DESC
+             LIMIT 50',
+            ['slug' => $slug]
+        );
+
+        return array_map(
+            static function (array $row): array {
+                $row['created_at'] = format_datetime((string) $row['created_at']);
+
+                return $row;
+            },
+            $rows
+        );
     }
 
-    private static function slugOfName(string $name): string
+    /**
+     * 把 members 行转换为视图需要的结构，并批量挂载技能。
+     */
+    private static function hydrateMembers(array $rows): array
     {
-        foreach (self::$members as $member) {
-            if ($member['name'] === $name) {
-                return $member['slug'];
-            }
+        if ($rows === []) {
+            return [];
         }
 
-        return '';
+        $ids = array_map(static fn (array $row): int => (int) $row['id'], $rows);
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        $skillRows = Db::fetchAll(
+            "SELECT ms.member_id, s.name, s.category, ms.proficiency
+             FROM member_skills ms
+             JOIN skills s ON s.id = ms.skill_id
+             WHERE ms.member_id IN ({$placeholders})
+             ORDER BY s.sort_order ASC, s.name ASC",
+            $ids
+        );
+
+        $skillsByMember = [];
+        foreach ($skillRows as $skill) {
+            $skillsByMember[(int) $skill['member_id']][] = [
+                'name'        => (string) $skill['name'],
+                'category'    => (string) $skill['category'],
+                'proficiency' => (int) $skill['proficiency'],
+            ];
+        }
+
+        $members = [];
+        foreach ($rows as $row) {
+            $row['avatar'] = self::AVATAR_FALLBACK;
+            $row['cover'] = self::COVER_FALLBACK;
+            $row['email'] = (string) ($row['email'] ?? '');
+            $row['github'] = (string) ($row['github_url'] ?? '');
+            $row['website'] = (string) ($row['website_url'] ?? '');
+            $row['tagline'] = (string) ($row['tagline'] ?? '');
+            $row['is_featured'] = (int) $row['is_featured'];
+            $row['skills'] = $skillsByMember[(int) $row['id']] ?? [];
+            $members[] = $row;
+        }
+
+        return $members;
+    }
+
+    /**
+     * 把 projects 行转换为视图需要的结构，并批量挂载参与成员。
+     */
+    private static function hydrateProjects(array $rows): array
+    {
+        if ($rows === []) {
+            return [];
+        }
+
+        $ids = array_map(static fn (array $row): int => (int) $row['id'], $rows);
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+        $memberRows = Db::fetchAll(
+            "SELECT pm.project_id, m.name, pm.role_name
+             FROM project_members pm
+             JOIN members m ON m.id = pm.member_id
+             WHERE pm.project_id IN ({$placeholders})
+             ORDER BY pm.sort_order ASC, m.id ASC",
+            $ids
+        );
+
+        $membersByProject = [];
+        foreach ($memberRows as $member) {
+            $membersByProject[(int) $member['project_id']][] = [
+                'name'      => (string) $member['name'],
+                'role_name' => (string) ($member['role_name'] ?? ''),
+            ];
+        }
+
+        $projects = [];
+        foreach ($rows as $row) {
+            $row['description_html'] = markdown_lite((string) ($row['description'] ?? ''));
+            $row['cover'] = self::COVER_FALLBACK;
+            $row['featured'] = (int) $row['is_featured'];
+            $row['status_label'] = self::projectStatusLabel((string) $row['status']);
+            $row['start_date'] = (string) ($row['start_date'] ?? '');
+            $row['end_date'] = (string) ($row['end_date'] ?? '');
+            $row['repo_url'] = (string) ($row['repo_url'] ?? '');
+            $row['demo_url'] = (string) ($row['demo_url'] ?? '');
+            $row['tech_stack'] = (string) ($row['tech_stack'] ?? '');
+            $row['members'] = $membersByProject[(int) $row['id']] ?? [];
+            $projects[] = $row;
+        }
+
+        return $projects;
+    }
+
+    private static function projectStatusLabel(string $status): string
+    {
+        return match ($status) {
+            'planning'  => '规划中',
+            'ongoing'   => '进行中',
+            'completed' => '已完成',
+            'archived'  => '已归档',
+            default     => $status,
+        };
     }
 }

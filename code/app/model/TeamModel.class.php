@@ -1,8 +1,9 @@
 <?php
 /**
  * 文件名：TeamModel.class.php
- * 功能：团队资料、里程碑、价值观与能力矩阵的演示数据
+ * 功能：团队资料、里程碑、价值观与能力矩阵的数据访问
  * 作者：杨斯源（学号待填）
+ * 修改：后端接入数据库（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 团队介绍
  */
@@ -11,61 +12,127 @@ declare(strict_types=1);
 
 final class TeamModel
 {
+    /**
+     * 团队资料单例（id=1）。
+     */
     public static function profile(): array
     {
-        return [
-            'name' => '数聚 TeamHub',
-            'english_name' => 'DataNova',
-            'slogan' => '把团队的每一次协作，变成看得见的作品。',
-            'short_intro' => '数聚团队主页 · 项目、成员与课程作业的一站式展示空间。',
-            'story' => '我们来自计算机学院的不同方向，因为一门数据库课程走到一起。'
-                . '有人负责数据建模，有人写后端接口，有人把信息整理成清晰的界面。'
-                . '我们相信，好的团队项目不是功能的堆叠，而是让每个人都能被看见、被记录。'
-                . '这个主页既是课程作业，也是我们协作方式的说明书。',
-            'founded_on' => '2026-09-01',
-            'location' => '天津',
-            'email' => 'team@example.com',
-            'phone' => '',
-            'updated_at' => '2026-11-05 10:00:00',
-        ];
+        $row = Db::fetchOne('SELECT * FROM team_profile WHERE id = 1 LIMIT 1');
+
+        if ($row === null) {
+            return [
+                'name' => '团队主页',
+                'english_name' => '',
+                'slogan' => '',
+                'short_intro' => '',
+                'story' => '',
+                'founded_on' => '',
+                'location' => '',
+                'email' => '',
+                'phone' => '',
+                'updated_at' => '',
+            ];
+        }
+
+        $row['phone'] = (string) ($row['phone'] ?? '');
+        $row['updated_at'] = format_datetime((string) ($row['updated_at'] ?? ''));
+
+        return $row;
     }
 
+    /**
+     * 公开时间线，按年份与排序号升序。
+     */
     public static function milestones(): array
     {
-        return [
-            ['year' => '2026.09', 'title' => '组队与选题', 'description' => '确定团队主页方向，完成需求分析与角色分工。'],
-            ['year' => '2026.10', 'title' => '需求与设计定稿', 'description' => '完成 32 项功能清单、21 张表的数据字典与页面线框。'],
-            ['year' => '2026.11', 'title' => '前后台开发', 'description' => '完成公共门户、成员中心与管理后台的界面与联调。'],
-            ['year' => '2026.12', 'title' => '演示与交付', 'description' => '整理文档、PPT 与部署说明，完成课程演示。'],
-        ];
+        $rows = Db::fetchAll(
+            'SELECT year, title, description
+             FROM milestones
+             WHERE is_visible = 1
+             ORDER BY year ASC, sort_order ASC, id ASC'
+        );
+
+        return array_map(
+            static fn (array $row): array => [
+                'year'        => (string) $row['year'],
+                'title'       => (string) $row['title'],
+                'description' => (string) ($row['description'] ?? ''),
+            ],
+            $rows
+        );
     }
 
+    /**
+     * 团队价值观（team_profile.values_json）。
+     */
     public static function values(): array
     {
-        return [
-            ['title' => '共同目标', 'description' => '先把主流程做通，再谈锦上添花。'],
-            ['title' => '透明协作', 'description' => '接口、分工与进度都写在文档里，不靠口头同步。'],
-            ['title' => '可被验证', 'description' => '每个功能都能在页面上找到证据。'],
-            ['title' => '留有余地', 'description' => '给后来的人留下能读懂的代码与注释。'],
-        ];
+        $raw = Db::fetchValue('SELECT values_json FROM team_profile WHERE id = 1 LIMIT 1');
+        if (!is_string($raw) || $raw === '') {
+            return [];
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
+
+        $values = [];
+        foreach ($decoded as $item) {
+            if (!is_array($item) || !isset($item['title'])) {
+                continue;
+            }
+            $values[] = [
+                'title' => (string) $item['title'],
+                'description' => (string) ($item['description'] ?? ''),
+            ];
+        }
+
+        return $values;
     }
 
+    /**
+     * 能力矩阵：按技能分类聚合成员数量与平均熟练度。
+     */
     public static function skillGroups(): array
     {
-        return [
-            ['category' => '技术开发', 'items' => [
-                ['name' => 'PHP', 'count' => 3, 'avg' => 4.0],
-                ['name' => 'JavaScript', 'count' => 2, 'avg' => 4.0],
-                ['name' => 'MySQL', 'count' => 3, 'avg' => 4.3],
-                ['name' => 'Docker', 'count' => 1, 'avg' => 3.0],
-            ]],
-            ['category' => '设计表达', 'items' => [
-                ['name' => 'UI Design', 'count' => 2, 'avg' => 4.5],
-                ['name' => '写作', 'count' => 1, 'avg' => 5.0],
-            ]],
-            ['category' => '协作工具', 'items' => [
-                ['name' => 'Git', 'count' => 2, 'avg' => 3.5],
-            ]],
+        $rows = Db::fetchAll(
+            'SELECT s.name, s.category,
+                    COUNT(ms.member_id) AS member_count,
+                    ROUND(AVG(ms.proficiency), 1) AS avg_proficiency
+             FROM skills s
+             LEFT JOIN member_skills ms ON ms.skill_id = s.id
+             GROUP BY s.id, s.name, s.category
+             ORDER BY s.sort_order ASC, s.name ASC'
+        );
+
+        $groups = [
+            '技术开发' => [],
+            '设计表达' => [],
+            '协作工具' => [],
         ];
+
+        foreach ($rows as $row) {
+            $group = match ((string) $row['category']) {
+                'design', 'soft' => '设计表达',
+                'tool'          => '协作工具',
+                default         => '技术开发',
+            };
+
+            $groups[$group][] = [
+                'name'  => (string) $row['name'],
+                'count' => (int) $row['member_count'],
+                'avg'   => (float) $row['avg_proficiency'],
+            ];
+        }
+
+        $result = [];
+        foreach ($groups as $label => $items) {
+            if ($items !== []) {
+                $result[] = ['category' => $label, 'items' => $items];
+            }
+        }
+
+        return $result;
     }
 }

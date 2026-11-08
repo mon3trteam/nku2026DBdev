@@ -17,7 +17,7 @@ $expiresValue = $old['expires_at'] !== '' ? str_replace(' ', 'T', (string) $old[
 <?php endif; ?>
 
 <form class="admin-form" action="<?= e(url('admin/updateAnnouncement')) ?>" method="post" enctype="multipart/form-data" novalidate>
-    <input type="hidden" name="_token" value="">
+    <?= csrf_field() ?>
     <input type="hidden" name="id" value="<?= e($old['id']) ?>">
 
     <div class="row g-4">

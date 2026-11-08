@@ -9,12 +9,20 @@
 
 declare(strict_types=1);
 
+// 与 MySQL 会话时区保持一致，避免锁定时间、日志时间相差 8 小时
+date_default_timezone_set('Asia/Shanghai');
+
 define('APP_ROOT', dirname(__DIR__));   // code/
 define('APP_DEBUG', true);              // 上线前改为 false
 define('APP_BASE', '/public');          // 站点根未指向 public/ 前的访问前缀；vhost 修好后改为 ''
 define('ASSET_VERSION', '20261105');
 
 require_once APP_ROOT . '/app/helpers.php';
+require_once APP_ROOT . '/app/core/Db.class.php';
+require_once APP_ROOT . '/app/core/Auth.class.php';
+
+// 会话必须在任何输出之前启动；随后初始化 CSRF token 并检查空闲超时
+Auth::boot();
 
 // ---- 简易路由：index.php?r=控制器/动作&参数=值 ----
 // 约定：控制器文件 app/controller/{Xxx}Controller.class.php，动作即方法名。

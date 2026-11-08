@@ -14,7 +14,7 @@ require APP_ROOT . '/app/view/layout/admin_header.php';
 <?php endif; ?>
 
 <form class="admin-form" action="<?= e(url('admin/updateSettings')) ?>" method="post" novalidate>
-    <input type="hidden" name="_token" value="">
+    <?= csrf_field() ?>
 
     <?php foreach ($groups as $groupKey => $groupLabel): ?>
         <?php if (!isset($grouped[$groupKey])): continue; endif; ?>

@@ -1,8 +1,9 @@
 <?php
 /**
  * 文件名：MessageModel.class.php
- * 功能：留言板演示数据；公开查询只返回 approved，后端接入数据库后替换方法实现
+ * 功能：留言的数据访问；公开查询只返回 approved，后台可查看全部状态
  * 作者：杨斯源（学号待填）
+ * 修改：后端接入数据库（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 留言
  */
@@ -11,115 +12,111 @@ declare(strict_types=1);
 
 final class MessageModel
 {
-    /**
-     * 演示数据。status 为 approved 的才会出现在公开列表。
-     */
-    private static array $messages = [
-        [
-            'id' => 1,
-            'author_name' => '一位访客',
-            'content' => '首页的结构很清楚，成员主页的技能条也很好读，期待看到项目详情页。',
-            'member_slug' => 'lin-zhiyuan',
-            'member_name' => '林知远',
-            'created_at' => '2026-11-02 20:15',
-            'reply' => '谢谢关注，项目详情页已经补上了。',
-            'reply_at' => '2026-11-03 09:10',
-            'status' => 'approved',
-        ],
-        [
-            'id' => 2,
-            'author_name' => '同班同学',
-            'content' => '请问下载中心会放团队文档的 PDF 吗？想参考一下设计文档的结构。',
-            'member_slug' => 'zhou-yuan',
-            'member_name' => '周予安',
-            'created_at' => '2026-11-03 09:40',
-            'reply' => '会放需求、设计、部署三份文档，资源页正在做。',
-            'reply_at' => '2026-11-03 12:20',
-            'status' => 'approved',
-        ],
-        [
-            'id' => 3,
-            'author_name' => '访客C',
-            'content' => '成员主页的项目卡片排版很清晰，建议在列表页也加上项目入口。',
-            'member_slug' => 'su-wanqing',
-            'member_name' => '苏晚晴',
-            'created_at' => '2026-11-04 21:05',
-            'reply' => null,
-            'reply_at' => null,
-            'status' => 'approved',
-        ],
-        [
-            'id' => 4,
-            'author_name' => '学弟',
-            'content' => '想了解团队招新和课程项目的方向，有没有公开的介绍材料？',
-            'member_slug' => '',
-            'member_name' => '',
-            'created_at' => '2026-11-04 18:30',
-            'reply' => '团队介绍页有方向和分工，后续会补招新说明。',
-            'reply_at' => '2026-11-04 19:00',
-            'status' => 'approved',
-        ],
-        [
-            'id' => 5,
-            'author_name' => '合作方',
-            'content' => '项目状态和参与成员的展示很直观，方便快速判断团队分工。',
-            'member_slug' => 'chen-yiming',
-            'member_name' => '陈一鸣',
-            'created_at' => '2026-11-03 16:20',
-            'reply' => null,
-            'reply_at' => null,
-            'status' => 'approved',
-        ],
-        [
-            'id' => 6,
-            'author_name' => '访客D',
-            'content' => '留言板会支持管理员回复吗？希望能看到官方的补充说明。',
-            'member_slug' => '',
-            'member_name' => '',
-            'created_at' => '2026-11-02 11:05',
-            'reply' => '支持，回复会显示在留言下方。',
-            'reply_at' => '2026-11-02 13:40',
-            'status' => 'approved',
-        ],
-        [
-            'id' => 7,
-            'author_name' => '路过的同学',
-            'content' => '移动端的导航抽屉很好用，360 宽度下也没有横向滚动。',
-            'member_slug' => 'lin-zhiyuan',
-            'member_name' => '林知远',
-            'created_at' => '2026-11-01 10:12',
-            'reply' => null,
-            'reply_at' => null,
-            'status' => 'approved',
-        ],
+    private const STATUS_LABELS = [
+        'pending'  => '待审核',
+        'approved' => '已通过',
+        'rejected' => '已拒绝',
+        'spam'     => '垃圾',
     ];
 
     /**
-     * 公开留言分页。只返回 approved。
+     * 公开留言分页。只返回 approved，并带出最新一条可见回复。
      *
      * @return array{items: array, total: int, page: int, per_page: int, last_page: int}
      */
     public static function approved(int $page = 1, int $perPage = 5): array
     {
-        $list = array_values(array_filter(
-            self::$messages,
-            static fn (array $message): bool => $message['status'] === 'approved'
-        ));
-
-        usort($list, static fn (array $a, array $b): int => strcmp($b['created_at'], $a['created_at']));
-
-        $total = count($list);
+        $total = (int) Db::fetchValue("SELECT COUNT(*) FROM messages WHERE status = 'approved'");
         $perPage = max(1, min(50, $perPage));
         $lastPage = max(1, (int) ceil($total / $perPage));
         $page = max(1, min($page, $lastPage));
         $offset = ($page - 1) * $perPage;
 
+        $rows = Db::fetchAll(
+            "SELECT m.id, m.author_name, m.content, m.created_at,
+                    mem.slug AS member_slug, mem.name AS member_name,
+                    (SELECT r.content
+                       FROM message_replies r
+                      WHERE r.message_id = m.id AND r.status = 'visible'
+                      ORDER BY r.created_at DESC, r.id DESC
+                      LIMIT 1) AS reply,
+                    (SELECT r.created_at
+                       FROM message_replies r
+                      WHERE r.message_id = m.id AND r.status = 'visible'
+                      ORDER BY r.created_at DESC, r.id DESC
+                      LIMIT 1) AS reply_at
+             FROM messages m
+             LEFT JOIN members mem ON mem.id = m.member_id
+             WHERE m.status = 'approved'
+             ORDER BY m.created_at DESC, m.id DESC
+             LIMIT {$perPage} OFFSET {$offset}"
+        );
+
+        $items = array_map(
+            static function (array $row): array {
+                $row['member_slug'] = (string) ($row['member_slug'] ?? '');
+                $row['member_name'] = (string) ($row['member_name'] ?? '');
+                $row['created_at'] = format_datetime((string) $row['created_at']);
+                $row['reply_at'] = $row['reply_at'] === null
+                    ? null
+                    : format_datetime((string) $row['reply_at']);
+                $row['status'] = 'approved';
+
+                return $row;
+            },
+            $rows
+        );
+
         return [
-            'items' => array_slice($list, $offset, $perPage),
-            'total' => $total,
-            'page' => $page,
-            'per_page' => $perPage,
+            'items'     => $items,
+            'total'     => $total,
+            'page'      => $page,
+            'per_page'  => $perPage,
             'last_page' => $lastPage,
         ];
+    }
+
+    /**
+     * 后台留言列表：按待审核优先、时间倒序排列。
+     */
+    public static function forAdmin(): array
+    {
+        $rows = Db::fetchAll(
+            'SELECT m.id, m.author_name, m.content, m.created_at, m.status, mem.name AS member_name
+             FROM messages m
+             LEFT JOIN members mem ON mem.id = m.member_id
+             ORDER BY FIELD(m.status, \'pending\', \'approved\', \'rejected\', \'spam\'),
+                      m.created_at DESC, m.id DESC'
+        );
+
+        return array_map(
+            static fn (array $row): array => [
+                'id'         => (int) $row['id'],
+                'author'     => (string) $row['author_name'],
+                'excerpt'    => str_limit((string) $row['content'], 60),
+                'member'     => (string) ($row['member_name'] ?? '—'),
+                'created_at' => format_datetime((string) $row['created_at']),
+                'status'     => self::STATUS_LABELS[(string) $row['status']] ?? (string) $row['status'],
+                'status_code'=> (string) $row['status'],
+            ],
+            $rows
+        );
+    }
+
+    /**
+     * 各状态数量，供看板使用。
+     *
+     * @return array<string, int>
+     */
+    public static function countByStatus(): array
+    {
+        $rows = Db::fetchAll('SELECT status, COUNT(*) AS total FROM messages GROUP BY status');
+        $counts = array_fill_keys(array_keys(self::STATUS_LABELS), 0);
+
+        foreach ($rows as $row) {
+            $counts[(string) $row['status']] = (int) $row['total'];
+        }
+
+        return $counts;
     }
 }

@@ -110,3 +110,76 @@ function str_limit(string $text, int $limit = 60, string $end = '…'): string
 
     return mb_substr($text, 0, $limit, 'UTF-8') . $end;
 }
+
+/**
+ * 日期时间格式化：2026-11-05 09:12:00 -> 2026-11-05 09:12。
+ */
+function format_datetime(?string $value, string $fallback = '—'): string
+{
+    if ($value === null || $value === '') {
+        return $fallback;
+    }
+
+    $timestamp = strtotime($value);
+    return $timestamp === false ? $fallback : date('Y-m-d H:i', $timestamp);
+}
+
+/**
+ * 受限 Markdown 渲染：只支持段落、三级以内标题与换行。
+ *
+ * 说明：先转义再拼标签，禁止原始 HTML 进入页面；链接、图片等语法
+ * 在课程项目中不需要，避免引入 XSS 面。
+ */
+function markdown_lite(string $text): string
+{
+    $text = trim(str_replace(["\r\n", "\r"], "\n", $text));
+    if ($text === '') {
+        return '';
+    }
+
+    $blocks = preg_split('/\n{2,}/', $text) ?: [];
+    $html = '';
+
+    foreach ($blocks as $block) {
+        $block = trim($block);
+        if ($block === '') {
+            continue;
+        }
+
+        if (preg_match('/^###\s+(.+)$/u', $block, $matches) === 1) {
+            $html .= '<h3>' . e($matches[1]) . '</h3>';
+        } elseif (preg_match('/^##\s+(.+)$/u', $block, $matches) === 1) {
+            $html .= '<h2>' . e($matches[1]) . '</h2>';
+        } elseif (preg_match('/^#\s+(.+)$/u', $block, $matches) === 1) {
+            $html .= '<h1>' . e($matches[1]) . '</h1>';
+        } else {
+            $html .= '<p>' . nl2br(e($block)) . '</p>';
+        }
+    }
+
+    return $html;
+}
+
+/**
+ * 输出 CSRF 隐藏域。所有 POST 表单必须调用（Auth 类在 index.php 中先行加载）。
+ */
+function csrf_field(): string
+{
+    return Auth::csrfField();
+}
+
+/**
+ * 文件大小展示：字节数 -> 1.8 MB / 980 KB。
+ */
+function bytes_text(int $bytes): string
+{
+    if ($bytes >= 1048576) {
+        return round($bytes / 1048576, 1) . ' MB';
+    }
+
+    if ($bytes >= 1024) {
+        return round($bytes / 1024) . ' KB';
+    }
+
+    return $bytes . ' B';
+}

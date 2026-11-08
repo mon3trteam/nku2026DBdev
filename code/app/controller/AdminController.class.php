@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 require_once APP_ROOT . '/app/model/MemberModel.class.php';
 require_once APP_ROOT . '/app/model/AnnouncementModel.class.php';
+require_once APP_ROOT . '/app/model/MessageModel.class.php';
 require_once APP_ROOT . '/app/model/TeamModel.class.php';
 require_once APP_ROOT . '/app/model/ResourceModel.class.php';
 require_once APP_ROOT . '/app/model/UserModel.class.php';
@@ -19,8 +20,14 @@ require_once APP_ROOT . '/app/model/LogModel.class.php';
 
 final class AdminController
 {
+    public function __construct()
+    {
+        Auth::requireLogin();
+    }
+
     public function dashboard(): void
     {
+        Auth::requirePermission('dashboard.view');
         $members = MemberModel::allVisible();
         $announcements = AnnouncementModel::latest(5);
 
@@ -75,19 +82,21 @@ final class AdminController
 
     public function members(): void
     {
+        Auth::requirePermission('member.manage');
         render('admin/member_list', [
             'pageTitle' => '成员管理 · 管理后台',
             'adminNav' => 'members',
-            'members' => MemberModel::allVisible(),
+            'members' => MemberModel::allForAdmin(),
         ]);
     }
 
     public function announcements(): void
     {
+        Auth::requirePermission('content.manage');
         render('admin/announcement_list', [
             'pageTitle' => '公告管理 · 管理后台',
             'adminNav' => 'announcements',
-            'announcements' => AnnouncementModel::all(),
+            'announcements' => AnnouncementModel::allForAdmin(),
             'toastMessage' => ($_GET['saved'] ?? '') === '1' ? '公告已保存（演示）。' : '',
             'toastType' => 'success',
         ]);
@@ -95,6 +104,7 @@ final class AdminController
 
     public function team(): void
     {
+        Auth::requirePermission('team.edit');
         $team = TeamModel::profile();
 
         render('admin/team', [
@@ -111,6 +121,9 @@ final class AdminController
 
     public function updateTeam(): void
     {
+        Auth::requirePermission('team.edit');
+        $this->requirePost();
+
         $team = TeamModel::profile();
         $input = [
             'name' => trim((string) ($_POST['name'] ?? '')),
@@ -155,10 +168,11 @@ final class AdminController
 
     public function resources(): void
     {
+        Auth::requirePermission('resource.manage');
         render('admin/resource_list', [
             'pageTitle' => '资源管理 · 管理后台',
             'adminNav' => 'resources',
-            'resources' => ResourceModel::all(),
+            'resources' => ResourceModel::allForAdmin(),
             'categories' => ResourceModel::categories(),
             'toastMessage' => '',
             'toastType' => 'success',
@@ -167,6 +181,7 @@ final class AdminController
 
     public function users(): void
     {
+        Auth::requirePermission('user.manage');
         render('admin/user_list', [
             'pageTitle' => '用户与角色 · 管理后台',
             'adminNav' => 'users',
@@ -179,6 +194,7 @@ final class AdminController
 
     public function settings(): void
     {
+        Auth::requirePermission('setting.manage');
         render('admin/setting', [
             'pageTitle' => '站点设置 · 管理后台',
             'adminNav' => 'settings',
@@ -193,6 +209,9 @@ final class AdminController
 
     public function updateSettings(): void
     {
+        Auth::requirePermission('setting.manage');
+        $this->requirePost();
+
         $posted = $_POST['settings'] ?? [];
         if (!is_array($posted)) {
             $posted = [];
@@ -238,6 +257,7 @@ final class AdminController
 
     public function logs(): void
     {
+        Auth::requirePermission('log.view');
         render('admin/log_list', [
             'pageTitle' => '日志审计 · 管理后台',
             'adminNav' => 'logs',
@@ -250,6 +270,7 @@ final class AdminController
 
     public function announcementEdit(): void
     {
+        Auth::requirePermission('content.manage');
         $id = (int) ($_GET['id'] ?? 1);
         $announcement = AnnouncementModel::findById($id);
         if ($announcement === null) {
@@ -276,6 +297,9 @@ final class AdminController
 
     public function updateAnnouncement(): void
     {
+        Auth::requirePermission('content.manage');
+        $this->requirePost();
+
         $id = (int) ($_POST['id'] ?? 0);
         $announcement = AnnouncementModel::findById($id);
         if ($announcement === null) {
@@ -334,31 +358,59 @@ final class AdminController
 
     public function messages(): void
     {
+        Auth::requirePermission('message.moderate');
         render('admin/message_list', [
             'pageTitle' => '留言管理 · 管理后台',
             'adminNav' => 'messages',
-            'messages' => self::pendingMessages(),
+            'messages' => MessageModel::forAdmin(),
         ]);
     }
 
     public function projects(): void
     {
+        Auth::requirePermission('content.manage');
         render('admin/project_list', [
             'pageTitle' => '项目管理 · 管理后台',
             'adminNav' => 'projects',
-            'projects' => MemberModel::allProjects(),
+            'projects' => MemberModel::allProjectsForAdmin(),
         ]);
     }
 
     /**
-     * 留言审核队列演示数据。
+     * 看板与留言管理共用的审核队列。
      */
     private static function pendingMessages(): array
     {
-        return [
-            ['author' => '访客A', 'excerpt' => '首页的成员速览可以再加一个技能标签。', 'member' => '林知远', 'created_at' => '2026-11-05 09:12', 'status' => '待审核'],
-            ['author' => '访客B', 'excerpt' => '请问团队文档什么时候可以下载？', 'member' => '周予安', 'created_at' => '2026-11-05 08:40', 'status' => '待审核'],
-            ['author' => '访客C', 'excerpt' => '成员主页的项目卡片排版很清晰。', 'member' => '苏晚晴', 'created_at' => '2026-11-04 21:05', 'status' => '待审核'],
-        ];
+        return MessageModel::forAdmin();
+    }
+
+    /**
+     * 写操作统一入口检查：只接受 POST，且必须携带有效 CSRF token。
+     */
+    private function requirePost(): void
+    {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Allow: POST');
+            $this->abort(405, '请求方式不正确', '该地址只接受表单 POST 提交，请从后台页面操作。');
+        }
+
+        if (!Auth::verifyCsrf($_POST['_token'] ?? null)) {
+            // 419 不是 Apache 认识的标准状态码，会被改写成 500，这里使用 400
+            $this->abort(400, '页面已过期', '安全令牌已失效，请返回上一页刷新后重新提交。');
+        }
+    }
+
+    private function abort(int $code, string $title, string $message): never
+    {
+        http_response_code($code);
+        render('error_request', [
+            'pageTitle' => $title . ' · 数聚 TeamHub',
+            'metaDescription' => $message,
+            'activeNav' => '',
+            'errorCode' => $code,
+            'errorTitle' => $title,
+            'errorMessage' => $message,
+        ]);
+        exit;
     }
 }
