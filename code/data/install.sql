@@ -1,6 +1,7 @@
 -- =====================================================================
 -- 文件名：install.sql
--- 功能：团队主页项目数据库唯一真源（21 张表 + 3 个视图 + 初始数据）
+-- 功能：表结构 + 演示种子数据（21 张表 + 3 个视图）。
+--       本文件是"模板初始态"，真实站点内容通过后台「数据包」导出/导入迁移（FR-DB-04），不回填本文件。
 -- 作者：金暄琛（2411672）
 -- 创建日期：2026-11-08
 -- 所属模块：数据库
@@ -10,7 +11,8 @@
 --   2) 表结构、字段、索引与视图以 docs/team/02-设计文档 的数据字典为准；
 --      修改后必须在干净库上验证可完整还原（mysql < install.sql）。
 --   3) 作业硬性要求：数据库表数量 > 10 张；本文件共 21 张表。
---   4) 初始账号（bcrypt 散列，严禁写入真实生产密码）：
+--   4) 初始账号（bcrypt 散列，严禁写入真实生产密码；全部账号
+--      must_change_password=1，首次登录强制改密，防止仓库公开口令被滥用）：
 --        admin        / Admin@123456   （超级管理员，must_change_password=1）
 --        editor       / Member@123456  （编辑）
 --        lin-zhiyuan  / Member@123456  （成员，绑定同名成员档案）
@@ -580,23 +582,24 @@ INSERT INTO permissions (id, code, name, module, description) VALUES
 (10, 'log.view',         '查看日志',     'log',       '查看登录日志与操作审计'),
 (11, 'member.edit',      '编辑本人资料', 'me',        '修改本人公开资料、头像与技能'),
 (12, 'media.upload',     '上传媒体',     'media',     '上传头像、封面与资源文件');
+(13, 'data.manage',      '数据包管理',   'data',      '导出/导入全站数据包（整库覆盖，仅超级管理员）');
 
 -- 8.3 角色权限
 INSERT INTO role_permissions (role_id, permission_id) VALUES
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12),
-(2, 1), (2, 4), (2, 5), (2, 6), (2, 7), (2, 11), (2, 12),
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13),
+(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 11), (2, 12),
 (3, 11), (3, 12);
 
 -- 8.4 账号
 -- 密码散列对应：admin=Admin@123456，其余账号=Member@123456
 INSERT INTO users
 (id, role_id, username, email, password_hash, display_name, status, must_change_password, last_login_at, last_login_ip_hash, password_changed_at) VALUES
-(1, 1, 'admin',       'admin@example.com', '$2b$10$ZbRqUKRVLJVuk74rdCrT.u5RH4M5WZ0MlMHoKfrfwBqzDgrp8/6zK', '管理员',   1, 1, '2026-11-05 09:12:00', SHA2('seed-ip-1', 256), '2026-10-29 10:00:00'),
-(2, 2, 'editor',      'editor@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '内容编辑', 1, 0, '2026-11-02 10:22:00', SHA2('seed-ip-2', 256), '2026-10-29 10:00:00'),
-(3, 3, 'lin-zhiyuan', 'lin@example.com',    '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '林知远',   1, 0, '2026-11-04 21:40:00', SHA2('seed-ip-1', 256), '2026-10-29 10:00:00'),
-(4, 3, 'su-wanqing',  'su@example.com',     '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '苏晚晴',   1, 0, '2026-11-03 18:05:00', SHA2('seed-ip-3', 256), '2026-10-29 10:00:00'),
-(5, 3, 'chen-yiming', 'chen@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '陈一鸣',   1, 0, '2026-11-03 16:20:00', SHA2('seed-ip-3', 256), '2026-10-29 10:00:00'),
-(6, 3, 'zhou-yuan',   'zhou@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '周予安',   1, 0, '2026-11-04 18:30:00', SHA2('seed-ip-4', 256), '2026-10-29 10:00:00');
+(1, 1, 'admin',       'admin@example.com', '$2b$10$ZbRqUKRVLJVuk74rdCrT.u5RH4M5WZ0MlMHoKfrfwBqzDgrp8/6zK', '管理员',   1, 1, NULL, NULL, NULL),
+(2, 2, 'editor',      'editor@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '内容编辑', 1, 1, NULL, NULL, NULL),
+(3, 3, 'lin-zhiyuan', 'lin@example.com',    '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '林知远',   1, 1, NULL, NULL, NULL),
+(4, 3, 'su-wanqing',  'su@example.com',     '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '苏晚晴',   1, 1, NULL, NULL, NULL),
+(5, 3, 'chen-yiming', 'chen@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '陈一鸣',   1, 1, NULL, NULL, NULL),
+(6, 3, 'zhou-yuan',   'zhou@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '周予安',   1, 1, NULL, NULL, NULL);
 
 -- 8.5 团队资料
 INSERT INTO team_profile
@@ -753,15 +756,15 @@ INSERT INTO media
 -- 8.16 下载资源
 INSERT INTO resources
 (id, title, category, description, media_id, download_count, is_public, sort_order, uploaded_by, created_at, updated_at) VALUES
-(1, '团队需求文档', 'team',     '功能需求、用例、业务规则与验收标准。', 1, 36, 1, 1, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(2, '团队设计文档', 'team',     '架构、21 张表的数据字典、接口与页面设计。', 2, 41, 1, 2, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(3, '部署文档',     'doc',      'Docker Compose 一键部署、备份与还原流程。', 3, 18, 1, 3, 1, '2026-11-02 10:00:00', '2026-11-02 10:00:00'),
-(4, '个人作业 1（学号_姓名）', 'personal', 'Web 前端初探：抓包、jQuery 事件与浏览器插件。', 4, 12, 1, 4, 1, '2026-10-20 10:00:00', '2026-10-20 10:00:00'),
-(5, '个人作业 2（学号_姓名）', 'personal', '页面设计实践与响应式布局。', 5, 9, 1, 5, 1, '2026-10-27 10:00:00', '2026-10-27 10:00:00'),
-(6, '个人作业 3（学号_姓名）', 'personal', 'WordPress 建站实践与内容运营。', 6, 7, 1, 6, 1, '2026-11-01 10:00:00', '2026-11-01 10:00:00'),
-(7, 'E-R 图',       'design',   '团队主页核心实体关系图。', 7, 15, 1, 7, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(8, '数据字典',     'design',   '21 张表的字段、类型、索引与约束。', 8, 22, 1, 8, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(9, '演示环境说明', 'other',    '本地 Docker 环境、初始账号与演示路径。', 9, 5, 1, 9, 1, '2026-11-03 10:00:00', '2026-11-03 10:00:00');
+(1, '团队需求文档', 'team',     '功能需求、用例、业务规则与验收标准。', 1, 0, 1, 1, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
+(2, '团队设计文档', 'team',     '架构、21 张表的数据字典、接口与页面设计。', 2, 0, 1, 2, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
+(3, '部署文档',     'doc',      'Docker Compose 一键部署、备份与还原流程。', 3, 0, 1, 3, 1, '2026-11-02 10:00:00', '2026-11-02 10:00:00'),
+(4, '个人作业 1（学号_姓名）', 'personal', 'Web 前端初探：抓包、jQuery 事件与浏览器插件。', 4, 0, 1, 4, 1, '2026-10-20 10:00:00', '2026-10-20 10:00:00'),
+(5, '个人作业 2（学号_姓名）', 'personal', '页面设计实践与响应式布局。', 5, 0, 1, 5, 1, '2026-10-27 10:00:00', '2026-10-27 10:00:00'),
+(6, '个人作业 3（学号_姓名）', 'personal', 'WordPress 建站实践与内容运营。', 6, 0, 1, 6, 1, '2026-11-01 10:00:00', '2026-11-01 10:00:00'),
+(7, 'E-R 图',       'design',   '团队主页核心实体关系图。', 7, 0, 1, 7, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
+(8, '数据字典',     'design',   '21 张表的字段、类型、索引与约束。', 8, 0, 1, 8, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
+(9, '演示环境说明', 'other',    '本地 Docker 环境、初始账号与演示路径。', 9, 0, 1, 9, 1, '2026-11-03 10:00:00', '2026-11-03 10:00:00');
 
 -- 8.17 站点设置
 INSERT INTO site_settings (setting_key, setting_value, value_type, group_name, label, is_public, updated_by) VALUES
@@ -798,12 +801,11 @@ FROM (
 ) nums
 WHERE n < 70;
 
--- 8.19 登录日志
+-- 8.19 登录日志（演示用失败记录；种子账号均未登录过，首登强制改密，
+--       成功登录记录由真实使用产生）
 INSERT INTO login_logs (user_id, username_attempted, success, failure_reason, ip_hash, user_agent, created_at) VALUES
-(1, 'admin',       1, NULL,             SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-05 09:12:00'),
-(3, 'lin-zhiyuan', 1, NULL,             SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:40:00'),
 (3, 'lin-zhiyuan', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:39:00'),
-(4, 'su-wanqing',  1, NULL,             SHA2('seed-ip-3', 256), 'Firefox / Windows 11', '2026-11-03 18:05:00'),
+(3, 'lin-zhiyuan', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:41:00'),
 (NULL, 'unknown',  0, 'not_found',      SHA2('seed-ip-3', 256), 'Firefox / Windows 11', '2026-11-02 10:22:00');
 
 -- 8.20 操作审计

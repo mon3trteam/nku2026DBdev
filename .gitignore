@@ -9,7 +9,9 @@ desktop.ini
 # ===== 运行时与日志 =====
 *.log
 code/runtime/
+code/backups/
 code/storage/uploads/
+code/storage/exports/
 code/public/static/uploads/*
 !code/public/static/uploads/.htaccess
 

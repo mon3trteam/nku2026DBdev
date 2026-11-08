@@ -1,0 +1,3 @@
+# 运行时上传目录（资源文件）：禁止通过 Web 直接读取，下载必须走 resource/download 控制器。
+# 本文件为镜像内模板：uploads 卷首次初始化时由 docker-entrypoint.sh 复制到位。
+Require all denied
