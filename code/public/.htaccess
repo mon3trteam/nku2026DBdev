@@ -1,0 +1,14 @@
+# 文件名：.htaccess
+# 功能：public/ 站点根目录的轻量重写规则
+# 作者：杨斯源（学号待填）
+# 创建日期：2026-11-08
+# 所属模块：部署 / 路由
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 健康检查对外保持 /healthz，不暴露内部 ?r= 路由写法
+    RewriteRule ^healthz/?$ index.php?r=system/healthz [L,QSA]
+</IfModule>

@@ -1,0 +1,7 @@
+# 文件名：.htaccess
+# 功能：禁止通过 Web 直接读取 data/ 下的文档与作业文件；下载必须走 resource/download
+# 作者：杨斯源（学号待填）
+# 创建日期：2026-11-08
+# 所属模块：部署 / 安全
+
+Require all denied

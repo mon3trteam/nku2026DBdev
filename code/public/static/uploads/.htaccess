@@ -1,0 +1,9 @@
+# 上传目录：仅作为静态图片存放，禁止执行任何脚本、禁止目录列表。
+Options -Indexes
+
+<FilesMatch "\.(?i:php|phtml|php[0-9]|phar|pl|py|cgi|sh)$">
+    Require all denied
+</FilesMatch>
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar

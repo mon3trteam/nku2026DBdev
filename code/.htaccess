@@ -1,0 +1,12 @@
+# 文件名：.htaccess
+# 功能：在 DocumentRoot 仍指向 code/ 时，阻止直接访问应用源码、配置与数据目录
+# 作者：杨斯源（学号待填）
+# 创建日期：2026-11-08
+# 所属模块：部署 / 安全
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(\.git|app|config|data|storage)(/|$) - [F,L]
+</IfModule>

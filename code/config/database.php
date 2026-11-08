@@ -7,7 +7,8 @@
  * 所属模块：配置 / 数据库
  *
  * 说明：
- *   1) 生产环境请通过环境变量或 code/.env 覆盖，禁止把真实口令提交到 Git。
+ *   1) 生产环境请通过环境变量覆盖；Docker Compose 会自动读取 code/.env
+ *      做变量替换，禁止把真实口令提交到 Git。
  *   2) 同时兼容设计文档中的 DB_DATABASE/DB_USERNAME/DB_PASSWORD
  *      与简写 DB_NAME/DB_USER/DB_PASS，便于 phpStudy/XAMPP 手动部署。
  */

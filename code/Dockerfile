@@ -12,16 +12,22 @@ FROM php:8.2-apache
 RUN docker-php-ext-install mysqli pdo_mysql && \
     a2enmod rewrite expires headers
 
+# 上传限制：单文件 12 MB、表单总量 16 MB
+COPY uploads.ini /usr/local/etc/php/conf.d/teamhub-uploads.ini
+
 # 静态资源长缓存 + PHP 页面不缓存
 COPY apache-cache.conf /etc/apache2/conf-available/teamhub-cache.conf
 RUN a2enconf teamhub-cache
 
 # 站点根目录指向 public/（统一入口 index.php）
-# TODO：骨架细化后取消注释并验证虚拟主机配置
-# COPY apache-site.conf /etc/apache2/sites-available/000-default.conf
+COPY apache-site.conf /etc/apache2/sites-available/000-default.conf
 
 # 开发模式下源码经 docker-compose 卷挂载，无需 COPY；
 # 正式发布（交付镜像）时改为：
-# COPY . /var/www/html
+# COPY --chown=www-data:www-data . /var/www/html
+
+# 上传与运行时目录交给 www-data（交付镜像 COPY 源码后需再次执行 chown）
+RUN mkdir -p /var/www/html/public/static/uploads/media /var/www/html/storage/uploads && \
+    chown -R www-data:www-data /var/www/html/public/static/uploads /var/www/html/storage
 
 EXPOSE 80
