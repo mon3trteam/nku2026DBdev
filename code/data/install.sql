@@ -13,12 +13,9 @@
 --   3) 作业硬性要求：数据库表数量 > 10 张；本文件共 21 张表。
 --   4) 初始账号（bcrypt 散列，严禁写入真实生产密码；全部账号
 --      must_change_password=1，首次登录强制改密，防止仓库公开口令被滥用）：
---        admin        / Admin@123456   （超级管理员，must_change_password=1）
---        editor       / Member@123456  （编辑）
---        lin-zhiyuan  / Member@123456  （成员，绑定同名成员档案）
---        su-wanqing   / Member@123456  （成员）
---        chen-yiming  / Member@123456  （成员）
---        zhou-yuan    / Member@123456  （成员）
+--        admin    / Admin@123456   （超级管理员）
+--        editor   / Member@123456  （编辑）
+--        member1~4 / Member@123456 （成员账号 ×4，绑定四个成员档案）
 --   5) 种子中的成员、项目、公告、留言为课程演示数据，接入真实内容后可替换。
 -- =====================================================================
 
@@ -581,7 +578,7 @@ INSERT INTO permissions (id, code, name, module, description) VALUES
 (9,  'setting.manage',   '管理站点设置', 'setting',   '修改 SEO、页脚与联系信息'),
 (10, 'log.view',         '查看日志',     'log',       '查看登录日志与操作审计'),
 (11, 'member.edit',      '编辑本人资料', 'me',        '修改本人公开资料、头像与技能'),
-(12, 'media.upload',     '上传媒体',     'media',     '上传头像、封面与资源文件');
+(12, 'media.upload',     '上传媒体',     'media',     '上传头像、封面与资源文件'),
 (13, 'data.manage',      '数据包管理',   'data',      '导出/导入全站数据包（整库覆盖，仅超级管理员）');
 
 -- 8.3 角色权限
@@ -596,10 +593,10 @@ INSERT INTO users
 (id, role_id, username, email, password_hash, display_name, status, must_change_password, last_login_at, last_login_ip_hash, password_changed_at) VALUES
 (1, 1, 'admin',       'admin@example.com', '$2b$10$ZbRqUKRVLJVuk74rdCrT.u5RH4M5WZ0MlMHoKfrfwBqzDgrp8/6zK', '管理员',   1, 1, NULL, NULL, NULL),
 (2, 2, 'editor',      'editor@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '内容编辑', 1, 1, NULL, NULL, NULL),
-(3, 3, 'lin-zhiyuan', 'lin@example.com',    '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '林知远',   1, 1, NULL, NULL, NULL),
-(4, 3, 'su-wanqing',  'su@example.com',     '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '苏晚晴',   1, 1, NULL, NULL, NULL),
-(5, 3, 'chen-yiming', 'chen@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '陈一鸣',   1, 1, NULL, NULL, NULL),
-(6, 3, 'zhou-yuan',   'zhou@example.com',   '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '周予安',   1, 1, NULL, NULL, NULL);
+(3, 3, 'member1', 'member1@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '成员一', 1, 1, NULL, NULL, NULL),
+(4, 3, 'member2', 'member2@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '成员二', 1, 1, NULL, NULL, NULL),
+(5, 3, 'member3', 'member3@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '成员三', 1, 1, NULL, NULL, NULL),
+(6, 3, 'member4', 'member4@example.com', '$2b$10$0Hk2GEp1Agw2yiiPCDc7e.o51zyl7d5QmFBjOwdiefoUGo/ql6EXa', '成员四', 1, 1, NULL, NULL, NULL);
 
 -- 8.5 团队资料
 INSERT INTO team_profile
@@ -804,8 +801,8 @@ WHERE n < 70;
 -- 8.19 登录日志（演示用失败记录；种子账号均未登录过，首登强制改密，
 --       成功登录记录由真实使用产生）
 INSERT INTO login_logs (user_id, username_attempted, success, failure_reason, ip_hash, user_agent, created_at) VALUES
-(3, 'lin-zhiyuan', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:39:00'),
-(3, 'lin-zhiyuan', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:41:00'),
+(3, 'member1', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:39:00'),
+(3, 'member1', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:41:00'),
 (NULL, 'unknown',  0, 'not_found',      SHA2('seed-ip-3', 256), 'Firefox / Windows 11', '2026-11-02 10:22:00');
 
 -- 8.20 操作审计
