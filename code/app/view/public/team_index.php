@@ -3,6 +3,7 @@
  * 文件名：team_index.php
  * 功能：团队介绍页（故事、价值观、时间线、能力矩阵、成员网格）
  * 作者：杨斯源（学号待填）
+ * 修改：黄浩天（2413421）成员卡片启用竖排变体，恢复原型比例（2026-11-15）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 团队介绍
@@ -110,6 +111,7 @@ $teamMetaText = implode(' · ', $teamMeta);
                 <div class="row g-3">
                     <?php foreach ($members as $member): ?>
                         <div class="col-sm-6">
+                            $cardStacked = true;
                             <?php require APP_ROOT . '/app/view/partial/member_card.php'; ?>
                         </div>
                     <?php endforeach; ?>

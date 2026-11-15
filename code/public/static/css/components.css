@@ -213,6 +213,24 @@
     line-height: 1.6;
 }
 
+/* ---------- 成员卡片竖排变体（4列栅格下恢复原型比例） ---------- */
+.member-card--stacked {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.member-card--stacked .member-card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.member-card--stacked .tag-list {
+    justify-content: center;
+}
+
 .project-card__cover {
     position: relative;
     aspect-ratio: 16 / 9;

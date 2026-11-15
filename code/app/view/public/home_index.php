@@ -3,6 +3,7 @@
  * 文件名：home_index.php
  * 功能：首页视图（首屏、数据条、精选项目、最新公告、成员速览）
  * 作者：杨斯源（学号待填）
+ * 修改：黄浩天（2413421）成员卡片启用竖排变体，恢复原型比例（2026-11-15）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 首页
@@ -108,6 +109,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
         <div class="row g-4">
             <?php foreach ($members as $member): ?>
                 <div class="col-sm-6 col-lg-3">
+                    $cardStacked = true;
                     <?php require APP_ROOT . '/app/view/partial/member_card.php'; ?>
                 </div>
             <?php endforeach; ?>

@@ -3,11 +3,13 @@
  * 文件名：member_card.php
  * 功能：成员卡片组件
  * 作者：杨斯源（学号待填）
+ * 修改：黄浩天（2413421）新增竖排变体 member-card--stacked（2026-11-15）
  * 创建日期：2026-11-05
  * 所属模块：公共组件
  */
 ?>
-<a class="member-card" href="<?= e(url('member/show', ['slug' => $member['slug']])) ?>">
+<?php $stacked = $cardStacked ?? false; ?>
+<a class="member-card<?= $stacked ? ' member-card--stacked' : '' ?>" href="<?= e(url('member/show', ['slug' => $member['slug']])) ?>">
     <div class="member-card__avatar">
         <img src="<?= e(asset($member['avatar'])) ?>" alt="<?= e($member['name']) ?> 的头像" width="88" height="88" loading="lazy">
     </div>
