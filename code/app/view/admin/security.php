@@ -47,7 +47,6 @@ $loginLogs = $loginLogs ?? [];
                         <input class="form-control <?= isset($errors['new_password']) ? 'is-invalid' : '' ?>"
                                id="new_password" name="new_password" type="password"
                                autocomplete="new-password" required minlength="10">
-                        <button class="password-toggle" type="button" data-toggle-password="#new_password" aria-label="显示密码">显示</button>
                     </div>
                     <?php if (isset($errors['new_password'])): ?>
                         <div class="invalid-feedback"><?= e($errors['new_password']) ?></div>
