@@ -3,6 +3,7 @@
  * 文件名：public_header.php
  * 功能：公共门户头部布局（导航、样式、跳转链接）
  * 作者：杨斯源（学号待填）
+ * 修改：黄浩天（2413421）登录态下导航按钮改显「个人信息」（2026-11-15）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共布局
@@ -85,7 +86,11 @@ $toastType = $toastType ?? 'success';
                         <a class="nav-link <?= e(is_active('resource')) ?>" href="<?= e(url('resource/index')) ?>">资源</a>
                     </li>
                     <li class="nav-item ms-lg-2">
+<?php if (Auth::check()): ?>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= e(url('me/index')) ?>">个人信息</a>
+<?php else: ?>
                         <a class="btn btn-outline-primary btn-sm" href="<?= e(url('auth/login')) ?>">登录</a>
+<?php endif; ?>
                     </li>
                 </ul>
             </div>
