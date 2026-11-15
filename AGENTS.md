@@ -64,13 +64,13 @@ code/            项目源码
 - ✅ 运行数据与源码解耦：数据库在卷 `db_data`；上传文件在卷 `uploads_public` / `uploads_storage`（空卷首次初始化由 `docker-entrypoint.sh` 补齐 .htaccess 安全规则；非 Docker 部署时目录已 gitignore）
 - ☐ 六份文档：01/02 定稿、03/05 有草稿；**04 用户手册、06 PPT 未开始**；PDF 导出与正式命名待做
 - ✅ 数据包机制（FR-DB-04 产品化，2026-11-09）：后台「数据包」导出/导入全站数据 ZIP（全表+上传文件+manifest，日志表包含在内，schema 版本校验，仅 data.manage/超管）；黄浩天 MVC 三层各一文件（M DataPackageModel / C DatapackageController / V admin/data_package.php）
-- ☐ 真实数据替换（演示种子 → 团队真实信息：**后台录入 → 导出数据包**，不回填仓库）；个人作业入库；杨斯源学号（65 处「学号待填」）与钱泊瑜 MVC 归属文件补齐
+- ☐ 真实数据替换（模板初始数据 → 团队真实信息：**后台录入 → 导出数据包**，不回填仓库）；个人作业入库；杨斯源学号（65 处「学号待填」）与钱泊瑜 MVC 归属文件补齐
 
 ## 运行数据与解耦约定
 
 1. 一切运行期写入的数据（数据库、上传文件）**不得提交进 Git**：`.gitignore` 已排除 `code/storage/`、`code/public/static/uploads/*`（保留 .htaccess）与 `code/.env`；
 2. Docker 部署时上传目录映射为命名卷（`uploads_public`、`uploads_storage`）；安全规则模板在`code/docker/htaccess/`，由 `docker-entrypoint.sh` 每次启动强制覆盖到卷内（模板升级即生效），修改卷策略或模板须同步该脚本；**例外**：下载中心"团队作业/个人作业"分类文件按作业要求固定放 `code/data/team|personal/`（交付内容，需提交进仓库）；
-3. `code/data/install.sql` 承载**表结构 + 演示种子**，永不回填真实数据；后台产生的真实内容通过"数据包"导出/导入迁移（后台 → 数据包，FR-DB-04），真实数据一律不进 Git 仓库。
+3. `code/data/install.sql` 承载**表结构 + 模板初始数据**，永不回填真实数据；后台产生的真实内容通过"数据包"导出/导入迁移（后台 → 数据包，FR-DB-04），真实数据一律不进 Git 仓库。
 
 ## 常用命令
 

@@ -14,7 +14,6 @@
 declare(strict_types=1);
 
 return [
-    'name'             => '数聚 TeamHub',
     'key'              => getenv('APP_KEY') ?: 'teamhub-local-demo-key-change-me',
     'session_name'     => 'teamhub_session',
     'session_lifetime' => (int) (getenv('SESSION_LIFETIME') ?: 1800),

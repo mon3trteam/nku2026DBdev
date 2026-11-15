@@ -19,11 +19,11 @@ if ($footerLocation === '') {
 }
 $footerSlogan = trim((string) ($siteTeam['slogan'] ?? ''));
 if ($footerSlogan === '') {
-    $footerSlogan = $siteDescription !== '' ? $siteDescription : '把团队的每一次协作，变成看得见的作品。';
+    $footerSlogan = $siteDescription !== '' ? $siteDescription : $siteName;
 }
 $footerCopyright = trim((string) ($siteSettings['footer.copyright'] ?? ''));
 if ($footerCopyright === '') {
-    $footerCopyright = '© ' . date('Y') . ' ' . $siteName . ' · 课程设计演示';
+    $footerCopyright = '© ' . date('Y') . ' ' . $siteName;
 }
 $footerIcp = trim((string) ($siteSettings['footer.icp'] ?? ''));
 ?>

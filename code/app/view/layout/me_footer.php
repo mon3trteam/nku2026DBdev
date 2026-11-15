@@ -9,7 +9,7 @@
  */
 ?>
         </div>
-        <footer class="me-footer"><?= e(site_name()) ?> 成员中心 · 课程设计演示</footer>
+        <footer class="me-footer"><?= e(site_name()) ?> 成员中心</footer>
     </div>
 </div>
 <?php require APP_ROOT . '/app/view/partial/toast.php'; ?>

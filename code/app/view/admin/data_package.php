@@ -24,7 +24,7 @@ $opsTables = ['page_views', 'login_logs', 'audit_logs', 'schema_migrations'];
     <ul class="admin-list">
         <li><span class="admin-list__title">导出</span><span class="admin-list__meta">下载当前全站数据的 ZIP，作为备份或迁移到云端/新机器的载体。</span></li>
         <li><span class="admin-list__title">导入</span><span class="admin-list__meta">上传任一历史数据包，整库覆盖恢复到那个时点（可多次导出留档，实现"回到某个版本"）。</span></li>
-        <li><span class="admin-list__title">与 install.sql 的分工</span><span class="admin-list__meta">install.sql 只承载表结构与演示种子；真实内容只随数据包走，不回填仓库。</span></li>
+        <li><span class="admin-list__title">与 install.sql 的分工</span><span class="admin-list__meta">install.sql 只承载表结构与模板初始数据；真实内容只随数据包走，不回填仓库。</span></li>
         <li><span class="admin-list__title">安全边界</span><span class="admin-list__meta">仅超级管理员可操作；导入校验包内 schema 版本，包版本新于当前代码时拒绝导入；不含 .env 等密钥。</span></li>
     </ul>
     <p class="admin-hint">当前代码结构版本：schema v<?= e((string) $schemaVersion) ?>（导入的包不得高于此版本）。</p>

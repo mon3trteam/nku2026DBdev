@@ -13,7 +13,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
 
 $teamHeroSlogan = trim((string) ($team['slogan'] ?? '')) !== ''
     ? (string) $team['slogan']
-    : '把团队的每一次协作，变成看得见的作品。';
+    : site_name();
 $teamMeta = [];
 if (trim((string) ($team['founded_on'] ?? '')) !== '') {
     $teamMeta[] = '成立于 ' . $team['founded_on'];

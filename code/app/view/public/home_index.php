@@ -20,7 +20,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                 </p>
                 <h1 class="hero__title"><?= e(trim((string) ($team['slogan'] ?? '')) !== ''
                     ? $team['slogan']
-                    : '把团队的每一次协作，变成看得见的作品。') ?></h1>
+                    : site_name()) ?></h1>
                 <p class="hero__lead"><?= e($team['short_intro']) ?></p>
                 <div class="hero__actions">
                     <a class="btn btn-primary btn-lg" href="<?= e(url('team/index')) ?>">认识我们 <span aria-hidden="true">→</span></a>
@@ -53,7 +53,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                 <div class="stat"><span class="stat__num"><?= e($stats['tables']) ?></span><span class="stat__label">数据表</span></div>
             </div>
             <div class="col-6 col-lg-3">
-                <div class="stat"><span class="stat__num"><?= e($stats['dimensions']) ?></span><span class="stat__label">展示维度</span></div>
+                <div class="stat"><span class="stat__num"><?= e($stats['announcements']) ?></span><span class="stat__label">公告</span></div>
             </div>
         </div>
     </div>

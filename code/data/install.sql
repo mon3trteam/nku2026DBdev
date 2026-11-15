@@ -1,7 +1,8 @@
 -- =====================================================================
 -- 文件名：install.sql
--- 功能：表结构 + 演示种子数据（21 张表 + 3 个视图）。
---       本文件是"模板初始态"，真实站点内容通过后台「数据包」导出/导入迁移（FR-DB-04），不回填本文件。
+-- 功能：表结构 + 模板初始数据（21 张表 + 3 个视图）。
+--       本文件是纯模板初始态：除角色/权限/账号/成员占位档案/功能必需配置外不含任何内容数据，
+--       真实站点内容全部由使用者通过后台创建，并经「数据包」迁移（FR-DB-04），不回填本文件。
 -- 作者：金暄琛（2411672）
 -- 创建日期：2026-11-08
 -- 所属模块：数据库
@@ -16,7 +17,8 @@
 --        admin    / Admin@123456   （超级管理员）
 --        editor   / Member@123456  （编辑）
 --        member1~4 / Member@123456 （成员账号 ×4，绑定四个成员档案）
---   5) 种子中的成员、项目、公告、留言为课程演示数据，接入真实内容后可替换。
+--   5) 除角色/权限/账号/成员占位档案/技能字典/站点配置外不含任何内容数据；
+--      真实内容全部由使用者通过后台创建，经「数据包」迁移。
 -- =====================================================================
 
 SET NAMES utf8mb4;
@@ -556,7 +558,7 @@ FROM page_views pv
 GROUP BY DATE(pv.viewed_at);
 
 -- ---------------------------------------------------------------------
--- 8. 种子数据
+-- 8. 模板初始数据
 -- ---------------------------------------------------------------------
 
 -- 8.1 角色
@@ -587,8 +589,7 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 11), (2, 12),
 (3, 11), (3, 12);
 
--- 8.4 账号
--- 密码散列对应：admin=Admin@123456，其余账号=Member@123456
+-- 8.4 账号（模板初始账号；密码散列对应：admin=Admin@123456，其余=Member@123456）
 INSERT INTO users
 (id, role_id, username, email, password_hash, display_name, status, must_change_password, last_login_at, last_login_ip_hash, password_changed_at) VALUES
 (1, 1, 'admin',       'admin@example.com', '$2b$10$ZbRqUKRVLJVuk74rdCrT.u5RH4M5WZ0MlMHoKfrfwBqzDgrp8/6zK', '管理员',   1, 1, NULL, NULL, NULL),
@@ -602,48 +603,30 @@ INSERT INTO users
 INSERT INTO team_profile
 (id, name, english_name, slogan, short_intro, story, founded_on, location, email, phone, social_json, values_json, status, updated_by) VALUES
 (1,
- '数聚 TeamHub',
- 'DataNova',
- '把团队的每一次协作，变成看得见的作品。',
- '数聚团队主页 · 项目、成员与课程作业的一站式展示空间。',
- '我们来自计算机学院的不同方向，因为一门数据库课程走到一起。有人负责数据建模，有人写后端接口，有人把信息整理成清晰的界面。我们相信，好的团队项目不是功能的堆叠，而是让每个人都能被看见、被记录。这个主页既是课程作业，也是我们协作方式的说明书。',
- '2026-09-01',
- '天津',
- 'team@example.com',
+ 'TeamHub',
+ 'TeamHub',
  '',
- '{"github":"https://github.com/mon3trteam","email":"team@example.com"}',
- '[{"title":"共同目标","description":"先把主流程做通，再谈锦上添花。"},{"title":"透明协作","description":"接口、分工与进度都写在文档里，不靠口头同步。"},{"title":"可被验证","description":"每个功能都能在页面上找到证据。"},{"title":"留有余地","description":"给后来的人留下能读懂的代码与注释。"}]',
+ '',
+ '',
+ NULL,
+ '',
+ '',
+ '',
+ '[]',
+ '[]',
  1,
  1);
 
--- 8.6 里程碑
-INSERT INTO milestones (id, year, title, description, sort_order, is_visible) VALUES
-(1, 2026, '组队与选题',       '确定团队主页方向，完成需求分析与角色分工。', 1, 1),
-(2, 2026, '需求与设计定稿',   '完成 32 项功能清单、21 张表的数据字典与页面线框。', 2, 1),
-(3, 2026, '前后台开发',       '完成公共门户、成员中心与管理后台的界面与联调。', 3, 1),
-(4, 2026, '演示与交付',       '整理文档、PPT 与部署说明，完成课程演示。', 4, 1);
-
--- 8.7 成员
+-- 8.6 成员（模板占位档案：与 member1~4 账号一一绑定，is_visible=0，
+--             使用者在成员中心完成资料实例化并开启可见后再公开展示）
 INSERT INTO members
 (id, user_id, slug, name, english_name, role_title, tagline, bio, email, github_url, website_url, location, join_date, sort_order, is_featured, is_visible, profile_completeness) VALUES
-(1, 3, 'lin-zhiyuan', '林知远', 'Lin Zhiyuan', '前端开发 / 数据库设计',
- '用数据与界面讲好团队故事。',
- '负责团队主页的前台与后台界面，关注信息架构、交互细节与可访问性。喜欢把复杂的数据整理成一眼能看懂的页面。',
- 'lin@example.com', 'https://github.com/example', '', '天津', '2026-09-01', 1, 1, 1, 90),
-(2, 4, 'su-wanqing', '苏晚晴', 'Su Wanqing', '后端开发 / 接口设计',
- '让每一条请求都有清晰的去向。',
- '负责认证、会话与后台服务，关注接口边界、事务一致性与安全默认值。',
- 'su@example.com', 'https://github.com/example', '', '天津', '2026-09-01', 2, 1, 1, 88),
-(3, 5, 'chen-yiming', '陈一鸣', 'Chen Yiming', '数据建模 / SQL',
- '先想清楚关系，再写第一条 SQL。',
- '负责数据库设计、install.sql 与查询优化，喜欢用 EXPLAIN 找问题。',
- 'chen@example.com', 'https://github.com/example', '', '天津', '2026-09-01', 3, 1, 1, 86),
-(4, 6, 'zhou-yuan', '周予安', 'Zhou Yuan', '内容运营 / 视觉',
- '把团队的故事讲得清楚、好看。',
- '负责团队介绍文案、视觉素材与内容发布，关注品牌一致性与阅读体验。',
- 'zhou@example.com', '', 'https://example.com', '天津', '2026-09-15', 4, 1, 1, 84);
+(1, 3, 'member-1', '成员一', '', '', '', '', '', '', '', '', NULL, 1, 0, 0, 0),
+(2, 4, 'member-2', '成员二', '', '', '', '', '', '', '', '', NULL, 2, 0, 0, 0),
+(3, 5, 'member-3', '成员三', '', '', '', '', '', '', '', '', NULL, 3, 0, 0, 0),
+(4, 6, 'member-4', '成员四', '', '', '', '', '', '', '', '', NULL, 4, 0, 0, 0);
 
--- 8.8 技能字典
+-- 8.7 技能字典（功能必需参照数据，供成员中心技能选择；可由管理员按需扩展）
 INSERT INTO skills (id, name, category, color, sort_order) VALUES
 (1, 'PHP',         'tech',   '#4F5D75', 1),
 (2, 'JavaScript',  'tech',   '#F2CC8F', 2),
@@ -653,174 +636,17 @@ INSERT INTO skills (id, name, category, color, sort_order) VALUES
 (6, '写作',        'soft',   '#81B29A', 6),
 (7, 'Git',         'tool',   '#F4A261', 7);
 
--- 8.9 成员技能
-INSERT INTO member_skills (member_id, skill_id, proficiency, years) VALUES
-(1, 2, 5, 2.0), (1, 1, 4, 1.5), (1, 3, 4, 1.5), (1, 5, 4, 1.0),
-(2, 1, 5, 2.0), (2, 3, 5, 2.0), (2, 4, 3, 0.5),
-(3, 3, 5, 2.0), (3, 1, 3, 1.0), (3, 7, 4, 1.5),
-(4, 5, 5, 2.0), (4, 6, 5, 2.0), (4, 7, 3, 1.0);
-
--- 8.10 项目
-INSERT INTO projects
-(id, slug, title, summary, description, tech_stack, status, start_date, end_date, repo_url, demo_url, is_featured, is_visible, view_count, sort_order, created_by) VALUES
-(1, 'teamhub', '数聚 TeamHub 团队主页',
- '团队展示、成员主页、公告与作业下载一体化的课程设计项目。',
- '数聚 TeamHub 是本课程的团队主页项目，目标是做出一套可演示、可还原、可讲清楚的 PHP + MySQL 应用。\n\n前端包含公共门户、成员中心与管理后台三套布局；后端按 MVC 分层，数据库设计 21 张表。',
- 'PHP, MySQL, Bootstrap, ECharts', 'ongoing', '2026-10-28', NULL,
- 'https://github.com/mon3trteam/nku2026DBdev', '', 1, 1, 128, 1, 1),
-(2, 'book-market', '校园二手书交易平台',
- '面向校园的二手书发布、检索与留言系统，练习 CRUD 与权限控制。',
- '一个面向校园的二手书交易练习项目：用户可以发布书籍、按关键词检索，并在详情页留言。\n\n项目重点练习表单校验、权限边界与列表分页。',
- 'PHP, MySQL, JavaScript', 'completed', '2026-09-10', '2026-10-20',
- '', '', 1, 1, 76, 2, 1),
-(3, 'download-center', '课程作业下载中心',
- '按团队文档与个人作业分类的下载中心，包含权限校验与下载计数。',
- '下载中心读取 data/team 与 data/personal 目录，按团队文档与个人作业分类展示。\n\n公开资源直接下载并计数，私有资源需要登录；下载路径经过控制器校验，不暴露磁盘路径。',
- 'PHP, MySQL, Bootstrap', 'planning', '2026-11-01', NULL,
- '', '', 1, 1, 32, 3, 1);
-
--- 8.11 项目成员
-INSERT INTO project_members (project_id, member_id, role_name, contribution, sort_order) VALUES
-(1, 1, '前端 / 数据库设计', '公共门户与成员中心界面', 1),
-(1, 2, '后端 / 接口',       '认证、资料保存与下载接口', 2),
-(2, 3, '数据建模',           '表结构与查询优化', 1),
-(2, 2, '后端',               '留言与权限控制', 2),
-(3, 4, '内容 / 视觉',       '资源分类与页面文案', 1);
-
--- 8.12 公告
-INSERT INTO announcements
-(id, title, slug, summary, content, category, status, is_pinned, published_at, expires_at, view_count, author_id) VALUES
-(1, '团队主页初版界面开放预览', 'site-preview',
- '首页、团队介绍、成员列表与成员主页已经完成第一版，欢迎提出意见。',
- '团队主页的第一版界面已经完成，包含首页、团队介绍、成员列表与成员主页。\n\n当前使用演示数据，后端接口接入后会替换为真实内容。欢迎在留言板留下你的建议。',
- 'news', 'published', 1, '2026-11-05 10:00:00', NULL, 156, 6),
-(2, '需求与设计文档完成评审', 'design-review',
- '32 项功能、21 张表与页面线框已定稿，进入开发阶段。',
- '需求文档与设计文档已完成内部评审。\n\n下一步按 P0 优先级推进：公共门户、成员中心与管理后台。',
- 'notice', 'published', 0, '2026-10-28 18:30:00', NULL, 98, 3),
-(3, '课程作业下载中心即将上线', 'download-center',
- '团队文档与个人作业将按分类提供下载，并记录下载次数。',
- '下载中心将读取 data/team 与 data/personal 目录，按团队文档与个人作业分类展示。\n\n资源管理页面完成后即可在后台上传与公开。',
- 'activity', 'published', 0, '2026-10-30 14:20:00', NULL, 64, 5);
-
--- 8.13 留言
-INSERT INTO messages
-(id, member_id, author_name, author_email, author_website, content, status, ip_hash, user_agent, admin_note, created_at) VALUES
-(1, 1, '一位访客', NULL, NULL,
- '首页的结构很清楚，成员主页的技能条也很好读，期待看到项目详情页。',
- 'approved', SHA2('seed-msg-ip-1', 256), 'Edge / Windows 11', NULL, '2026-11-02 20:15:00'),
-(2, 4, '同班同学', NULL, NULL,
- '请问下载中心会放团队文档的 PDF 吗？想参考一下设计文档的结构。',
- 'approved', SHA2('seed-msg-ip-2', 256), 'Chrome / Windows 11', NULL, '2026-11-03 09:40:00'),
-(3, 2, '访客C', NULL, NULL,
- '成员主页的项目卡片排版很清晰，建议在列表页也加上项目入口。',
- 'approved', SHA2('seed-msg-ip-3', 256), 'Firefox / Windows 11', NULL, '2026-11-04 21:05:00'),
-(4, NULL, '学弟', NULL, NULL,
- '想了解团队招新和课程项目的方向，有没有公开的介绍材料？',
- 'approved', SHA2('seed-msg-ip-4', 256), 'Safari / macOS', NULL, '2026-11-04 18:30:00'),
-(5, 3, '合作方', NULL, NULL,
- '项目状态和参与成员的展示很直观，方便快速判断团队分工。',
- 'approved', SHA2('seed-msg-ip-5', 256), 'Edge / Windows 11', NULL, '2026-11-03 16:20:00'),
-(6, NULL, '访客D', NULL, NULL,
- '留言板会支持管理员回复吗？希望能看到官方的补充说明。',
- 'approved', SHA2('seed-msg-ip-6', 256), 'Chrome / Android', NULL, '2026-11-02 11:05:00'),
-(7, 1, '路过的同学', NULL, NULL,
- '移动端的导航抽屉很好用，360 宽度下也没有横向滚动。',
- 'approved', SHA2('seed-msg-ip-7', 256), 'Edge / Windows 11', NULL, '2026-11-01 10:12:00');
-
--- 8.14 留言回复
-INSERT INTO message_replies (id, message_id, user_id, replier_name, content, is_admin, status, created_at) VALUES
-(1, 1, 1, '管理员', '谢谢关注，项目详情页已经补上了。', 1, 'visible', '2026-11-03 09:10:00'),
-(2, 2, 1, '管理员', '会放需求、设计、部署三份文档，资源页正在做。', 1, 'visible', '2026-11-03 12:20:00'),
-(3, 4, 1, '管理员', '团队介绍页有方向和分工，后续会补招新说明。', 1, 'visible', '2026-11-04 19:00:00'),
-(4, 6, 1, '管理员', '支持，回复会显示在留言下方。', 1, 'visible', '2026-11-02 13:40:00');
-
--- 8.15 媒体（指向课程要求的 data/team 与 data/personal 目录）
--- 说明：以下记录对应预期交付文件；文件未上传前下载会返回“文件不存在”，
---       请把真实 PDF/ZIP 放入 code/data/team、code/data/personal 后再演示。
-INSERT INTO media
-(id, disk_name, original_name, mime_type, extension, size_bytes, width, height, sha256, storage_path, visibility, uploaded_by, created_at) VALUES
-(1, 'seed-team-requirement.pdf', 'M3_需求文档.pdf',       'application/pdf', 'pdf', 1887436, NULL, NULL, SHA2('seed-media-1', 256), 'data/team/M3_需求文档.pdf',            'public', 1, '2026-10-28 10:00:00'),
-(2, 'seed-team-design.pdf',      'M3_设计文档.pdf',       'application/pdf', 'pdf', 3355443, NULL, NULL, SHA2('seed-media-2', 256), 'data/team/M3_设计文档.pdf',            'public', 1, '2026-10-28 10:00:00'),
-(3, 'seed-team-deploy.pdf',      'M3_部署文档.pdf',       'application/pdf', 'pdf', 1003520, NULL, NULL, SHA2('seed-media-3', 256), 'data/team/M3_部署文档.pdf',            'public', 1, '2026-11-02 10:00:00'),
-(4, 'seed-personal-hw1.zip',     '作业1(学号_姓名).zip',   'application/zip', 'zip', 4823449, NULL, NULL, SHA2('seed-media-4', 256), 'data/personal/作业1(学号_姓名).zip',   'public', 1, '2026-10-20 10:00:00'),
-(5, 'seed-personal-hw2.zip',     '作业2(学号_姓名).zip',   'application/zip', 'zip', 3250585, NULL, NULL, SHA2('seed-media-5', 256), 'data/personal/作业2(学号_姓名).zip',   'public', 1, '2026-10-27 10:00:00'),
-(6, 'seed-personal-hw3.zip',     '作业3(学号_姓名).zip',   'application/zip', 'zip', 5662310, NULL, NULL, SHA2('seed-media-6', 256), 'data/personal/作业3(学号_姓名).zip',   'public', 1, '2026-11-01 10:00:00'),
-(7, 'seed-team-er.pdf',          'M3_ER图.pdf',           'application/pdf', 'pdf', 634880,  NULL, NULL, SHA2('seed-media-7', 256), 'data/team/M3_ER图.pdf',                'public', 1, '2026-10-28 10:00:00'),
-(8, 'seed-team-dictionary.pdf',  'M3_数据字典.pdf',       'application/pdf', 'pdf', 1153433, NULL, NULL, SHA2('seed-media-8', 256), 'data/team/M3_数据字典.pdf',            'public', 1, '2026-10-28 10:00:00'),
-(9, 'seed-team-demo.pdf',        'M3_演示说明.pdf',       'application/pdf', 'pdf', 327680,  NULL, NULL, SHA2('seed-media-9', 256), 'data/team/M3_演示说明.pdf',            'public', 1, '2026-11-03 10:00:00');
-
--- 8.16 下载资源
-INSERT INTO resources
-(id, title, category, description, media_id, download_count, is_public, sort_order, uploaded_by, created_at, updated_at) VALUES
-(1, '团队需求文档', 'team',     '功能需求、用例、业务规则与验收标准。', 1, 0, 1, 1, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(2, '团队设计文档', 'team',     '架构、21 张表的数据字典、接口与页面设计。', 2, 0, 1, 2, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(3, '部署文档',     'doc',      'Docker Compose 一键部署、备份与还原流程。', 3, 0, 1, 3, 1, '2026-11-02 10:00:00', '2026-11-02 10:00:00'),
-(4, '个人作业 1（学号_姓名）', 'personal', 'Web 前端初探：抓包、jQuery 事件与浏览器插件。', 4, 0, 1, 4, 1, '2026-10-20 10:00:00', '2026-10-20 10:00:00'),
-(5, '个人作业 2（学号_姓名）', 'personal', '页面设计实践与响应式布局。', 5, 0, 1, 5, 1, '2026-10-27 10:00:00', '2026-10-27 10:00:00'),
-(6, '个人作业 3（学号_姓名）', 'personal', 'WordPress 建站实践与内容运营。', 6, 0, 1, 6, 1, '2026-11-01 10:00:00', '2026-11-01 10:00:00'),
-(7, 'E-R 图',       'design',   '团队主页核心实体关系图。', 7, 0, 1, 7, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(8, '数据字典',     'design',   '21 张表的字段、类型、索引与约束。', 8, 0, 1, 8, 1, '2026-10-28 10:00:00', '2026-10-28 10:00:00'),
-(9, '演示环境说明', 'other',    '本地 Docker 环境、初始账号与演示路径。', 9, 0, 1, 9, 1, '2026-11-03 10:00:00', '2026-11-03 10:00:00');
-
--- 8.17 站点设置
+-- 8.8 站点设置（功能必需配置；内容字段为中性模板值）
 INSERT INTO site_settings (setting_key, setting_value, value_type, group_name, label, is_public, updated_by) VALUES
-('site.name',          '数聚 TeamHub', 'string', 'general', '站点名称', 1, 1),
-('site.english_name',  'DataNova',     'string', 'general', '英文名', 1, 1),
+('site.name',          'TeamHub',      'string', 'general', '站点名称', 1, 1),
+('site.english_name',  'TeamHub',      'string', 'general', '英文名', 1, 1),
 ('general.maintenance','0',            'bool',   'general', '维护模式', 0, 1),
-('general.values',     '[{"title":"共同目标","description":"先把主流程做通"},{"title":"透明协作","description":"接口、分工与进度都写在文档里"}]', 'json', 'general', '价值观（JSON）', 1, 1),
-('site.description',   '数聚 TeamHub：团队展示、成员主页、公告与课程作业下载。', 'string', 'seo', 'SEO 描述', 1, 1),
-('site.keywords',      '南开大学, 数据库, 团队主页, 课程设计', 'string', 'seo', 'SEO 关键词', 1, 1),
-('footer.copyright',   '© 2026 数聚 TeamHub · 课程设计演示', 'string', 'footer', '版权文案', 1, 1),
+('general.values',     '[]',           'json',   'general', '价值观（JSON）', 1, 1),
+('site.description',   'TeamHub：团队展示、成员主页、公告与课程作业下载。', 'string', 'seo', 'SEO 描述', 1, 1),
+('site.keywords',      '团队主页, 数据库, 课程设计', 'string', 'seo', 'SEO 关键词', 1, 1),
+('footer.copyright',   '',             'string', 'footer', '版权文案（留空走默认）', 1, 1),
 ('footer.icp',         '',             'string', 'footer', '备案信息', 1, 1),
-('contact.email',      'team@example.com', 'string', 'contact', '联系邮箱', 1, 1),
-('contact.location',   '天津',         'string', 'contact', '所在地', 1, 1);
-
--- 8.18 访问统计（演示数据；接入真实统计后可删除本段）
-INSERT INTO page_views (path, route_name, visitor_hash, viewed_at)
-SELECT CASE MOD(n, 3)
-           WHEN 0 THEN '/'
-           WHEN 1 THEN '/members'
-           ELSE '/announcements'
-       END,
-       CASE MOD(n, 3)
-           WHEN 0 THEN 'home/index'
-           WHEN 1 THEN 'member/index'
-           ELSE 'announcement/index'
-       END,
-       SHA2(CONCAT('seed-visitor-', n), 256),
-       DATE_SUB(CURDATE(), INTERVAL MOD(n, 14) DAY) + INTERVAL (8 + MOD(n, 10)) HOUR
-FROM (
-    SELECT a.n + b.n * 10 AS n
-    FROM (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-          UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) a
-    CROSS JOIN (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) b
-) nums
-WHERE n < 70;
-
--- 8.19 登录日志（演示用失败记录；种子账号均未登录过，首登强制改密，
---       成功登录记录由真实使用产生）
-INSERT INTO login_logs (user_id, username_attempted, success, failure_reason, ip_hash, user_agent, created_at) VALUES
-(3, 'member1', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:39:00'),
-(3, 'member1', 0, 'wrong_password', SHA2('seed-ip-1', 256), 'Edge / Windows 11',    '2026-11-04 21:41:00'),
-(NULL, 'unknown',  0, 'not_found',      SHA2('seed-ip-3', 256), 'Firefox / Windows 11', '2026-11-02 10:22:00');
-
--- 8.20 操作审计
-INSERT INTO audit_logs (actor_id, action, entity_type, entity_id, before_json, after_json, ip_hash, created_at) VALUES
-(1, 'publish', 'announcement', 1, '{"status":"draft"}',     '{"status":"published"}', SHA2('seed-ip-1', 256), '2026-11-05 10:20:00'),
-(2, 'update',  'member',       2, NULL,                     '{"skills":["PHP","MySQL"]}', SHA2('seed-ip-2', 256), '2026-11-05 09:45:00'),
-(1, 'moderate','message',      3, '{"status":"pending"}',   '{"status":"approved"}',  SHA2('seed-ip-1', 256), '2026-11-04 20:10:00'),
-(2, 'create',  'announcement', 4, NULL,                     '{"status":"draft"}',     SHA2('seed-ip-2', 256), '2026-11-04 16:32:00'),
-(1, 'update',  'site_settings', NULL, '{"seo.description":"旧描述"}', '{"seo.description":"数聚 TeamHub：团队展示、成员主页、公告与课程作业下载。"}', SHA2('seed-ip-1', 256), '2026-11-03 11:08:00');
+('contact.email',      '',             'string', 'contact', '联系邮箱', 1, 1),
+('contact.location',   '',             'string', 'contact', '所在地', 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
-
--- =====================================================================
--- 安装完成。验证建议：
---   SELECT COUNT(*) FROM information_schema.tables
---    WHERE table_schema = 'team_home' AND table_type = 'BASE TABLE';  -- 应为 21
---   SELECT COUNT(*) FROM information_schema.views
---    WHERE table_schema = 'team_home';                                -- 应为 3
---   SELECT * FROM v_public_members;
---   SELECT * FROM v_published_announcements;
--- =====================================================================

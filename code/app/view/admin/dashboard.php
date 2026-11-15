@@ -11,10 +11,10 @@
 
 require APP_ROOT . '/app/view/layout/admin_header.php';
 
-$maxViews = max(1, ...array_column($trend, 'views'));
-$maxSkill = max(1, ...array_column($skills, 'count'));
-$maxMessage = max(1, ...array_column($messageStatus, 'count'));
-$maxProject = max(1, ...array_column($projectStatus, 'count'));
+$maxViews = max([1, ...array_column($trend, 'views')]);
+$maxSkill = max([1, ...array_column($skills, 'count')]);
+$maxMessage = max([1, ...array_column($messageStatus, 'count')]);
+$maxProject = max([1, ...array_column($projectStatus, 'count')]);
 
 // 传给 ECharts 的数据（JSON_HEX_TAG 防止 </script> 提前闭合标签）
 $chartPayload = [

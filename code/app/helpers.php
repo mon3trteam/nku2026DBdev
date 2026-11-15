@@ -49,7 +49,7 @@ function site_identity(): array
     }
 
     $team = [
-        'name' => '数聚 TeamHub',
+        'name' => 'TeamHub',
         'english_name' => '',
         'slogan' => '',
         'short_intro' => '',
@@ -77,7 +77,7 @@ function site_identity(): array
         $name = trim((string) ($team['name'] ?? ''));
     }
     if ($name === '') {
-        $name = '数聚 TeamHub';
+        $name = 'TeamHub';
     }
 
     $description = trim((string) ($settings['site.description'] ?? ''));

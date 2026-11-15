@@ -39,8 +39,12 @@ final class HomeController
             'stats' => [
                 'members' => count(MemberModel::allVisible()),
                 'projects' => MemberModel::countVisibleProjects(),
-                'tables' => 21,
-                'dimensions' => 3,
+                'tables' => (int) Db::fetchValue(
+                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'"
+                ),
+                'announcements' => (int) Db::fetchValue(
+                    "SELECT COUNT(*) FROM announcements WHERE status = 'published'"
+                ),
             ],
             'projects' => $projects,
             'announcements' => $announcements,

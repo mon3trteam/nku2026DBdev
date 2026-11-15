@@ -9,7 +9,7 @@
  * 所属模块：数据与运维 / 数据包
  *
  * 设计要点：
- *   1) 数据包与代码模板解耦：install.sql 只承载表结构 + 演示种子；真实内容随数据包迁移，永不回填仓库；
+ *   1) 数据包与代码模板解耦：install.sql 只承载表结构 + 模板初始数据；真实内容随数据包迁移，永不回填仓库；
  *   2) 包结构：manifest.json + data.sql（全表 INSERT，随机哨兵逐语句分隔，兼容独立 mysql CLI）+
  *      uploads_public/ + uploads_storage/；不含 .env 等密钥，可跨机器移植；
  *   3) 导入为整库覆盖，仅限 data.manage 权限；清表用 DELETE（事务安全），FK 开关 try/finally 保证恢复；
@@ -327,7 +327,7 @@ final class DataPackageModel
     {
         $pdo = Db::pdo();
         $out = self::SENTINEL_HEADER . ' ' . substr($sentinel, strlen(self::SENTINEL_PREFIX)) . "\n"
-             . "-- TeamHub 数据包 data.sql；生成时间：" . date('c') . "；导入将整库覆盖。\n";
+             . "-- 站点数据包 data.sql；生成时间：" . date('c') . "；导入将整库覆盖。\n";
         $emit = static function (string $sql) use (&$out, $sentinel): void {
             $out .= rtrim($sql, ";\n\r") . ";\n" . $sentinel . "\n";
         };

@@ -57,7 +57,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
                 </div>
                 <div class="side-panel">
                     <h2 class="side-panel__title">说明</h2>
-                    <p class="text-muted mb-0">公告正文使用受限 Markdown 渲染，发布后出现在首页最新动态。当前为演示数据。</p>
+                    <p class="text-muted mb-0">公告正文使用受限 Markdown 渲染，发布后出现在首页最新动态。</p>
                 </div>
             </aside>
         </div>
