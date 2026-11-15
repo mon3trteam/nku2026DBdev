@@ -63,7 +63,8 @@
             }
             var revealed = input.getAttribute('data-revealed') === '1';
             input.setAttribute('type', revealed ? 'text' : 'password');
-            button.innerHTML = revealed ? EYE_OFF_ICON : EYE_ICON;
+            // 图标反映当前状态：掩码=闭眼，明文=睁眼
+            button.innerHTML = revealed ? EYE_ICON : EYE_OFF_ICON;
             button.setAttribute('aria-label', revealed ? '隐藏密码' : '显示密码');
             button.setAttribute('aria-pressed', String(revealed));
         }
