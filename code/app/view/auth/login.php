@@ -77,8 +77,6 @@ $metaDescription = $metaDescription ?? ($siteName . ' 成员登录入口。');
                            id="password" name="password" type="password"
                            autocomplete="current-password" required minlength="10" placeholder="请输入密码"
                            <?= $state === 'error' ? 'aria-describedby="password-error"' : '' ?>>
-                    <button class="password-toggle" type="button" data-toggle-password="#password"
-                            aria-label="显示密码">显示</button>
                 </div>
                 <?php if ($state === 'error'): ?>
                     <div class="invalid-feedback d-block" id="password-error">请检查密码后重试。</div>

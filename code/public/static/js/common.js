@@ -49,40 +49,65 @@
             window.showToast(document.body.dataset.toast, document.body.dataset.toastType || 'info');
         }
 
-        // 密码显示/隐藏：每个密码框旁有一颗常驻切换按钮，默认掩码（圆点），
-        // 点击在明文与掩码间切换。事件委托 + 绑定幂等，按钮始终存在不消失。
-        var togglePassword = function (button) {
-            var input = document.querySelector(button.getAttribute('data-toggle-password'));
+        // 密码可见切换（小眼睛）：为每个 .password-field 自动注入眼睛按钮，
+        // 默认掩码，点击切换明文/掩码，图标在 眼睛/闭眼 之间切换。
+        // 事件委托，绑定幂等；视图层零标记，全部由这里统一生成。
+        var EYE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+        var EYE_OFF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a13.07 13.07 0 0 0 7.13-2.04"/><path d="M2 2l20 20"/></svg>';
+
+        function applyPasswordEyeState(field) {
+            var input = field.querySelector('input');
+            var button = field.querySelector('.password-eye');
+            if (!input || !button) {
+                return;
+            }
+            var revealed = input.getAttribute('data-revealed') === '1';
+            input.setAttribute('type', revealed ? 'text' : 'password');
+            button.innerHTML = revealed ? EYE_OFF_ICON : EYE_ICON;
+            button.setAttribute('aria-label', revealed ? '隐藏密码' : '显示密码');
+            button.setAttribute('aria-pressed', String(revealed));
+        }
+
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest('.password-eye');
+            if (!button) {
+                return;
+            }
+            var field = button.closest('.password-field');
+            if (!field) {
+                return;
+            }
+            var input = field.querySelector('input');
             if (!input) {
                 return;
             }
-            var masked = input.getAttribute('type') === 'password';
-            input.setAttribute('type', masked ? 'text' : 'password');
-            button.textContent = masked ? '隐藏' : '显示';
-            button.setAttribute('aria-label', masked ? '隐藏密码' : '显示密码');
-            button.setAttribute('aria-pressed', String(masked));
-        };
-        document.addEventListener('click', function (event) {
-            var button = event.target.closest('[data-toggle-password]');
-            if (button) {
-                togglePassword(button);
-            }
+            input.setAttribute('data-revealed', input.getAttribute('data-revealed') === '1' ? '0' : '1');
+            applyPasswordEyeState(field);
         });
-        // 自动补齐：.password-field 内没有按钮的密码框自动注入一颗（含未来新增字段）
-        document.querySelectorAll('.password-field input[type="password"]').forEach(function (input) {
-            var field = input.closest('.password-field');
-            if (!field || field.querySelector('.password-toggle') || !input.id) {
-                return;
-            }
-            var button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'password-toggle';
-            button.setAttribute('data-toggle-password', '#' + input.id);
-            button.setAttribute('aria-label', '显示密码');
-            button.setAttribute('aria-pressed', 'false');
-            button.textContent = '显示';
-            field.appendChild(button);
-        });
+
+        function injectPasswordEyes() {
+            document.querySelectorAll('.password-field').forEach(function (field) {
+                if (field.querySelector('.password-eye')) {
+                    applyPasswordEyeState(field);   // 已有按钮：校准状态
+                    return;
+                }
+                var input = field.querySelector('input');
+                if (!input) {
+                    return;
+                }
+                if (!input.id) {
+                    input.id = 'pw-' + Math.random().toString(36).slice(2, 8);
+                }
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'password-eye';
+                button.setAttribute('aria-label', '显示密码');
+                button.setAttribute('aria-pressed', 'false');
+                field.appendChild(button);
+                applyPasswordEyeState(field);
+            });
+        }
+        injectPasswordEyes();
 
         // 表单提交锁：防止重复提交；校验失败时浏览器不会触发 submit
         document.querySelectorAll('form[method="post"]').forEach(function (form) {
