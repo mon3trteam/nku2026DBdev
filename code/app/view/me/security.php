@@ -41,7 +41,6 @@ require APP_ROOT . '/app/view/layout/me_header.php';
                         <input class="form-control <?= isset($errors['current_password']) ? 'is-invalid' : '' ?>"
                                id="current_password" name="current_password" type="password"
                                autocomplete="current-password" required>
-                        <button class="password-toggle" type="button" data-toggle-password="#current_password" aria-label="显示密码">显示</button>
                     </div>
                     <?php if (isset($errors['current_password'])): ?>
                         <div class="invalid-feedback"><?= e($errors['current_password']) ?></div>
@@ -67,7 +66,6 @@ require APP_ROOT . '/app/view/layout/me_header.php';
                         <input class="form-control <?= isset($errors['confirm_password']) ? 'is-invalid' : '' ?>"
                                id="confirm_password" name="confirm_password" type="password"
                                autocomplete="new-password" required>
-                        <button class="password-toggle" type="button" data-toggle-password="#confirm_password" aria-label="显示密码">显示</button>
                     </div>
                     <?php if (isset($errors['confirm_password'])): ?>
                         <div class="invalid-feedback"><?= e($errors['confirm_password']) ?></div>

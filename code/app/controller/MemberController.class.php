@@ -3,6 +3,7 @@
  * 文件名：MemberController.class.php
  * 功能：成员列表与成员主页控制器，支持按技能筛选和按 slug 查看详情
  * 作者：杨斯源（学号待填）
+ * 修改：黄浩天（2413421）成员列表每页 3 条改 4 条（2026-11-15）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 成员
@@ -21,7 +22,7 @@ final class MemberController
         $sort = (string) ($_GET['sort'] ?? '');
         $sort = in_array($sort, ['name', 'join_date'], true) ? $sort : '';
         $page = max(1, (int) ($_GET['page'] ?? 1));
-        $perPage = 3;
+        $perPage = 4;
 
         $result = MemberModel::search($keyword, $skill, $sort, $page, $perPage);
 

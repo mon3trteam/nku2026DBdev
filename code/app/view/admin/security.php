@@ -3,6 +3,7 @@
  * 文件名：security.php
  * 功能：后台账号安全（修改本人密码、查看最近登录）
  * 作者：金暄琛（2411672）
+ * 修改：黄浩天（2413421）密码显示按钮仅保留新密码一处（2026-11-15）
  * 创建日期：2026-11-08
  * 所属模块：管理后台 / 账号安全
  */
@@ -34,7 +35,6 @@ $loginLogs = $loginLogs ?? [];
                         <input class="form-control <?= isset($errors['current_password']) ? 'is-invalid' : '' ?>"
                                id="current_password" name="current_password" type="password"
                                autocomplete="current-password" required>
-                        <button class="password-toggle" type="button" data-toggle-password="#current_password" aria-label="显示密码">显示</button>
                     </div>
                     <?php if (isset($errors['current_password'])): ?>
                         <div class="invalid-feedback"><?= e($errors['current_password']) ?></div>
@@ -60,7 +60,6 @@ $loginLogs = $loginLogs ?? [];
                         <input class="form-control <?= isset($errors['confirm_password']) ? 'is-invalid' : '' ?>"
                                id="confirm_password" name="confirm_password" type="password"
                                autocomplete="new-password" required>
-                        <button class="password-toggle" type="button" data-toggle-password="#confirm_password" aria-label="显示密码">显示</button>
                     </div>
                     <?php if (isset($errors['confirm_password'])): ?>
                         <div class="invalid-feedback"><?= e($errors['confirm_password']) ?></div>
