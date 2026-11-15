@@ -49,20 +49,39 @@
             window.showToast(document.body.dataset.toast, document.body.dataset.toastType || 'info');
         }
 
-        // 密码显示/隐藏
-        document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var selector = button.getAttribute('data-toggle-password');
-                var input = document.querySelector(selector);
-                if (!input) {
-                    return;
-                }
-
-                var isPassword = input.getAttribute('type') === 'password';
-                input.setAttribute('type', isPassword ? 'text' : 'password');
-                button.textContent = isPassword ? '隐藏' : '显示';
-                button.setAttribute('aria-label', isPassword ? '隐藏密码' : '显示密码');
-            });
+        // 密码显示/隐藏：每个密码框旁有一颗常驻切换按钮，默认掩码（圆点），
+        // 点击在明文与掩码间切换。事件委托 + 绑定幂等，按钮始终存在不消失。
+        var togglePassword = function (button) {
+            var input = document.querySelector(button.getAttribute('data-toggle-password'));
+            if (!input) {
+                return;
+            }
+            var masked = input.getAttribute('type') === 'password';
+            input.setAttribute('type', masked ? 'text' : 'password');
+            button.textContent = masked ? '隐藏' : '显示';
+            button.setAttribute('aria-label', masked ? '隐藏密码' : '显示密码');
+            button.setAttribute('aria-pressed', String(masked));
+        };
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest('[data-toggle-password]');
+            if (button) {
+                togglePassword(button);
+            }
+        });
+        // 自动补齐：.password-field 内没有按钮的密码框自动注入一颗（含未来新增字段）
+        document.querySelectorAll('.password-field input[type="password"]').forEach(function (input) {
+            var field = input.closest('.password-field');
+            if (!field || field.querySelector('.password-toggle') || !input.id) {
+                return;
+            }
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'password-toggle';
+            button.setAttribute('data-toggle-password', '#' + input.id);
+            button.setAttribute('aria-label', '显示密码');
+            button.setAttribute('aria-pressed', 'false');
+            button.textContent = '显示';
+            field.appendChild(button);
         });
 
         // 表单提交锁：防止重复提交；校验失败时浏览器不会触发 submit
