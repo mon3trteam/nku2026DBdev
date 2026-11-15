@@ -109,8 +109,7 @@ require APP_ROOT . '/app/view/layout/public_header.php';
         <div class="row g-4">
             <?php foreach ($members as $member): ?>
                 <div class="col-sm-6 col-lg-3">
-                    $cardStacked = true;
-                    <?php require APP_ROOT . '/app/view/partial/member_card.php'; ?>
+                    <?php $cardStacked = true; require APP_ROOT . '/app/view/partial/member_card.php'; ?>
                 </div>
             <?php endforeach; ?>
         </div>

@@ -111,8 +111,7 @@ $teamMetaText = implode(' · ', $teamMeta);
                 <div class="row g-3">
                     <?php foreach ($members as $member): ?>
                         <div class="col-sm-6">
-                            $cardStacked = true;
-                            <?php require APP_ROOT . '/app/view/partial/member_card.php'; ?>
+                            <?php $cardStacked = true; require APP_ROOT . '/app/view/partial/member_card.php'; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
