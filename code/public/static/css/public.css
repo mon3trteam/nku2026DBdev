@@ -133,7 +133,7 @@
     position: relative;
     display: flex;
     align-items: flex-end;
-    aspect-ratio: 16 / 9;   /* 与上传封面规格一致（1600×900），避免裁切 */
+    aspect-ratio: 4 / 3;
     padding: var(--space-6);
     overflow: hidden;
     background:
