@@ -4,6 +4,7 @@
  * 功能：成员列表页（搜索、技能筛选、排序、分页、空状态）
  * 作者：杨斯源（学号待填）
  * 修改：黄浩天（2413421）成员卡片启用竖排变体，恢复原型比例（2026-11-15）
+ * 修改：黄浩天（2413421）修复技能筛选/排序切换失效（数组并集旧值胜出改为覆盖式合并）（2026-11-18）
  * 创建日期：2026-11-05
  * 所属模块：公共门户 / 成员
  */
@@ -19,6 +20,29 @@ if ($sort !== '') {
     $pagerParams['sort'] = $sort;
 }
 $sortParams = $baseParams;
+
+/* 筛选/排序链接统一走覆盖式合并（旧写法 $sortParams + [...] 会保留旧值，导致切换失效） */
+$memberListUrl = static function (array $overrides = []) use ($keyword, $activeSkill, $sort): string {
+    $params = [];
+    if ($keyword !== '') {
+        $params['q'] = $keyword;
+    }
+    if ($activeSkill !== '') {
+        $params['skill'] = $activeSkill;
+    }
+    if ($sort !== '') {
+        $params['sort'] = $sort;
+    }
+    foreach ($overrides as $key => $value) {
+        $params[$key] = $value;   // 新值必胜
+    }
+    foreach (['skill', 'sort'] as $key) {
+        if (($params[$key] ?? '') === '') {
+            unset($params[$key]);   // 空值参数不出现在 URL 里
+        }
+    }
+    return url('member/index', $params);
+};
 ?>
 <section class="page-hero page-hero--compact">
     <div class="container">
@@ -49,10 +73,10 @@ $sortParams = $baseParams;
 
         <div class="filter-bar" role="group" aria-label="按技能筛选">
             <a class="filter-pill <?= $activeSkill === '' ? 'is-active' : '' ?>"
-               href="<?= e(url('member/index', $sortParams)) ?>">全部</a>
-            <?php foreach ($skills as $skill): ?>
-                <a class="filter-pill <?= $activeSkill === $skill ? 'is-active' : '' ?>"
-                   href="<?= e(url('member/index', $sortParams + ['skill' => $skill])) ?>"><?= e($skill) ?></a>
+               href="<?= e($memberListUrl(['skill' => ''])) ?>">全部</a>
+            <?php foreach ($skills as $skillName): ?>
+                <a class="filter-pill <?= $activeSkill === $skillName ? 'is-active' : '' ?>"
+                   href="<?= e($memberListUrl(['skill' => $skillName])) ?>"><?= e($skillName) ?></a>
             <?php endforeach; ?>
         </div>
 
@@ -65,11 +89,11 @@ $sortParams = $baseParams;
             <nav class="sort-bar" aria-label="排序方式">
                 <span>排序</span>
                 <a class="sort-link <?= $sort === '' ? 'is-active' : '' ?>"
-                   href="<?= e(url('member/index', $sortParams)) ?>">默认</a>
+                   href="<?= e($memberListUrl(['sort' => ''])) ?>">默认</a>
                 <a class="sort-link <?= $sort === 'name' ? 'is-active' : '' ?>"
-                   href="<?= e(url('member/index', $sortParams + ['sort' => 'name'])) ?>">姓名</a>
+                   href="<?= e($memberListUrl(['sort' => 'name'])) ?>">姓名</a>
                 <a class="sort-link <?= $sort === 'join_date' ? 'is-active' : '' ?>"
-                   href="<?= e(url('member/index', $sortParams + ['sort' => 'join_date'])) ?>">加入时间</a>
+                   href="<?= e($memberListUrl(['sort' => 'join_date'])) ?>">加入时间</a>
             </nav>
         </div>
 

@@ -4,6 +4,7 @@
  * 功能：成员中心控制器（概览、个人资料、我的项目、账号安全）
  * 作者：杨斯源（学号待填）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
+ * 修改：黄浩天（2413421）管理员访问成员中心时跳转管理后台（2026-11-18）
  * 创建日期：2026-11-05
  * 所属模块：成员中心
  */
@@ -20,6 +21,11 @@ final class MeController
     {
         Auth::requireLogin();
         Auth::requirePermission('member.edit');
+
+        // 管理员角色没有绑定成员档案，访问成员中心时直接送往管理后台，避免 403 中断体验
+        if (Auth::isAdmin() && MemberModel::findByUserId(Auth::id()) === null) {
+            redirect(url('admin/dashboard'));
+        }
     }
 
     public function index(): void

@@ -4,6 +4,7 @@
  * 功能：公共门户头部布局（导航、样式、跳转链接）
  * 作者：杨斯源（学号待填）
  * 修改：黄浩天（2413421）登录态下导航按钮改显「个人信息」（2026-11-15）
+ * 修改：黄浩天（2413421）管理员角色按钮改指管理后台，避免落入未绑定档案的成员中心（2026-11-18）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
  * 所属模块：公共布局
@@ -86,10 +87,12 @@ $toastType = $toastType ?? 'success';
                         <a class="nav-link <?= e(is_active('resource')) ?>" href="<?= e(url('resource/index')) ?>">资源</a>
                     </li>
                     <li class="nav-item ms-lg-2">
-<?php if (Auth::check()): ?>
-                        <a class="btn btn-outline-primary btn-sm" href="<?= e(url('me/index')) ?>">个人信息</a>
-<?php else: ?>
+<?php if (!Auth::check()): ?>
                         <a class="btn btn-outline-primary btn-sm" href="<?= e(url('auth/login')) ?>">登录</a>
+<?php elseif (Auth::isAdmin()): ?>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= e(url('admin/dashboard')) ?>">管理后台</a>
+<?php else: ?>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= e(url('me/index')) ?>">个人信息</a>
 <?php endif; ?>
                     </li>
                 </ul>

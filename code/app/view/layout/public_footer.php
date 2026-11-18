@@ -62,8 +62,14 @@ $footerIcp = trim((string) ($siteSettings['footer.icp'] ?? ''));
             <span><?= e($footerCopyright) ?></span>
             <?php if ($footerIcp !== ''): ?><span><?= e($footerIcp) ?></span><?php endif; ?>
             <span class="d-flex gap-3">
+<?php if (Auth::check() && Auth::isAdmin()): ?>
+                <a href="<?= e(url('admin/dashboard')) ?>">管理后台</a>
+<?php elseif (Auth::check()): ?>
+                <a href="<?= e(url('me/index')) ?>">成员中心</a>
+<?php else: ?>
                 <a href="<?= e(url('me/index')) ?>">成员中心</a>
                 <a href="<?= e(url('auth/login')) ?>">管理入口</a>
+<?php endif; ?>
             </span>
         </div>
     </div>
