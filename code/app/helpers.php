@@ -173,8 +173,10 @@ function format_date(?string $date, string $fallback = '—'): string
 /**
  * 截取纯文本摘要，避免卡片高度失控。
  */
-function str_limit(string $text, int $limit = 60, string $end = '…'): string
+function str_limit(?string $text, int $limit = 60, string $end = '…'): string
 {
+    $text = $text ?? '';   // 摘要等字段允许 NULL（如未填摘要的公告），按空串处理
+
     if (mb_strlen($text, 'UTF-8') <= $limit) {
         return $text;
     }
