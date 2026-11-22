@@ -61,12 +61,12 @@ code/            项目源码
 ## 当前状态（2026-11-22 晚 交接页——换对话后先读本节）
 
 - **队名已定稿：M 立方（M-Cubed）**，产品名 数聚 TeamHub；四名成员：黄浩天 2413421（组长）· 钱泊瑜 2411282 · 杨斯源 2412796 · 金暄琛 2411672（依据：答辩讲稿 + 服务器 team_profile）
-- **分支**：main 与 dev 均领先 origin（本地含 2026-11-22 收尾批次提交）；**GitHub 未同步**——代理 7890 未开 + 直连被墙，恢复后 `git push origin main dev`
-- **线上**：http://39.96.23.4:8018 运行中（bind mount）；四人档案已实例化（username=学号、display_name=真名，2026-11-22 SQL 直改 users 表）；品牌 M 立方已生效；**服务器尚未同步本日仓库改动**（logo.svg、注释头学号、data/team 六份 PDF、data/personal 三份 zip）——同步后下载中心即有真实交付物
+- **分支**：main 与 dev 均已推送 GitHub（dev=737eb66，含合并钱泊瑜远端提交 54c28c6 健康检查页；main=1c8be16 快进推送）
+- **线上**：http://39.96.23.4:8018 全部同步完成——logo.svg、注释头学号、钱泊瑜健康页（php -l 通过）、data/team 六份 PDF、data/personal 三份 zip；**下载中心已上线 9 条资源记录**（resources id 10~18，SQL 直建 media+resources，下载流实测 200）；四人档案 username=学号、display_name=真名（SQL 直改）
 - **文档与 PDF**：六份 md 定稿；六份 PDF 已按 `M立方_文档名(2413421).pdf` 导出入 `code/data/team/`（管线：md→HTML→Edge 无头打印，mermaid 流程图/ER 图真渲染；PPT 版走 PowerPoint COM）
 - **PPT**：`M立方-项目展示.pptx` 已走完审阅→修复→复审闭环（6/7/8/9/12 五页排版事故修复，复审全过，定稿）；讲稿 Q&A 已补 Datapackage 命名应答（路由 ucfirst 约定所致，代码非 bug）
 - **个人作业**：黄浩天三份 zip 入 `code/data/personal/`，源文件入 `personal/2413421_黄浩天/作业N/`；其余成员待收
-- **剩余待办**：① GitHub push ② 服务器同步（git pull 或 scp 上述文件）③ 后台重新导出数据包（users 表曾 SQL 直改，按数据解耦约定应重导 ZIP）④ 录屏讲解（团队作业7）⑤ 钱泊瑜 MVC（健康检查页提示词已交）⑥ 11.29 前邮件 nkdbis_homework@163.com + 联系助教
+- **剩余待办**：① 后台重新导出数据包 ZIP（users 表与资源记录均为 SQL 直建，按数据解耦约定应在后台重导留档）② 录屏讲解（团队作业7）③ 其余成员个人作业 zip 收集入库 ④ 11.29 前邮件 nkdbis_homework@163.com + 联系助教（钱泊瑜 MVC 已由其远端提交 54c28c6 落地，无需再催）
 - **已知坑**：本机到 GitHub 需代理（7890）或直连间歇可用；Git Bash 中文 grep 需用 python 代替；本机无 LibreOffice（C 盘容量警戒不装），PPT 渲染验证用 PowerPoint COM；install.sql 保持纯模板态（member1~4+admin/editor，勿加演示数据）
 
 ## 运行数据与解耦约定

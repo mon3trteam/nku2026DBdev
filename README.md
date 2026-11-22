@@ -116,6 +116,7 @@ nku2026DBdev/
 | 11 | Docker 站点根配置 | 已启用：`apache-site.conf` DocumentRoot 指向 `public/`，源码目录双重拒绝访问 | `code/apache-site.conf` |
 | 12 | 本地部署脚本 | 已实现：`install.sh`（165 行）/ `install.bat`（190 行），建库建号、导入 install.sql、二次确认与临时口令清理 | `code/install.sh`、`code/install.bat` |
 | 13 | 杨斯源同学学号 | 已确认 **2412796**（见 `docs/team/06` 答辩讲稿成员名单） | 代码注释头 76 处「学号待填」已全部替换 |
+| 14 | 钱泊瑜同学的 MVC 归属文件 | 已落地：FR-DB-05 后台数据健康检查页 | `HealthController` + `HealthModel` + `admin/health.php` 三层各一（dev 提交 54c28c6），"每人 MVC 三层各 ≥1 文件"全员达标 |
 | 15 | 六份文档导出 PDF + 正式命名 | 已导出：`M立方_需求/设计/实现/用户手册/部署文档/项目展示PPT(2413421).pdf` 六份，入 `code/data/team/`（md→HTML→渲染引擎打印，mermaid 图已真渲染） | `code/data/team/` 实际文件 |
 
 ### 仍待定
@@ -123,8 +124,7 @@ nku2026DBdev/
 | # | 事项 | 触发条件 | 落地动作 |
 | --- | --- | --- | --- |
 | 6 | 成员名单、各模块负责人与工作量分配 | 小组确认后（最终以《项目展示 PPT》为准） | 填入「模块与职责」各表；PPT 必含 |
-| 8 | 个人作业入库 | 各成员作业完成后（**黄浩天 2413421 三份 zip 与源文件已入库**） | 源文件放 `personal/学号_姓名/作业N/`；打包 zip 至 `code/data/personal/` |
-| 14 | 钱泊瑜同学的 MVC 归属文件 | 本人认领一个 P1 小功能（如 FR-DB-05 后台健康检查页、公告 CSV 导出）后 | 补齐"每人 MVC 三层各 ≥1 文件"的 PPT 硬指标（当前 金暄琛/杨斯源 已覆盖三层，黄浩天 以入口与图表修改计入，钱泊瑜 0 个） |
+| 8 | 个人作业入库 | 其余成员作业完成后（**黄浩天 2413421 三份 zip 与源文件已入库**） | 源文件放 `personal/学号_姓名/作业N/`；打包 zip 至 `code/data/personal/` |
 | 16 | 模板初始数据数据 → 真实数据 | 团队信息收集表填写完成后 | 后台录入 → 导出数据包 ZIP；云端部署 = clone 模板 + 导入数据包（install.sql 不回填真实数据） |
 
 ## 快速开始
