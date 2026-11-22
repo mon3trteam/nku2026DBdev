@@ -58,15 +58,16 @@ code/            项目源码
 7. **保密**：不得将真实账号密码写入仓库；install.sql 中的初始账号密码使用 bcrypt 散列并在文件头注明。
 8. **路径安全**：下载中心读取 `code/data/team|personal` 时须过滤 `../`，防目录穿越。
 
-## 当前状态（2026-11-22 交接页——换对话后先读本节）
+## 当前状态（2026-11-22 晚 交接页——换对话后先读本节）
 
-- **分支**：本地 main = dev = `0061b2c`（含文档全量核对修订）；**GitHub 未同步**——网络不通（代理 7890 未开 + 直连被墙），恢复后执行 `git push origin main dev`
-- **线上**：http://39.96.23.4:8018 运行最新代码（bind mount 即时生效），数据完好；member1/2 已实例化（黄浩天/钱泊瑜），member3/4 停用
-- **文档**：六份 md 全部齐备并经子智能体全量核对修订（04 手册 15 处、03 虚构清零、05 双版本合并、02/01 口径同步）；金版两份已退役为过程稿
-- **PPT**：`docs/team/06-项目展示PPT/M立方-项目展示.pptx` 已生成（13 页，未提交待审阅）；逐页讲稿 `答辩讲稿-逐页.md`（未跟踪）
-- **品牌**：候选方案三套（数怪/怪才工坊/M立方）在桌面 `品牌方案/`；M立方素材：logo-mcubed.svg（待替换仓库 logo.svg）、cover-mcubed.png（4:3，已可上传）、badge-512.png（后台 Logo 槽用）
-- **剩余待办**：① GitHub 推送（网络恢复后）② PPT 审阅定稿 + 讲稿定稿提交 ③ 04 手册定稿名与 PDF 导出（六份按 `队名_文档名(学号).pdf`）④ data/team|personal 填充作业 zip 与文档 PDF（黄浩天三份 zip 在桌面）⑤ 录屏讲解（团队作业7）⑥ member4 档案实例化或隐藏 ⑦ 钱泊瑜 MVC（健康检查页提示词已交给她）⑧ 11.29 前邮件 nkdbis_homework@163.com + 联系助教
-- **已知坑**：本机到 GitHub 需代理（7890）或直连间歇可用，fetch/push 都要重试循环；服务器 39 内存小，禁止现场构建（镜像本地 save/load）；Git Bash 中文 grep 需用 python 代替；install.sql 已是纯模板态（member1~4+admin/editor，勿再加演示数据）
+- **队名已定稿：M 立方（M-Cubed）**，产品名 数聚 TeamHub；四名成员：黄浩天 2413421（组长）· 钱泊瑜 2411282 · 杨斯源 2412796 · 金暄琛 2411672（依据：答辩讲稿 + 服务器 team_profile）
+- **分支**：main 与 dev 均领先 origin（本地含 2026-11-22 收尾批次提交）；**GitHub 未同步**——代理 7890 未开 + 直连被墙，恢复后 `git push origin main dev`
+- **线上**：http://39.96.23.4:8018 运行中（bind mount）；四人档案已实例化（username=学号、display_name=真名，2026-11-22 SQL 直改 users 表）；品牌 M 立方已生效；**服务器尚未同步本日仓库改动**（logo.svg、注释头学号、data/team 六份 PDF、data/personal 三份 zip）——同步后下载中心即有真实交付物
+- **文档与 PDF**：六份 md 定稿；六份 PDF 已按 `M立方_文档名(2413421).pdf` 导出入 `code/data/team/`（管线：md→HTML→Edge 无头打印，mermaid 流程图/ER 图真渲染；PPT 版走 PowerPoint COM）
+- **PPT**：`M立方-项目展示.pptx` 已走完审阅→修复→复审闭环（6/7/8/9/12 五页排版事故修复，复审全过，定稿）；讲稿 Q&A 已补 Datapackage 命名应答（路由 ucfirst 约定所致，代码非 bug）
+- **个人作业**：黄浩天三份 zip 入 `code/data/personal/`，源文件入 `personal/2413421_黄浩天/作业N/`；其余成员待收
+- **剩余待办**：① GitHub push ② 服务器同步（git pull 或 scp 上述文件）③ 后台重新导出数据包（users 表曾 SQL 直改，按数据解耦约定应重导 ZIP）④ 录屏讲解（团队作业7）⑤ 钱泊瑜 MVC（健康检查页提示词已交）⑥ 11.29 前邮件 nkdbis_homework@163.com + 联系助教
+- **已知坑**：本机到 GitHub 需代理（7890）或直连间歇可用；Git Bash 中文 grep 需用 python 代替；本机无 LibreOffice（C 盘容量警戒不装），PPT 渲染验证用 PowerPoint COM；install.sql 保持纯模板态（member1~4+admin/editor，勿加演示数据）
 
 ## 运行数据与解耦约定
 
