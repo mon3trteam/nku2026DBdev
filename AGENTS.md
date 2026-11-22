@@ -58,13 +58,15 @@ code/            项目源码
 7. **保密**：不得将真实账号密码写入仓库；install.sql 中的初始账号密码使用 bcrypt 散列并在文件头注明。
 8. **路径安全**：下载中心读取 `code/data/team|personal` 时须过滤 `../`，防目录穿越。
 
-## 当前状态（2026-11-08）
+## 当前状态（2026-11-22 交接页——换对话后先读本节）
 
-- ✅ 功能主体已实现并通过实机验证：前台 7 页、成员中心、后台 CRUD、认证（CSRF/限流/强制改密）、21 表 + 3 视图空库安装、Docker 一键部署、下载中心（计数 + 路径校验）、看板 ECharts 本地 vendor（2026-11-08 接入）
-- ✅ 运行数据与源码解耦：数据库在卷 `db_data`；上传文件在卷 `uploads_public` / `uploads_storage`（空卷首次初始化由 `docker-entrypoint.sh` 补齐 .htaccess 安全规则；非 Docker 部署时目录已 gitignore）
-- ☐ 六份文档：01/02 定稿、03/05 有草稿；**04 用户手册、06 PPT 未开始**；PDF 导出与正式命名待做
-- ✅ 数据包机制（FR-DB-04 产品化，2026-11-09）：后台「数据包」导出/导入全站数据 ZIP（全表+上传文件+manifest，日志表包含在内，schema 版本校验，仅 data.manage/超管）；黄浩天 MVC 三层各一文件（M DataPackageModel / C DatapackageController / V admin/data_package.php）
-- ☐ 真实数据替换（模板初始数据 → 团队真实信息：**后台录入 → 导出数据包**，不回填仓库）；个人作业入库；杨斯源学号（65 处「学号待填」）与钱泊瑜 MVC 归属文件补齐
+- **分支**：本地 main = dev = `0061b2c`（含文档全量核对修订）；**GitHub 未同步**——网络不通（代理 7890 未开 + 直连被墙），恢复后执行 `git push origin main dev`
+- **线上**：http://39.96.23.4:8018 运行最新代码（bind mount 即时生效），数据完好；member1/2 已实例化（黄浩天/钱泊瑜），member3/4 停用
+- **文档**：六份 md 全部齐备并经子智能体全量核对修订（04 手册 15 处、03 虚构清零、05 双版本合并、02/01 口径同步）；金版两份已退役为过程稿
+- **PPT**：`docs/team/06-项目展示PPT/M立方-项目展示.pptx` 已生成（13 页，未提交待审阅）；逐页讲稿 `答辩讲稿-逐页.md`（未跟踪）
+- **品牌**：候选方案三套（数怪/怪才工坊/M立方）在桌面 `品牌方案/`；M立方素材：logo-mcubed.svg（待替换仓库 logo.svg）、cover-mcubed.png（4:3，已可上传）、badge-512.png（后台 Logo 槽用）
+- **剩余待办**：① GitHub 推送（网络恢复后）② PPT 审阅定稿 + 讲稿定稿提交 ③ 04 手册定稿名与 PDF 导出（六份按 `队名_文档名(学号).pdf`）④ data/team|personal 填充作业 zip 与文档 PDF（黄浩天三份 zip 在桌面）⑤ 录屏讲解（团队作业7）⑥ member4 档案实例化或隐藏 ⑦ 钱泊瑜 MVC（健康检查页提示词已交给她）⑧ 11.29 前邮件 nkdbis_homework@163.com + 联系助教
+- **已知坑**：本机到 GitHub 需代理（7890）或直连间歇可用，fetch/push 都要重试循环；服务器 39 内存小，禁止现场构建（镜像本地 save/load）；Git Bash 中文 grep 需用 python 代替；install.sql 已是纯模板态（member1~4+admin/editor，勿再加演示数据）
 
 ## 运行数据与解耦约定
 
