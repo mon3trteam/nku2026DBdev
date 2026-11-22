@@ -3,6 +3,7 @@
  * 文件名：admin_header.php
  * 功能：管理后台头部布局（侧栏、顶栏、面包屑）
  * 作者：杨斯源（学号待填）
+ * 修改：钱泊瑜（2411282）侧栏新增「数据健康」入口（2026-11-22）
  * 修改：黄浩天（2413421）侧栏新增「数据包」入口（2026-11-09）
  * 修改：金暄琛（2411672）后端接入与品牌同步（2026-11-08）
  * 创建日期：2026-11-05
@@ -29,6 +30,7 @@ $adminItems = [
     'settings' => '站点设置',
     'logs' => '日志审计',
     'datamanager' => '数据包',
+    'health' => '数据健康',
 ];
 $adminRoutes = [
     'dashboard' => 'admin/dashboard',
@@ -42,6 +44,7 @@ $adminRoutes = [
     'settings' => 'admin/settings',
     'logs' => 'admin/logs',
     'datamanager' => 'datapackage/index',
+    'health' => 'health/index',
 ];
 $adminPermissions = [
     'dashboard' => 'dashboard.view',
@@ -55,6 +58,7 @@ $adminPermissions = [
     'settings' => 'setting.manage',
     'logs' => 'log.view',
     'datamanager' => 'data.manage',
+    'health' => 'setting.manage',
 ];
 // 无权限的菜单不渲染，避免成员误点后进入 403
 $adminItems = array_filter(
