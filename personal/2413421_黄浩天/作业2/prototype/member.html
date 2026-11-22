@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  文件名：member.html
+  功能：团队主页前台 · 成员个人主页原型（作业2）
+  作者：黄浩天（2413421）
+  说明：左侧个人资料卡 + 右侧页签（我的分工 / 技能 / 我的留言），
+        页签切换为可交互原型。
+============================================================ -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>成员主页 · 黄浩天 — 云舟小组</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <a class="logo" href="index.html"><span class="mark">云</span>云舟小组</a>
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="index.html#about">团队介绍</a>
+      <a href="index.html#members">成员风采</a>
+      <a href="index.html#projects">项目展示</a>
+      <a href="index.html#news">新闻动态</a>
+      <a href="message.html">留言板</a>
+      <a class="btn-login" href="admin.html">后台管理</a>
+    </nav>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="profile">
+
+      <!-- 左：个人资料卡 -->
+      <div class="profile-card">
+        <div class="avatar a-blue">黄</div>
+        <h3>黄浩天</h3>
+        <div class="role">组长 · 用户与权限模块负责人</div>
+        <div class="kv">
+          <div><span>学号</span><b>2413421</b></div>
+          <div><span>学院</span><b>计算机学院</b></div>
+          <div><span>邮箱</span><b>2413421@nankai.edu.cn</b></div>
+          <div><span>加入时间</span><b>2026-09</b></div>
+          <div><span>GitHub</span><b>huanghaotian</b></div>
+        </div>
+      </div>
+
+      <!-- 右：页签区 -->
+      <div class="tabs">
+        <div class="tab-bar">
+          <button class="active" data-tab="t1">我的分工</button>
+          <button data-tab="t2">技能图谱</button>
+          <button data-tab="t3">我的留言墙</button>
+        </div>
+
+        <div class="tab-page show" id="t1">
+          <div class="duty"><b>① 用户模块（Controller / Model / View）</b><br>
+            注册、登录、会话与权限控制；后台统一入口与路由分发。</div>
+          <div class="duty"><b>② 后台框架页</b><br>
+            左侧菜单集成各模块入口，顶部显示登录人与快捷操作。</div>
+          <div class="duty"><b>③ 项目管理</b><br>
+            进度跟踪、看板维护、需求文档与用户手册撰写、成果提交。</div>
+        </div>
+
+        <div class="tab-page" id="t2">
+          <div class="skill"><div class="row"><span>PHP / MVC</span><span>85%</span></div><div class="bar"><i style="width:85%"></i></div></div>
+          <div class="skill"><div class="row"><span>MySQL 数据库设计</span><span>80%</span></div><div class="bar"><i style="width:80%"></i></div></div>
+          <div class="skill"><div class="row"><span>JavaScript / jQuery</span><span>90%</span></div><div class="bar"><i style="width:90%"></i></div></div>
+          <div class="skill"><div class="row"><span>文档撰写</span><span>75%</span></div><div class="bar"><i style="width:75%"></i></div></div>
+        </div>
+
+        <div class="tab-page" id="t3">
+          <div class="msg-list">
+            <div class="msg-item">
+              <div class="head"><span class="who">访客·小张</span><span class="when">2026-10-24</span><span class="badge">已回复</span></div>
+              <p>组长好，请问项目环境必须用 PHP 8 吗？</p>
+              <div class="reply"><b>回复：</b>是的，我们统一用 phpStudy 8 + MySQL 8，install.sql 为唯一真源。</div>
+            </div>
+            <div class="msg-item">
+              <div class="head"><span class="who">访客·阿鲤</span><span class="when">2026-10-19</span><span class="badge">已回复</span></div>
+              <p>后台权限是怎么区分管理员的？</p>
+              <div class="reply"><b>回复：</b>users 表带 role 字段（admin / member），后台入口统一鉴权。</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="copy">© 2026 云舟小组 · Nankai University · 仅供课程学习使用</div>
+  </div>
+</footer>
+
+<div class="proto-note">作业2 · 高保真原型 — 成员主页（页签可切换）</div>
+
+<script>
+/* 原型交互：页签切换 */
+document.querySelectorAll('.tab-bar button').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab-bar button').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-page').forEach(function (p) { p.classList.remove('show'); });
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('show');
+  });
+});
+</script>
+</body>
+</html>

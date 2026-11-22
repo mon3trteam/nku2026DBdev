@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  文件名：admin.html
+  功能：团队主页后台管理框架页原型（作业2）
+  作者：黄浩天（2413421）
+  说明：经典「左侧菜单 + 顶栏 + 内容区」后台布局；
+        菜单可在仪表盘 / 新闻管理 / 留言审核 三个面板间切换，
+        留言审核面板的【通过 / 拒绝】为可交互原型。
+============================================================ -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>后台管理 — 云舟小组</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin">
+
+  <!-- ===== 左侧菜单 ===== -->
+  <aside class="side">
+    <div class="brand"><span class="mark">云</span>云舟 · 后台</div>
+
+    <div class="group">
+      <div class="cap">概览</div>
+      <button class="active" data-panel="p-dash">仪表盘</button>
+    </div>
+
+    <div class="group">
+      <div class="cap">内容管理</div>
+      <button data-panel="p-news">新闻管理</button>
+      <button data-panel="p-msg">留言审核</button>
+      <button>友情链接</button>
+      <button>附件管理</button>
+    </div>
+
+    <div class="group">
+      <div class="cap">团队与成员</div>
+      <button>团队信息编辑</button>
+      <button>成员资料管理</button>
+    </div>
+
+    <div class="group">
+      <div class="cap">系统</div>
+      <button>访问统计</button>
+      <button>操作日志</button>
+      <button class="exit">退出登录</button>
+    </div>
+  </aside>
+
+  <!-- ===== 主区域 ===== -->
+  <div class="main">
+    <div class="topbar">
+      <span class="crumb">云舟后台 / <b id="crumb-now">仪表盘</b></span>
+      <div class="who">
+        <span>管理员 · 黄浩天</span>
+        <div class="avatar a-blue" style="width:34px;height:34px;font-size:14px">黄</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- 面板1：仪表盘 -->
+      <div class="panel-area" id="p-dash">
+        <div class="cards">
+          <div class="card"><div class="ico i-blue">👤</div><div><div class="num">4</div><div class="label">注册成员</div></div></div>
+          <div class="card"><div class="ico i-teal">📰</div><div><div class="num">23</div><div class="label">已发布新闻</div></div></div>
+          <div class="card"><div class="ico i-orange">💬</div><div><div class="num">6</div><div class="label">待审留言</div></div></div>
+          <div class="card"><div class="ico i-purple">📈</div><div><div class="num">1,286</div><div class="label">今日访问 PV</div></div></div>
+        </div>
+
+        <div class="grid2">
+          <div class="box">
+            <div class="hd">最新新闻<span class="btn-mini">+ 发布新闻</span></div>
+            <table class="tbl">
+              <tr><th>标题</th><th>分类</th><th>发布人</th><th>时间</th><th>状态</th></tr>
+              <tr><td>数据库 13 张表设计完成</td><td>进度</td><td>赵雨晴</td><td>10-26</td><td><span class="pill ok">已发布</span></td></tr>
+              <tr><td>前台 / 后台模板选定</td><td>进展</td><td>李明轩</td><td>10-18</td><td><span class="pill ok">已发布</span></td></tr>
+              <tr><td>需求文档 v1.0 评审通过</td><td>立项</td><td>黄浩天</td><td>10-12</td><td><span class="pill ok">已发布</span></td></tr>
+            </table>
+          </div>
+          <div class="box">
+            <div class="hd">近 7 日访问量（示意）</div>
+            <div class="bars">
+              <div class="row"><span class="d">10-20</span><div class="bar"><i style="width:46%"></i></div><span class="v">592</span></div>
+              <div class="row"><span class="d">10-21</span><div class="bar"><i style="width:62%"></i></div><span class="v">801</span></div>
+              <div class="row"><span class="d">10-22</span><div class="bar"><i style="width:55%"></i></div><span class="v">714</span></div>
+              <div class="row"><span class="d">10-23</span><div class="bar"><i style="width:78%"></i></div><span class="v">1005</span></div>
+              <div class="row"><span class="d">10-24</span><div class="bar"><i style="width:88%"></i></div><span class="v">1137</span></div>
+              <div class="row"><span class="d">10-25</span><div class="bar"><i style="width:96%"></i></div><span class="v">1240</span></div>
+              <div class="row"><span class="d">10-26</span><div class="bar"><i style="width:100%"></i></div><span class="v">1286</span></div>
+            </div>
+            <p style="padding:0 18px 14px;font-size:12px;color:var(--grey)">正式版将接入 ECharts 折线图（数据源：visit_stats 表）。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 面板2：新闻管理 -->
+      <div class="panel-area" id="p-news" style="display:none">
+        <div class="box">
+          <div class="hd">新闻管理</div>
+          <div class="toolbar">
+            <input type="text" placeholder="搜索标题关键字…" style="width:220px">
+            <select><option>全部分类</option><option>立项</option><option>进展</option><option>进度</option></select>
+            <select><option>全部状态</option><option>已发布</option><option>草稿</option></select>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" style="padding:8px 20px;font-size:13px">+ 发布新闻</button>
+          </div>
+          <table class="tbl">
+            <tr><th>#</th><th>标题</th><th>分类</th><th>发布人</th><th>更新时间</th><th>状态</th><th>操作</th></tr>
+            <tr><td>23</td><td>数据库 13 张表设计完成，install.sql 通过一键导入测试</td><td>进度</td><td>赵雨晴</td><td>2026-10-26</td><td><span class="pill ok">已发布</span></td><td><span class="op">编辑</span><span class="op danger">删除</span></td></tr>
+            <tr><td>22</td><td>前台 / 后台模板选定：Clean Blog + AdminLTE</td><td>进展</td><td>李明轩</td><td>2026-10-18</td><td><span class="pill ok">已发布</span></td><td><span class="op">编辑</span><span class="op danger">删除</span></td></tr>
+            <tr><td>21</td><td>需求文档 v1.0 评审通过</td><td>立项</td><td>黄浩天</td><td>2026-10-12</td><td><span class="pill ok">已发布</span></td><td><span class="op">编辑</span><span class="op danger">删除</span></td></tr>
+            <tr><td>20</td><td>（草稿）冲刺周计划安排</td><td>进度</td><td>黄浩天</td><td>2026-10-11</td><td><span class="pill off">草稿</span></td><td><span class="op">编辑</span><span class="op danger">删除</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- 面板3：留言审核 -->
+      <div class="panel-area" id="p-msg" style="display:none">
+        <div class="box">
+          <div class="hd">留言审核（<span id="pending-count">2</span> 条待处理）</div>
+          <table class="tbl">
+            <tr><th>#</th><th>昵称</th><th>留言对象</th><th>内容</th><th>时间</th><th>状态</th><th>操作</th></tr>
+            <tr><td>129</td><td>访客 · 阿默</td><td>给团队</td><td>演示需要准备录屏吗？</td><td>10-26 09:41</td><td><span class="pill wait">待审核</span></td><td><span class="op audit-pass">通过</span><span class="op danger audit-deny">拒绝</span></td></tr>
+            <tr><td>128</td><td>访客 · 阿鲤</td><td>给 赵雨晴</td><td>一键部署脚本支持 Linux 吗？</td><td>10-25 20:02</td><td><span class="pill wait">待审核</span></td><td><span class="op audit-pass">通过</span><span class="op danger audit-deny">拒绝</span></td></tr>
+            <tr><td>127</td><td>访客 · 汐止</td><td>给团队</td><td>插件会开源吗？</td><td>10-25 21:04</td><td><span class="pill ok">已通过</span></td><td><span class="op">回复</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="proto-note">作业2 · 高保真原型 — 后台框架页（左侧菜单可切换）</div>
+
+<script>
+/* 原型交互一：左侧菜单切换面板 */
+var names = { 'p-dash': '仪表盘', 'p-news': '新闻管理', 'p-msg': '留言审核' };
+document.querySelectorAll('.side button[data-panel]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.side button').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.panel-area').forEach(function (p) { p.style.display = 'none'; });
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.panel).style.display = 'block';
+    document.getElementById('crumb-now').textContent = names[btn.dataset.panel];
+  });
+});
+
+/* 原型交互二：留言审核（通过 / 拒绝改变行状态） */
+function audit(row, pass) {
+  var pill = row.querySelector('.pill');
+  var ops = row.querySelectorAll('.op');
+  pill.className = pass ? 'pill ok' : 'pill off';
+  pill.textContent = pass ? '已通过' : '已拒绝';
+  ops.forEach(function (o) { o.remove(); });
+  var n = document.getElementById('pending-count');
+  n.textContent = Math.max(0, parseInt(n.textContent) - 1);
+}
+document.querySelectorAll('.audit-pass').forEach(function (o) {
+  o.addEventListener('click', function () { audit(o.closest('tr'), true); });
+});
+document.querySelectorAll('.audit-deny').forEach(function (o) {
+  o.addEventListener('click', function () { audit(o.closest('tr'), false); });
+});
+</script>
+</body>
+</html>

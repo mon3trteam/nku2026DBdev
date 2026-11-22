@@ -1,0 +1,3302 @@
+***获取培养计划：
+发：
+GET /eams/myPlan!programDoc.action?_=1790138176666 HTTP/2
+Host: eamis.nankai.edu.cn
+Cookie: semester.id=4424; JSESSIONID=05963DDA7A3C5EE0AD3B7FE01A7EBC58.std7; JSESSIONID=9D99C2FEE48973A154B0D7943349D681.std7; CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138185|1790137973; CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138185|1790137973
+Sec-Ch-Ua-Platform: "Windows"
+X-Requested-With: XMLHttpRequest
+Accept-Language: zh-CN,zh;q=0.9
+Accept: text/html, */*; q=0.01
+Sec-Ch-Ua: "Chromium";v="131", "Not_A Brand";v="24"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.140 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://eamis.nankai.edu.cn/eams/home.action
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+收：
+HTTP/2 200 OK
+Server: volcclb
+Date: Wed, 23 Sep 2026 04:36:45 GMT
+Content-Type: text/html;charset=UTF-8
+X-Ua-Compatible: IE=edge
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+X-Download-Options: noopen
+Vary: accept-encoding
+Set-Cookie: CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138205|1790137973; Path=/
+Set-Cookie: CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138205|1790137973; Path=/; SameSite=None; Secure
+Vary: Accept-Encoding
+
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">一.专业基本信息</p>
+		<p style="text-align:left;">
+			<p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">专业名称：信息安全&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;学科门类：工学 </span></span></p><p><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">学制：4年&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;授予学位：工学学士</span></span></p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">二.培养目标</p>
+		<p style="text-align:left;">
+			<p><span style="font-size:9px;"><span style="font-family:Arial,Helvetica,sans-serif;">面向国家网络强国重大战略需求和国民经济发展需要，培养德智体美劳全面发展的社会主义事业合格建设者和可靠接班人，培养具有“公能”精神、创新能力、国际视野、团队合作与沟通能力、自主学习和终身学习能力，系统掌握信息安全基础理论，具备扎实的软件安全、网络安全、系统安全、密码学应用等专业知识及技能，能够在国家重要部门、高等院校、科研院所、高科技企业等从事信息安全相关科学研究、应用开发、管理运维等工作的高素质创新型人才。&nbsp;<br/>本专业培养的学生在毕业后五年左右能达到下列要求：<br/>培养目标1（技术能力）：具备数学、自然科学和信息安全专业知识和技能的应用能力，能够分析和解决信息安全领域科学研究或工程技术相关问题；<br/>培养目标2（创新能力）：具有良好的创新意识和较强的实践动手能力，掌握信息安全系统的设计方法，能够进行信息安全领域新理论、新系统和新设备的研究和开发；<br/>培养目标3（道德素养）：具有南开大学的“公能”精神、良好的人文素养、高尚的职业道德和社会责任感，能够正确评价专业工程实践和复杂工程问题解决方案对社会、健康、安全、法律以及文化的影响，并理解应承担的责任；<br/>培养目标4（团队合作）：具有良好的沟通能力和团队合作精神、较丰富的工程经验和项目管理能力，能够带领团队成员或作为团队骨干在项目实施过程中发挥有效作用；<br/>培养目标5（学习能力）：具有较强的自主学习、多学科融合和终身学习的能力、一定的国际视野和跨文化交流能力，了解和紧跟学科专业发展、实现能力和技术水平的不断提升，适应信息安全领域的技术发展和职业变化。</span></span></p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">三.毕业要求</p>
+		<p style="text-align:left;">
+			<p>（<span style="font-size:9px;"><span style="font-family:Arial,Helvetica,sans-serif;">1）工程知识：能够将数学、自然科学、工程基础和专业知识用于解决信息安全领域的复杂工程问题。<br/>（2）问题分析：能够应用数学、自然科学和工程科学的基本原理，识别、表达、建模信息安全领域的复杂工程问题，并通过文献研究分析寻求解决方案，获得有效结论。<br/>（3）设计/开发解决方案：能够设计针对信息安全领域复杂工程问题的解决方案，设计满足特定需求的信息安全系统、算法单元或者软件模块，并能够在设计环节中体现创新意识，考虑社会、健康、安全、法律、文化以及环境等因素。<br/>（4）研究：能够基于科学原理并采用科学方法对复杂的信息安全工程问题进行研究，包括设计实验、分析与解释数据、并通过信息综合得到合理有效的结论。<br/>（5）使用现代工具：能够针对信息安全领域复杂工程问题，开发、选择与使用恰当的技术、资源、现代工程工具和信息技术工具，包括对复杂工程问题的预测与模拟，并能够理解其局限性。<br/>（6）工程与社会：能够基于复杂的信息安全工程问题的相关背景知识，分析、评价解决方案对社会、健康、安全、法律及文化的影响，理解应承担的责任。<br/>（7）环境和可持续发展：能够理解和评价针对信息安全问题的工程实践对环境、社会可持续发展的影响。<br/>（8）职业规范：掌握辩证唯物主义的基本原理，具有人文社会科学素养、社会责任感，能够在信息安全工程实践中理解并遵守工程职业道德和规范，履行责任。<br/>（9）个人和团队：能够在多学科背景下的团队中承担个体、团队成员以及负责人的角色，能够有效沟通，参与制定团队计划，推进计划实施和目标完成。<br/>（10）沟通：能够就复杂信息安全工程问题与业界同行及社会公众进行有效沟通和交流，包括撰写报告和设计文稿、陈述发言、清晰表达或回应指令。并具备一定的国际视野，能够在跨文化背景下进行沟通和交流。<br/>（11）项目管理：理解并掌握信息安全工程管理原理与经济决策方法，并能在多学科环境中应用。<br/>（12）终身学习：具有自主学习和终身学习的意识，有不断学习和适应发展的能力。</span></span></p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">四.专业核心课程</p>
+		<p style="text-align:left;">
+			<p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">计算机硬件基础、数据结构、计算机组成原理、数据库系统、软件安全、操作系统、计算机网络、编译系统原理、软件工程、汇编语言与逆向技术、信息安全数学基础、恶意代码分析与防治技术、密码学基础、网络安全技术、信息隐藏技术。</span></span></p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">五.主要实践环节</p>
+		<p style="text-align:left;">
+			<p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">军事技能训练2学分、公能实践2学分、创新研究与训练1学分、大学物理基础实验2学分、专业实践（实习实训）2学分、毕业设计6学分。</span></span></p><p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">大类基础必修课程实践：高级语言程序设计2-1（每周4课时实践计1.5学分）、高级语言程序设计2-2（每周4课时实践计1.5学分）。</span></span></p><p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">专业必修核心课程实践，每周4课时实践计1.5学分，每周2课时实践计1学分，包括：数据结构（1.5学分），计算机硬件基础（1学分）、计算机组成原理（1学分）、数据库系统（1学分）、软件安全（1学分）、操作系统（1学分）、计算机网络（1学分）、编译系统原理（1学分）、软件工程（1学分）、汇编语言与逆向技术（1学分）、恶意代码分析与防治技术（1学分）、密码学基础（1学分）、网络安全技术（1学分）。</span></span></p><p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">专业选修课程实践，应修17学分，按每门课程2.5学分计算，需修读8门课程，每门课程包含1学分实践，计8学分。</span></span></p><p style="text-align:justify"><span style="font-size:9px"><span style="font-family:Arial,Helvetica,sans-serif">实践总学分：39.5学分，占比25.48%。</span></span></p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">六.毕业要求与课程设置对应关系矩阵</p>
+		<p style="text-align:left;">
+			<p>详见附件。</p>
+		</p>
+		<p style="color:#00108c;font-weight:bold;font-size:10pt;text-align:left;">七.教学计划</p>
+		<p style="text-align:left;">
+			
+		</p>
+
+
+发：
+GET /eams/myPlan.action?_=1790138176665 HTTP/2
+Host: eamis.nankai.edu.cn
+Cookie: semester.id=4424; JSESSIONID=05963DDA7A3C5EE0AD3B7FE01A7EBC58.std7; JSESSIONID=9D99C2FEE48973A154B0D7943349D681.std7; CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138179|1790137973; CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138179|1790137973
+Sec-Ch-Ua-Platform: "Windows"
+X-Requested-With: XMLHttpRequest
+Accept-Language: zh-CN,zh;q=0.9
+Accept: text/html, */*; q=0.01
+Sec-Ch-Ua: "Chromium";v="131", "Not_A Brand";v="24"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.140 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://eamis.nankai.edu.cn/eams/home.action
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+
+收：
+HTTP/2 200 OK
+Server: volcclb
+Date: Wed, 23 Sep 2026 04:36:34 GMT
+Content-Type: text/html;charset=UTF-8
+X-Ua-Compatible: IE=edge
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+X-Download-Options: noopen
+Vary: accept-encoding
+Set-Cookie: CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138194|1790137973; Path=/
+Set-Cookie: CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138194|1790137973; Path=/; SameSite=None; Secure
+Vary: Accept-Encoding
+
+
+ 
+<div id="toolbar10787600791"></div>
+<script type="text/javascript">
+  bar = bg.ui.toolbar("toolbar10787600791",'培养计划');
+  
+  bar.addHr();
+</script><link rel="stylesheet" type="text/css" href="/eams/static/css/plan.css" />
+<div>
+<div id="tabs10787600791" >
+<ul>
+</ul>
+<div id="tab10787600791_target" class="ajax_container"></div>
+<script>bg.ready(function(){bg.Go('/eams/myPlan!programDoc.action','tab10787600791_target');});</script>
+<div id="tab10787600792_target">		<p style="text-align:center;color:#00108c;font-weight:bold;font-size:13pt;margin:0px 5px;">
+    本科&nbsp;普通本科&nbsp;密码与网络空间安全学院&nbsp;信息安全<br>&nbsp;专业培养计划(2024)
+		</p>
+
+
+
+
+
+<table border="0" width="100%" align="center">
+	<tr>
+		<td align="center">
+			<table id="planInfoTable5744" name="planInfoTable5744" class="planTable"  style="font-size:12px;font-family:宋体;vnd.ms-excel.numberformat:@" width="95%">
+				<thead>
+					<tr align="center">
+						<td colspan="4" width="7%">分类</td>
+						<td width="10%">课程代码</td>
+						<td width="20%">课程名称</td>
+						<td width="5%">学分</td>
+						<td width="10%">开课学期</td>
+						<td width="10%">建议修读学期</td>
+						<td width="10%">是否必修</td>
+						<td width="22%">开课院系</td>
+						<td width="10%">备注</td>
+					</tr>
+					<tr>
+				</thead>
+				<tbody>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0024</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19195" target="_blank">思想道德与法治</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>UPRC0001</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19579" target="_blank">新生研讨课</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">教务部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0012</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16163" target="_blank">公能实践</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1,2,3,4,5,6
+	</td>
+	<td class="credit_hour">
+		1,2,3,4,5,6
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0016</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16748" target="_blank">形势与政策</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1,2,3,4,5,6,7,8
+	</td>
+	<td class="credit_hour">
+		1,2,3,4,5,6,7,8
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0025</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19196" target="_blank">马克思主义基本原理</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0013</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16743" target="_blank">中国近现代史纲要</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0023</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19194" target="_blank">毛泽东思想和中国特色社会主义理论体系概论</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+
+			<td>IPTD0026</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19198" target="_blank">习近平新时代中国特色社会主义思想概论</a></td>
+			<td class="credit_hour">3</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+理想与信念教育类				</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">18</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">军事体育与健康类</td>
+
+			<td>MHEC0003</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19399" target="_blank">大学生心理健康</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">心理健康教育中心</td>
+				<td>				
+				
+				大学生心理健康课
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">军事体育与健康类</td>
+
+			<td>MITD0005</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17755" target="_blank">军事技能训练</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">军事教研室</td>
+				<td>				
+				
+				24级新生应为1学期
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">军事体育与健康类</td>
+
+			<td>MITD0003</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16164" target="_blank">军事理论</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">军事教研室</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">军事体育与健康类</td>
+				<td class="group" colspan="2">体育</td>
+			<td class="credit_hour">4</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;第1-4学期修读</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">军事体育与健康类</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">10</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅰ				</td>
+
+			<td>ENTD0072</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20058" target="_blank">英语口语与写作基础I</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅰ				</td>
+
+			<td>ENTD0073</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20059" target="_blank">英语口语与写作进阶I</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅰ				</td>
+
+			<td>ENTD0074</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20060" target="_blank">英语口语与写作高阶I</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅰ				</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">2</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅱ				</td>
+
+			<td>ENTD0075</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20173" target="_blank">英语口语与写作基础II</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅱ				</td>
+
+			<td>ENTD0076</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20174" target="_blank">英语口语与写作进阶II</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅱ				</td>
+
+			<td>ENTD0077</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20175" target="_blank">英语口语与写作高阶II</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="2" width="2%">
+基础英语 Ⅱ				</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">2</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0036</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14168" target="_blank">公众演讲</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0037</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14169" target="_blank">英汉双向笔译实务</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0043</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14269" target="_blank">英汉语言意识与翻译</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0052</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16867" target="_blank">思辨能力与英语表达</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0054</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16869" target="_blank">商务英语-BECII</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0062</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18224" target="_blank">高级英语</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0078</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20593" target="_blank">英语演讲：从技巧到影响力</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0080</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20595" target="_blank">学术思维与大学英语写作</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+
+			<td>ENTD0081</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20596" target="_blank">口译入门与口语技能</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+语言技能模块				</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">0</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0034</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14166" target="_blank">学术交流英语</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0035</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14167" target="_blank">学术英语写作</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0039</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14171" target="_blank">实用英语语言学</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0042</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14268" target="_blank">英语修辞与思维方式</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0050</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16467" target="_blank">学术英语视听说</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0053</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16868" target="_blank">留学与学术交流实用技能</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+
+			<td>ENTD0055</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16870" target="_blank">雅思学术英语</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+学术英语模块				</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">0</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0038</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14170" target="_blank">西方幻想文学</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0044</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=14172" target="_blank">超越文化——中西文化概览</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0046</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16463" target="_blank">美国社会与文化</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0048</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16465" target="_blank">西方经典影视与文化</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0049</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16466" target="_blank">西方电影中的文化冲突与融合</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+
+			<td>ENTD0079</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20594" target="_blank">文明互鉴：中国文化与世界表达</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">公共外语教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+				<td class="group" colspan="1" width="2%">
+文化素养模块				</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">0</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+				<td class="group" colspan="1" width="2%">公共英语选修</td>
+			<td colspan="3" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">2</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="1" width="2%">外语能力类</td>
+			<td colspan="4" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">6</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>LITE0244</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=2593" target="_blank">大学语文</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">文学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>ECON0340</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18213" target="_blank">经济学原理</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">经济学院</td>
+				<td class="anonymous-group-87148">
+		人文基础与“四史”选修模块（多选一）
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>HIST0242</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18216" target="_blank">史学通论</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">历史学院</td>
+				<td class="anonymous-group-87148">
+		人文基础与“四史”选修模块（多选一）
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>IPTD0022</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18757" target="_blank">四史专题</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">马克思主义基础理论教学部</td>
+				<td class="anonymous-group-87148">
+		人文基础与“四史”选修模块（多选一）
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>LAWS0120</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18214" target="_blank">法学概论</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">法学院</td>
+				<td class="anonymous-group-87148">
+		人文基础与“四史”选修模块（多选一）
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+
+			<td>PHIL0141</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18215" target="_blank">哲学导论</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">哲学院</td>
+				<td class="anonymous-group-87148">
+		人文基础与“四史”选修模块（多选一）
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">人文基础与四史类</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">4</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+数理基础类				</td>
+
+			<td>AMTD0033</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18133" target="_blank">高等数学（A类）I</a></td>
+			<td class="credit_hour">5</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">高等数学教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+数理基础类				</td>
+
+			<td>AMTD0034</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18134" target="_blank">高等数学（A类）II</a></td>
+			<td class="credit_hour">5</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">高等数学教学部</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+数理基础类				</td>
+
+			<td>CPTD0007</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=6105" target="_blank">大学基础物理实验</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">大学物理及实验</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+				<td class="group" colspan="3" width="2%">
+数理基础类				</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">12</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">通识必修课</td>
+			<td colspan="5" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">50</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+
+			<td>ARIN0014</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17434" target="_blank">线性代数</a></td>
+			<td class="credit_hour">4</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">人工智能学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+
+			<td>COSC0002</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16810" target="_blank">高级语言程序设计2-1</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		1
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+
+			<td>COSC0039</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17483" target="_blank">高级语言程序设计2-2</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+
+			<td>ELEC0203</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17439" target="_blank">大学物理学（一）</a></td>
+			<td class="credit_hour">4</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">电子信息与光学工程学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+
+			<td>SOFT0218</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19602" target="_blank">概率论与数理统计</a></td>
+			<td class="credit_hour">4</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		2
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">软件学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="40px">大类基础课程</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">18</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0020</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16828" target="_blank">毕业论文</a></td>
+			<td class="credit_hour">6</td>
+	<td class="credit_hour">
+		8
+	</td>
+	<td class="credit_hour">
+		8
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0007</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16815" target="_blank">数据结构</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0069</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20375" target="_blank">计算机硬件基础</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0026</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18231" target="_blank">汇编语言与逆向技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0031</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17494" target="_blank">信息安全数学基础</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0013</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16821" target="_blank">数据库系统</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0027</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18234" target="_blank">软件安全</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0046</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18661" target="_blank">计算机组成原理</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0059</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20369" target="_blank">密码学基础</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0009</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16817" target="_blank">操作系统</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0010</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16818" target="_blank">计算机网络</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0017</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16825" target="_blank">编译系统原理</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0030</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16838" target="_blank">实习实训</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0028</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18235" target="_blank">恶意代码分析与防治技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0011</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16819" target="_blank">创新研究与训练</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>COSC0048</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17487" target="_blank">软件工程</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+
+			<td>CSSE0034</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17499" target="_blank">网络安全技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		是
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+				<td class="group" colspan="3" width="2%">
+专业必修课				</td>
+			<td colspan="2" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">53</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">专业必修课</td>
+			<td colspan="5" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">53</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0001</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16809" target="_blank">自然语言处理</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		7
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0015</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16823" target="_blank">人工智能导论</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0038</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18244" target="_blank">数字信号处理</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0044</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18301" target="_blank">信息安全前沿技术</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0055</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19551" target="_blank">数理逻辑与图论</a></td>
+			<td class="credit_hour">3</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3,5
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0072</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20881" target="_blank">人工智能实践课-初级</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		3,5
+	</td>
+	<td class="credit_hour">
+		3,5
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0025</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16833" target="_blank">并行程序设计</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0064</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19336" target="_blank">算法设计和分析</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0070</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20376" target="_blank">计算机系统基础</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4,6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0003</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16848" target="_blank">感知技术与应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4,6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0005</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16850" target="_blank">嵌入式系统</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4,6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0048</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18677" target="_blank">信息论</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4,6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0062</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=21303" target="_blank">开源软件与安全</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		4
+	</td>
+	<td class="credit_hour">
+		4,6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0018</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16826" target="_blank">计算机体系结构</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0024</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16832" target="_blank">互联网数据库开发</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0028</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16836" target="_blank">机器学习及应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0007</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16852" target="_blank">物联网安全</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0038</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17507" target="_blank">网络技术与应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0042</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17512" target="_blank">区块链基础及应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0049</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19242" target="_blank">现代密码学</a></td>
+			<td class="credit_hour">3.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0050</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19243" target="_blank">代数与编码</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0056</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19558" target="_blank">对称密码分析</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0058</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19966" target="_blank">密码工程</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0060</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20370" target="_blank">计算机图形学（高阶课程）</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0066</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=22140" target="_blank">人工智能数据与模型安全</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		5
+	</td>
+	<td class="credit_hour">
+		5,7
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0033</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16841" target="_blank">大数据计算及应用</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0008</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16853" target="_blank">物联网通信技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0010</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16855" target="_blank">智能计算系统</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0035</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17500" target="_blank">信息隐藏技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0043</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17511" target="_blank">信息对抗技术</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0045</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=18302" target="_blank">信息安全综合实验</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0051</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19244" target="_blank">计算理论</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0053</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19330" target="_blank">数据安全</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0054</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=19390" target="_blank">可证明安全</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>CSSE0061</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20421" target="_blank">密码协议</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0075</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=21222" target="_blank">计算机系统前沿</a></td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0022</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16830" target="_blank">Java语言与应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87156">
+		编程语言类课程建议选修一门即可，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0056</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17495" target="_blank">Python语言程序设计</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87156">
+		编程语言类课程建议选修一门即可，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0071</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20420" target="_blank">人工智能程序设计（高阶课）</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		3
+	</td>
+	<td class="credit_hour">
+		3,5
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87156">
+		编程语言类课程建议选修一门即可，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0054</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=17492" target="_blank">深度学习及应用</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87157">
+		深度学习课程普通和高阶二选一，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0067</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20244" target="_blank">深度学习与应用（高阶课）</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87157">
+		深度学习课程普通和高阶二选一，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0029</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=16837" target="_blank">计算机视觉基础</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87158">
+		计算机视觉课程普通和高阶二选一，非必须选择
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+
+			<td>COSC0068</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20245" target="_blank">计算机视觉</a></td>
+			<td class="credit_hour">2.5</td>
+	<td class="credit_hour">
+		6
+	</td>
+	<td class="credit_hour">
+		6,8
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td class="anonymous-group-87158">
+		计算机视觉课程普通和高阶二选一，非必须选择
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+				<td class="group" colspan="3" width="2%">专业选修课</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">17</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="1" width="2%">专业选修课</td>
+			<td colspan="5" class="credit_hour summary">
+				学分小计
+			</td>
+			<td class="credit_hour summary">17</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+
+			<td>INTL0032</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20511" target="_blank">密码与网络空间安全国际前沿技术</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+
+			<td>INTL0044</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20546" target="_blank">人工智能在医学和健康医疗中的前沿应用，方法及挑战</a></td>
+			<td class="credit_hour">0.5</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+
+			<td>INTL0045</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=20547" target="_blank">三维数字资产版权保护前沿技术</a></td>
+			<td class="credit_hour">0.5</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		1夏
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+
+			<td>INTL0092</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=21636" target="_blank">计算机科学国际前沿技术</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		2夏
+	</td>
+	<td class="credit_hour">
+		2夏
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">计算机学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+			<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+
+			<td>INTL0095</td>
+			<td class="course"><a href="/eams/myPlan!courseInfo.action?course.id=21660" target="_blank">软件与系统安全国际前沿技术</a></td>
+			<td class="credit_hour">1</td>
+	<td class="credit_hour">
+		2夏
+	</td>
+	<td class="credit_hour">
+		2夏
+	</td>
+	<td class="credit_hour">
+		否
+	</td>
+			<td class="credit_hour">密码与网络空间安全学院</td>
+				<td>				
+				
+				&nbsp;
+				</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="40px">国际学分课程</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">3</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">公能素质和服务中国</td>
+			<td class="credit_hour">0</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">艺术审美与文化思辨</td>
+			<td class="credit_hour">2</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">科学精神与健康生活</td>
+			<td class="credit_hour">0</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">社会发展与国家治理</td>
+			<td class="credit_hour">0</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">工程素养与未来科技</td>
+			<td class="credit_hour">0</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+				<td class="group" colspan="2">世界文明与国际视野</td>
+			<td class="credit_hour">0</td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+		<tr>
+				<td class="group" colspan="4" width="2%">通识选修课</td>
+			<td colspan="2" class="credit_hour summary">
+				<font color="#1F3D83">应修学分</font>
+			</td>
+			<td class="credit_hour summary"><font color="#1F3D83">14</font></td>
+	<td class="credit_hour">&nbsp;</td>
+	<td></td>
+	<td></td>
+			<td>&nbsp;</td>
+			<td class="credit_hour">&nbsp;</td>
+		</tr>
+					<tr>
+						<td class="summary" colspan="6">全程总计</td>
+						<td class="credit_hour summary">155</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="5">备注</td>
+						<td colspan="6">&nbsp;copy_remarkcopy_remarkcopy_remarkcopy_remark</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+</table>
+<script>
+	function mergeAnonymousRemark(tableId) {
+		var table = document.getElementById(tableId)
+		var groupId = 'nothing';
+		var firstY = -1;
+		for(var x = 3; x < 20; x++) {
+			for(var y = 2; y < table.rows.length - 2; y++) {
+				if(table.rows[y] == undefined || table.rows[y].cells[x] == undefined) {
+					continue;
+				}
+				if(groupId == table.rows[y].cells[x].className && table.rows[y].cells[x].className.indexOf("anonymous-group-") != -1) {
+					table.rows[y].deleteCell(x);
+					table.rows[firstY].cells[x].rowSpan++;
+				} else {
+					groupId = table.rows[y].cells[x].className;
+					if (table.rows[y].cells[x].className.indexOf("anonymous-group-") == -1) {
+						groupId = 'nothing';
+					}
+					firstY = y;
+				}
+			}
+		}
+	}
+	mergeAnonymousRemark('planInfoTable5744');
+	
+	function mergeCourseTypeCell(tableId) {
+		var table = document.getElementById(tableId)
+		for(var x = 4 - 1; x >= 0 ; x--) {
+			var content = '';
+			var firstY = -1;
+			for(var y = 2; y < table.rows.length - 2; y++) {
+				if(table.rows[y] == undefined || table.rows[y].cells[x] == undefined) {
+					continue;
+				}
+				if(content == table.rows[y].cells[x].innerHTML && table.rows[y].cells[x].className == 'group') {
+					table.rows[y].deleteCell(x);
+					table.rows[firstY].cells[x].rowSpan++;
+				}
+				else {
+					content = table.rows[y].cells[x].innerHTML;
+					// 如果是纯数字或‘学分小计’则不合并
+					if(table.rows[y].cells[x].className != 'group') {
+						content = '';
+					}
+					firstY = y;
+				}
+			}
+		}
+	}
+	mergeCourseTypeCell('planInfoTable5744');
+</script></div>
+<div id="tab10787600793_target">				暂无个人替代课程.
+				暂无专业替代课程.
+</div>
+
+</div>
+<script>
+jQuery(document).ready(function () { 
+  var tabs = [];
+  tabs.push({id:"tab10787600791",label:"培养方案内容",href:"#tab10787600791_target"});
+  tabs.push({id:"tab10787600792",label:"培养方案",href:"#tab10787600792_target"});
+  tabs.push({id:"tab10787600793",label:"替代课程",href:"#tab10787600793_target"});
+  jQuery('#tabs10787600791').data('taboptions', tabs);
+  jQuery.struts2_jquery_ui.bind(jQuery('#tabs10787600791'),{jqueryaction:"tabbedpanel",id:"tabs10787600791"});
+});
+</script>
+</div>
+
+
+
+
+***选课：
+发：
+POST /eams/stdElectCourse!batchOperator.action?profileId=2173 HTTP/2
+Host: eamis.nankai.edu.cn
+Cookie: semester.id=4424; JSESSIONID=05963DDA7A3C5EE0AD3B7FE01A7EBC58.std7; JSESSIONID=9D99C2FEE48973A154B0D7943349D681.std7; CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138470|1790137973; CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138470|1790137973
+Content-Length: 86
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: zh-CN,zh;q=0.9
+Sec-Ch-Ua: "Chromium";v="131", "Not_A Brand";v="24"
+Sec-Ch-Ua-Mobile: ?0
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.140 Safari/537.36
+Accept: text/html, */*; q=0.01
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Origin: https://eamis.nankai.edu.cn
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://eamis.nankai.edu.cn/eams/stdElectCourse!defaultPage.action?electionProfile.id=2173
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+optype=true&operator0=650670%3Atrue%3A0&lesson0=650670&expLessonGroup_650670=undefined
+
+收：
+HTTP/2 200 OK
+Server: volcclb
+Date: Wed, 23 Sep 2026 04:41:27 GMT
+Content-Type: text/html;charset=UTF-8
+X-Ua-Compatible: IE=edge
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+X-Download-Options: noopen
+Vary: accept-encoding
+Set-Cookie: CLBSERVERID=5141c86941d94ad01378ca0c063c0d20|1790138486|1790137973; Path=/
+Set-Cookie: CLBSERVERCORSID=5141c86941d94ad01378ca0c063c0d20|1790138486|1790137973; Path=/; SameSite=None; Secure
+Vary: Accept-Encoding
+
+
+ 
+<table  width="100%" align="center">
+	<tr style="padding-left:20%">
+		<td style="text-align:center;">
+			<div style="width:85%;color:red;text-align:left;margin:auto;">
+				文科高等数学[0454]选课 失败:因课程代码不在培养方案中认定为计划外选课，且计划外名额已满，请核对培养方案或选择其他课程</br>
+			</div>
+		</td>
+			<script type="text/javascript">
+			if(window.electCourseTable){
+						window.electCourseTable.lessons({id:650670})
+							.update({
+								preElect : false,
+								defaultElected : false,
+								elected : false
+							});
+			}
+			</script>
+	</tr>
+	<tr align="center">
+		<td id="timeElapsed"></td>
+	</tr>
+</table>
+

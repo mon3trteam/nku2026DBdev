@@ -1,0 +1,53 @@
+// ========== 【在这里修改配置！！】 ==========
+const targetKeyword = "高等数学";   // 你的关键字
+const pageDelay = 500;           // 翻页等待毫秒，慢就改成3000
+let foundList = [];
+let isRunning = true;
+
+function scanPage() {
+  console.log("====扫描当前页====");
+  $(".electGridTr").each(function () {
+    const $tr = $(this);
+    const textAll = $tr.text().trim();
+    // 获取名额单元格文本，例如 "141/141"
+    const countText = $tr.find(".stdCount").text().trim();
+    if (!countText.includes("/")) return;
+
+    // 分割为已选 / 上限
+    const [selected, total] = countText.split("/").map(Number);
+    // 判断：有余量 并且 包含关键字
+    if (selected < total && textAll.includes(targetKeyword)) {
+      foundList.push($tr.text());
+      console.log("✅命中【有余名额+关键字】：", $tr.text());
+    }
+  });
+
+  console.log("已收集结果：", foundList);
+
+  let nextBtn = $(".pgNextBtn");
+  if (nextBtn.length > 0 && isRunning) {
+    console.log("👉点击下一页");
+    nextBtn[0].click();
+    setTimeout(scanPage, pageDelay);
+  } else {
+    console.log("🛑全部翻页完成");
+    console.log("全部命中课程：\n", foundList.join("\n\n"));
+  }
+}
+
+scanPage();
+
+
+停止：
+```
+isRunning = false;
+```
+
+说明：
+三条语句分别是：
+//1. 选中所有课程行
+$(".electGridTr").each(function () {
+//2. 在当前行内查找名额单元格
+const countText = $tr.find(".stdCount").text().trim();
+//3. 触发下一页点击事件
+$(".pgNextBtn").trigger('click');
