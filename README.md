@@ -109,7 +109,7 @@ nku2026DBdev/
 | 2 | 数据库表清单（>10 张） | **21 张表 + 3 视图**，空库一次安装可还原（已实测） | `docs/team/02` §4.3、`code/data/install.sql` |
 | 3 | 前台 / 后台代码组织 | 视图按 `admin/`（后台）、`public/`（前台）、`me/`（成员中心）分目录；控制器以 `XxxController` 命名区分 | `code/app/view/` 实际结构 |
 | 4 | 初始账号 | admin（超管）/ editor（编辑）/ 4 个成员账号，bcrypt 散列 + 首次登录强制改密 | `code/data/install.sql` 文件头 |
-| 5 | 队名 / 产品名 | 产品名 **数聚 TeamHub**，队名 **M 立方（M-Cubed）**，团队代号 M3 | `docs/team/01`、`02` 封面；服务器 `team_profile`/`site_settings`（M 立方品牌已生效）；`code/public/static/img/logo.svg` |
+| 5 | 队名 / 产品名 | 产品名 **数聚 TeamHub**（项目名"数聚"），队名 **M立方队（M-Cubed）**，团队代号 M3 | `docs/team/01`、`02` 封面；服务器 `team_profile`/`site_settings`；`code/public/static/img/logo.svg` |
 | 7 | 团队文档 | 六份齐备：01 需求、02 设计、03 实现、04 用户手册、05 部署、06 项目展示 PPT 均已产出 | `docs/team/` 实际文件 |
 | 9 | 下载中心 | 已实现：资源记录 + 分类 + 下载计数 + realpath 路径校验流式输出 | `ResourceController`、FR-PUB-07 / AC-10 |
 | 10 | 动态图形展示（加分项） | 已落地：看板接入本地 ECharts 5.6（趋势折线含访问量/访客数双系列 / 技能条形 / 留言环形），CSS 条图保留为无 JS 降级 | `code/app/view/admin/dashboard.php` |
@@ -117,14 +117,14 @@ nku2026DBdev/
 | 12 | 本地部署脚本 | 已实现：`install.sh`（165 行）/ `install.bat`（190 行），建库建号、导入 install.sql、二次确认与临时口令清理 | `code/install.sh`、`code/install.bat` |
 | 13 | 杨斯源同学学号 | 已确认 **2412796**（见 `docs/team/06` 答辩讲稿成员名单） | 代码注释头 76 处「学号待填」已全部替换 |
 | 14 | 钱泊瑜同学的 MVC 归属文件 | 已落地：FR-DB-05 后台数据健康检查页 | `HealthController` + `HealthModel` + `admin/health.php` 三层各一（dev 提交 54c28c6），"每人 MVC 三层各 ≥1 文件"全员达标 |
-| 15 | 六份文档导出 PDF + 正式命名 | 已导出：`M立方_需求/设计/实现/用户手册/部署文档/项目展示PPT(2413421).pdf` 六份，入 `code/data/team/`（md→HTML→渲染引擎打印，mermaid 图已真渲染） | `code/data/team/` 实际文件 |
+| 15 | 六份文档导出 PDF + 正式命名 | 已定稿：命名规则 `M立方队_文档名(2413421_2411672_2412796_2411282)`；**`docs/team/` 与 `code/data/team/` 两处均存同名 md+pptx 源稿与 pdf 成对文件**，且 `code/data/team/` 内按 `01-需求文档` ~ `06-项目展示PPT` 子文件夹归档；文档编号旧代号 DATANOVA-DES-00X 已更正为 M3-DES-001~005，附录待确认事项 Q-01/02/03 已闭环 | `docs/team/`、`code/data/team/` 实际文件 |
 
 ### 仍待定
 
 | # | 事项 | 触发条件 | 落地动作 |
 | --- | --- | --- | --- |
 | 6 | 成员名单、各模块负责人与工作量分配 | 小组确认后（最终以《项目展示 PPT》为准） | 填入「模块与职责」各表；PPT 必含 |
-| 8 | 个人作业入库 | 其余成员作业完成后（**黄浩天 2413421 三份 zip 与源文件已入库**） | 源文件放 `personal/学号_姓名/作业N/`；打包 zip 至 `code/data/personal/` |
+| 8 | 个人作业入库 | 其余成员作业完成后（**黄浩天 2413421 三份 zip 与源文件已入库**） | 源文件放 `personal/学号_姓名/作业N/`；打包 zip 至 `code/data/personal/学号_姓名/`（按人建文件夹） |
 | 16 | 模板初始数据数据 → 真实数据 | 团队信息收集表填写完成后 | 后台录入 → 导出数据包 ZIP；云端部署 = clone 模板 + 导入数据包（install.sql 不回填真实数据） |
 
 ## 快速开始
