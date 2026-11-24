@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>插件测试页 —— 三种表格结构</title>
+<style>
+  body { margin:0; padding:24px; font:14px/1.7 "Microsoft YaHei","Segoe UI",sans-serif; color:#1f2937; background:#f7f8fa; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  h2 { font-size:15px; margin:28px 0 8px; padding-bottom:6px; border-bottom:2px solid #2b6cb0; display:inline-block; }
+  .tip { color:#6b7280; font-size:12.5px; margin:0 0 10px; }
+  .card { background:#fff; border:1px solid #e3e6ea; border-radius:8px; padding:16px; margin-bottom:8px; overflow-x:auto; }
+  table { border-collapse:collapse; min-width:520px; }
+  th, td { border:1px solid #d7dbe0; padding:7px 10px; text-align:left; font-size:13px; }
+  thead th { background:#eef4fb; }
+  caption { text-align:left; font-weight:600; padding-bottom:8px; color:#2b6cb0; }
+  tfoot td { background:#f3f4f6; font-weight:600; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  code { background:#eef2f7; padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; font-size:12.5px; }
+</style>
+</head>
+<body>
+
+<h1>插件测试页</h1>
+<p class="tip">这个页面专门用来演示 <code>网页表格 → SQL 生成器</code> 插件，三张表分别覆盖不同的结构，
+用来验证类型推断、表头识别、<code>colspan</code> 展开、空值与转义。</p>
+
+<h2>表一：标准结构（有 &lt;caption&gt; 和 &lt;thead&gt;）</h2>
+<p class="tip">最理想的情况：表名能从 caption 取到，列类型应推断为 INTEGER / VARCHAR / INTEGER / REAL。</p>
+<div class="card">
+  <table>
+    <caption>商品库存清单</caption>
+    <thead>
+      <tr><th>ID</th><th>名称</th><th>分类</th><th>数量</th><th>单价</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>机械键盘</td><td>外设</td><td class="num">12</td><td class="num">399</td></tr>
+      <tr><td>2</td><td>27寸显示器</td><td>外设</td><td class="num">5</td><td class="num">1299.5</td></tr>
+      <tr><td>3</td><td>固态硬盘 1TB</td><td>存储</td><td class="num">30</td><td class="num">549</td></tr>
+      <tr><td>4</td><td>人体工学椅</td><td>家具</td><td class="num">3</td><td class="num">880</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="3">合计</td><td class="num">50</td><td class="num">3127.5</td></tr>
+    </tfoot>
+  </table>
+</div>
+<p class="tip">注意 <code>&lt;tfoot&gt;</code> 那行是合计，插件会把它识别为表尾而不是数据行——正是这张表要验证的点。</p>
+
+<h2>表二：没有 &lt;thead&gt;，首行是普通 &lt;td&gt;</h2>
+<p class="tip">插件会猜首行是表头并给出提示；勾掉「首行作为表头」后可看到列名退化为 <code>col_1</code>、<code>col_2</code>…</p>
+<div class="card">
+  <table>
+    <tr><td>学号</td><td>姓名</td><td>成绩</td></tr>
+    <tr><td>2023001</td><td>张三</td><td>88</td></tr>
+    <tr><td>2023002</td><td>李四</td><td>92.5</td></tr>
+  </table>
+</div>
+
+<h2>表三：脏数据（colspan 表头 / 空单元格 / 单引号 / 日期 / 中文表头）</h2>
+<p class="tip">用来验证边界处理：<code>colspan</code> 展开补空列、空值写成 <code>NULL</code>、
+单引号按 SQL 标准翻倍转义、纯日期列推断为 <code>DATE</code>。</p>
+<div class="card">
+  <table>
+    <thead>
+      <tr><th colspan="2">客户信息</th><th colspan="2">订单</th></tr>
+      <tr><th>客户名称</th><th>联系电话</th><th>下单日期</th><th>金额</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tom's 五金店</td><td>010-8888 6666</td><td>2026-03-01</td><td>1500</td></tr>
+      <tr><td>启明科技</td><td></td><td>2026-03-05</td><td>288.8</td></tr>
+      <tr><td>王氏杂货</td><td>0571-1234 5678</td><td>2026-04-11</td><td>79.9</td></tr>
+    </tbody>
+  </table>
+</div>
+<p class="tip">表头是两行的，插件取最贴近数据的那一行（<code>客户名称 / 联系电话 / 下单日期 / 金额</code>）。</p>
+
+</body>
+</html>

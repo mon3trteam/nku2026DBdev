@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数聚 TeamHub · 低保真线框图</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="wire">
+
+<div class="wire-wrap">
+  <div class="wire-title">低保真线框图 · 数聚 TeamHub</div>
+  <div class="wire-note">
+    先定"信息放在哪里"，再谈"长什么样"。两张线框图分别对应前台首页（P-01）与后台数据看板（P-16），
+    标注了各区块的优先级与数据来源，高保真原型在此基础上完成。
+  </div>
+
+  <!-- 线框一：前台首页 -->
+  <div class="wf">
+    <h4>线框一 · 前台首页 P-01（公共布局）</h4>
+
+    <div class="wf-row">
+      <div class="wf-box wf-grow">Logo</div>
+      <div class="wf-box wf-grow" style="flex:3">主导航：首页 / 团队 / 成员 / 项目 / 公告 / 资源 / 留言</div>
+      <div class="wf-box">登录</div>
+    </div>
+
+    <div class="wf-box hero" style="margin-bottom:10px">
+      Hero 区：一句话定位 + 两条行动按钮（浏览项目 / 了解团队）
+    </div>
+
+    <div class="wf-grid4" style="margin-bottom:10px">
+      <div class="wf-box">成员数</div>
+      <div class="wf-box">项目数</div>
+      <div class="wf-box">公告数</div>
+      <div class="wf-box">资源数</div>
+    </div>
+
+    <div class="wf-row">
+      <div class="wf-box wf-grow tall">精选项目<br>（3 张卡片：封面 / 标题 / 摘要 / 标签）</div>
+    </div>
+
+    <div class="wf-row">
+      <div class="wf-box wf-grow tall">最新公告<br>（置顶 + 3 条列表：日期 / 标题）</div>
+    </div>
+
+    <div class="wf-grid3">
+      <div class="wf-box">成员卡片</div><div class="wf-box">成员卡片</div><div class="wf-box">成员卡片</div>
+    </div>
+
+    <div class="wf-row" style="margin-top:10px">
+      <div class="wf-box wf-grow">页脚：站点信息 / 快捷入口 / 版权</div>
+    </div>
+
+    <div class="wf-anno">
+      <b>取舍：</b>首页只放"能证明团队在做什么"的四类内容（人、项目、公告、资源），
+      搜索结果与筛选一律放到二级页面，保证首屏加载在 1 秒内完成。
+    </div>
+  </div>
+
+  <!-- 线框二：后台看板 -->
+  <div class="wf">
+    <h4>线框二 · 后台数据看板 P-16（管理布局）</h4>
+
+    <div class="wf-admin">
+      <div class="wf-side">
+        <div>Logo</div>
+        <div>数据看板</div>
+        <div>团队资料</div>
+        <div>公告管理</div>
+        <div>项目管理</div>
+        <div>留言管理</div>
+        <div>成员管理</div>
+        <div>站点设置</div>
+        <div>日志审计</div>
+      </div>
+      <div class="wf-main">
+        <div class="wf-row">
+          <div class="wf-box wf-grow">面包屑：首页 / 数据看板</div>
+          <div class="wf-box">搜索</div><div class="wf-box">通知</div><div class="wf-box">用户</div>
+        </div>
+
+        <div class="wf-grid4" style="margin-bottom:10px">
+          <div class="wf-box">成员总数</div>
+          <div class="wf-box">已发布项目</div>
+          <div class="wf-box">待审核留言</div>
+          <div class="wf-box">近 7 日访问</div>
+        </div>
+
+        <div class="wf-row">
+          <div class="wf-box wf-grow tall" style="flex:2">访问趋势折线图<br>（近 14 天）</div>
+          <div class="wf-box wf-grow tall">待办事项<br>（待审核 / 待补全）</div>
+        </div>
+
+        <div class="wf-row">
+          <div class="wf-box wf-grow tall" style="flex:2">最近登录记录表</div>
+          <div class="wf-box wf-grow tall">留言状态分布（环形图）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf-anno">
+      <b>取舍：</b>管理员进入后台的默认页就是看板，第一屏必须回答"现在有什么要处理"——
+      所以 KPI 下方直接跟"待办事项"，而不是先放图；图表只保留趋势和状态分布两项，避免信息过载。
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
