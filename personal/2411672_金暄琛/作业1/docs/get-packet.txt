@@ -1,0 +1,33 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Length: 611
+Cache-Control: no-store
+Date: Sun, 08 Nov 2026 03:56:49 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{
+  "ok": true,
+  "method": "GET",
+  "count": 3,
+  "data": [
+    {
+      "id": 3,
+      "author": "测试同学",
+      "content": "POST 接口验证成功",
+      "createdAt": "2026-11-08T03:20:53.607Z"
+    },
+    {
+      "id": 2,
+      "author": "李同学",
+      "content": "再提交一条留言，观察 POST 请求的 Payload 和 Response。",
+      "createdAt": "2026-11-08T02:50:34.084Z"
+    },
+    {
+      "id": 1,
+      "author": "张同学",
+      "content": "GET 请求已经准备好了，打开 Network 面板就能看到响应数据。",
+      "createdAt": "2026-11-08T02:20:34.077Z"
+    }
+  ]
+}

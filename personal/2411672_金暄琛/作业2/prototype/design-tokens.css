@@ -1,0 +1,54 @@
+/*
+ * 文件名：tokens.css
+ * 功能：设计令牌（颜色、字体、间距、圆角、阴影、断点）
+ * 作者：杨斯源（学号待填）
+ * 创建日期：2026-11-05
+ * 所属模块：公共样式
+ */
+
+:root {
+    /* 品牌色（设计文档 6.1） */
+    --c-primary: #102A43;
+    --c-primary-600: #1F3A5F;
+    --c-primary-050: #E8EEF5;
+    --c-accent: #2A9D8F;
+    --c-accent-600: #21867A;
+    --c-accent-050: #E6F4F1;
+    --c-gold: #C99A2E;
+    --c-gold-050: #FBF3DF;
+    --c-danger: #D95F43;
+    --c-danger-050: #FBEAE5;
+    --c-bg: #F7F9FB;
+    --c-surface: #FFFFFF;
+    --c-text: #243B53;
+    --c-muted: #627D98;
+    --c-border: #D9E2EC;
+    --c-border-strong: #BCCCDC;
+
+    /* 字体（不加载外部 Web Font） */
+    --font-body: "Source Han Serif SC", "Noto Serif CJK SC", "SimSun", serif;
+    --font-heading: "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "PingFang SC", sans-serif;
+    --font-mono: "Cascadia Code", "Consolas", "Courier New", monospace;
+
+    /* 8px 网格 */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+    /* 圆角与阴影 */
+    --radius-control: 8px;
+    --radius-card: 12px;
+    --radius-panel: 16px;
+    --shadow-float: 0 8px 24px rgba(16, 42, 67, .12);
+    --shadow-card: 0 2px 8px rgba(16, 42, 67, .06);
+
+    /* 布局 */
+    --container-max: 1200px;
+    --header-height: 72px;
+}

@@ -1,0 +1,41 @@
+采集时间：2026-11-13T11:24:06.168Z（本机 Edge/Chromium 157，DevTools 协议录制）
+真实网页 GET 请求与响应（学校官网首页）
+
+GET / HTTP/1.1
+Host: www.nankai.edu.cn
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0
+sec-ch-ua: "Not-A.Brand";v="99", "Microsoft Edge";v="157", "Chromium";v="157"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+--- 响应 ---
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Type: text/html
+Date: Fri, 13 Nov 2026 11:16:03 GMT
+Transfer-Encoding: chunked
+X-Frame-Options: SAMEORIGIN
+X-Protected-By: NKSOC
+frame-options: SAMEORIGIN
+vary: Accept-Encoding
+x-content-type-options: nosniff
+x-envoy-upstream-service-time: 0
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1;mode=block
+
+响应体长度：85900 字节
+响应体片段：
+<!DOCTYPE html>
+<html class="webplus-main"  >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />  
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link type="text/css" href="/_css/_system/system.css" rel="stylesheet"/>
+<link type="text/css" href="/_js/_portletPlugs/sudyNavi/css/sudyNav.css" rel="stylesheet" />
+<link type="text/css" href="/_js/_portletPlugs/datepicker/css/datepicker.css" rel="stylesheet" />
+<link type="text/css" href="/_

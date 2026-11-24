@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>校园留言板 | Web 前端初探</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <span class="eyebrow">互联网数据库开发 · 个人作业 1</span>
+      <h1>校园留言板</h1>
+      <p>一个用于演示 GET、POST、jQuery 事件和浏览器插件的本地网页。</p>
+      <div class="hero__chips">
+        <span>GET /api/messages</span>
+        <span>POST /api/messages</span>
+        <span>jQuery 3.7.1</span>
+      </div>
+    </div>
+    <div class="hero__mark" aria-hidden="true">DB</div>
+  </header>
+
+  <main class="layout">
+    <section class="card card--wide" aria-labelledby="get-title">
+      <div class="card__head">
+        <div>
+          <span class="section-no">01</span>
+          <h2 id="get-title">GET 请求演示</h2>
+        </div>
+        <span class="method method--get">GET</span>
+      </div>
+      <p class="muted">页面加载或点击刷新时，浏览器向 <code>/api/messages</code> 发起 GET 请求，并渲染服务器返回的 JSON。</p>
+      <div class="toolbar">
+        <button id="refreshMessages" class="btn btn--primary" type="button">刷新留言（GET）</button>
+        <a class="btn btn--ghost" href="/api/messages" target="_blank" rel="noreferrer">查看原始 JSON</a>
+        <span id="getStatus" class="status" role="status">等待请求</span>
+      </div>
+      <div id="messageList" class="message-list" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-labelledby="post-title">
+      <div class="card__head">
+        <div>
+          <span class="section-no">02</span>
+          <h2 id="post-title">POST 请求演示</h2>
+        </div>
+        <span class="method method--post">POST</span>
+      </div>
+      <p class="muted">提交表单后，前端把 JSON 数据 POST 到服务器。请在开发者工具中查看请求载荷与响应。</p>
+      <form id="messageForm" class="form">
+        <label>
+          <span>昵称</span>
+          <input id="author" name="author" type="text" maxlength="20" value="南开同学" required>
+        </label>
+        <label>
+          <span>留言内容</span>
+          <textarea id="content" name="content" rows="4" maxlength="200" required placeholder="写一句想展示在留言板上的话"></textarea>
+        </label>
+        <button class="btn btn--primary" type="submit">发送留言（POST）</button>
+        <span id="postStatus" class="status" role="status"></span>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="jquery-title">
+      <div class="card__head">
+        <div>
+          <span class="section-no">03</span>
+          <h2 id="jquery-title">jQuery 事件演示</h2>
+        </div>
+        <span class="method method--jq">jQuery</span>
+      </div>
+      <p class="muted">点击按钮会触发 jQuery 的 click 事件，动态修改文字、添加样式并更新计数。</p>
+      <div id="eventCard" class="event-card">
+        <span id="demoBadge" class="event-card__badge">未触发</span>
+        <p id="eventStatus">事件尚未触发</p>
+        <button id="eventDemo" class="btn btn--dark" type="button">触发 jQuery 事件</button>
+      </div>
+      <pre class="code-block"><code>$("#eventDemo").on("click", function () { ... });
+$("#eventStatus").text("jQuery 事件已触发");
+$("#eventCard").addClass("active");
+$("#demoBadge").text("已触发");</code></pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>实验提示：按 <kbd>F12</kbd> 打开开发者工具，切换到 <strong>Network / Fetch/XHR</strong> 面板观察请求。</p>
+  </footer>
+
+  <script src="vendor/jquery-3.7.1.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

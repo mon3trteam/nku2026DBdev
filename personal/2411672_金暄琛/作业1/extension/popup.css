@@ -1,0 +1,18 @@
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { width: 340px; margin: 0; padding: 18px; color: #172033; background: #f7f9fc; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+.logo { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; color: #fff; background: linear-gradient(145deg, #175cd3, #0b1f46); font: 900 20px Georgia, serif; box-shadow: 0 8px 18px rgba(23,92,211,.22); }
+h1 { margin: 0; font-size: 17px; line-height: 1.35; }
+header p { margin: 2px 0 0; color: #667085; font-size: 12px; }
+.preview { min-height: 78px; padding: 12px; border: 1px solid #e4e7ec; border-radius: 12px; background: #fff; }
+.preview span { color: #667085; font-size: 11px; font-weight: 700; letter-spacing: .05em; }
+.preview p { margin: 6px 0 0; overflow: hidden; color: #344054; font-size: 13px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.actions { display: grid; gap: 8px; margin-top: 12px; }
+button { min-height: 38px; border: 1px solid #cfd6e2; border-radius: 9px; cursor: pointer; color: #344054; background: #fff; font: 700 13px "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; transition: transform .15s, background .15s; }
+button:hover { transform: translateY(-1px); background: #f2f4f7; }
+button.primary { border-color: #175cd3; color: #fff; background: #175cd3; }
+button.primary:hover { background: #1249a8; }
+button.danger { color: #b42318; }
+.status { min-height: 18px; margin: 12px 0 0; color: #667085; font-size: 12px; text-align: center; }
+footer { margin-top: 8px; padding-top: 12px; border-top: 1px solid #e4e7ec; color: #98a2b3; font-size: 10px; line-height: 1.5; text-align: center; }
