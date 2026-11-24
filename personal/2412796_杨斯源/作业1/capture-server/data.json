@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "机械键盘",
+    "category": "外设",
+    "qty": 12,
+    "price": 399.0
+  },
+  {
+    "id": 2,
+    "name": "27寸显示器",
+    "category": "外设",
+    "qty": 5,
+    "price": 1299.0
+  },
+  {
+    "id": 3,
+    "name": "固态硬盘 1TB",
+    "category": "存储",
+    "qty": 30,
+    "price": 549.0
+  },
+  {
+    "id": 4,
+    "name": "人体工学椅",
+    "category": "家具",
+    "qty": 3,
+    "price": 880.0
+  },
+  {
+    "id": 5,
+    "name": "USB-C 扩展坞",
+    "category": "外设",
+    "qty": 20,
+    "price": 259.0
+  }
+]

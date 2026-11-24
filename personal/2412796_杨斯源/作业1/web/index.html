@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>商品库存管理 —— jQuery 事件演示</title>
+<style>
+  :root { --line:#e3e6ea; --brand:#2b6cb0; --muted:#6b7280; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:24px; font:14px/1.6 "Microsoft YaHei", "Segoe UI", sans-serif;
+         color:#1f2937; background:#f7f8fa; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:16px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:16px; }
+  .toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  input, select, button { font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:6px; }
+  input:focus, select:focus { outline:2px solid #bfdbfe; border-color:var(--brand); }
+  button { cursor:pointer; background:#fff; }
+  button.primary { background:var(--brand); border-color:var(--brand); color:#fff; }
+  button.danger  { color:#b91c1c; border-color:#fecaca; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { border-bottom:1px solid var(--line); padding:8px 10px; text-align:left; }
+  th { background:#f3f4f6; font-weight:600; font-size:13px; color:#374151; }
+  tbody tr:hover { background:#f9fafb; }
+  td.editable { cursor:text; }
+  td.editing { background:#fffbeb; outline:2px solid #fcd34d; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .empty { text-align:center; color:var(--muted); padding:24px; }
+  .stat { display:flex; gap:20px; font-size:13px; }
+  .stat b { color:var(--brand); font-size:16px; }
+  #log { font:12px/1.7 Consolas, monospace; background:#0f172a; color:#cbd5e1;
+         border-radius:6px; padding:12px; height:150px; overflow:auto; margin:0; }
+  #log .ok  { color:#86efac; } #log .err { color:#fca5a5; } #log .dim { color:#64748b; }
+  code { background:#eef2f7; padding:1px 5px; border-radius:4px;
+         font-family:Consolas, monospace; font-size:12.5px; }
+  ol.stmts li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<h1>商品库存管理</h1>
+<div class="sub">个人作业1 · 任务1（GET/POST 抓包）与任务2（jQuery 事件）共用演示页面</div>
+
+<!-- 状态区：截图「响应前后不同状态」靠这里的变化 -->
+<div class="card stat">
+  <div>记录数：<b id="stat-count">-</b></div>
+  <div>请求次数：<b id="stat-req">0</b></div>
+  <div>最后一次操作：<b id="stat-last">（尚未操作）</b></div>
+</div>
+
+<div class="card">
+  <div class="toolbar">
+    <input id="keyword" placeholder="输入名称实时过滤…" style="width:220px">
+    <button id="btn-reload">重新加载</button>
+    <button id="btn-add" class="primary">+ 新增记录</button>
+  </div>
+
+  <!-- 新增表单：默认隐藏，点「新增记录」后 $('#form-panel').slideDown() -->
+  <div id="form-panel" style="display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);">
+    <div class="toolbar">
+      <input id="f-name"  placeholder="名称 *"   style="width:160px">
+      <input id="f-cat"   placeholder="分类"     style="width:120px">
+      <input id="f-qty"   placeholder="数量"     style="width:90px"  value="1">
+      <input id="f-price" placeholder="单价"     style="width:90px"  value="0">
+      <button id="btn-save" class="primary">提交（POST）</button>
+      <button id="btn-cancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr><th style="width:60px">ID</th><th>名称</th><th style="width:110px">分类</th>
+          <th style="width:90px" class="num">数量</th><th style="width:110px" class="num">单价</th>
+          <th style="width:80px">操作</th></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="sub" style="margin:0 0 8px">
+    操作日志（双击表格中的「名称 / 分类 / 数量 / 单价」单元格可直接编辑并发送 PUT 请求）
+  </div>
+  <pre id="log"></pre>
+</div>
+
+<div class="card">
+  <div class="sub" style="margin:0 0 8px">本页用到的 jQuery 语句</div>
+  <ol class="stmts">
+    <li><code>$('#btn-add').on('click', function () { $('#form-panel').slideDown(); })</code> —— click 事件，展开表单</li>
+    <li><code>$('#btn-save').on('click', function () { $.ajax({url:'/api/items', type:'POST', ...}) })</code> —— POST 提交并 append 新行</li>
+    <li><code>$('#tbody').on('click', '.btn-del', function () { $.ajax({url:'/api/items/'+id, type:'DELETE'}) })</code> —— 事件委托 + DELETE</li>
+    <li><code>$('#keyword').on('input', function () { clearTimeout(t); t = setTimeout(...) })</code> —— input 事件，250ms 防抖后重查</li>
+    <li><code>$('#tbody').on('dblclick', 'td.editable', function () { ... $input.on('blur', commit) })</code> —— 双击编辑单元格 + PUT</li>
+  </ol>
+</div>
+
+<script src="static/jquery-3.7.1.min.js"></script>
+<script src="static/app.js"></script>
+</body>
+</html>

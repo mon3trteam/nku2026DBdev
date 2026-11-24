@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数聚 TeamHub · 首页原型</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 顶部导航（对应 P-01 首页） ============ -->
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#"><span class="mark">数</span>数聚 TeamHub</a>
+    <nav class="nav">
+      <a href="#" class="active">首页</a>
+      <a href="#">团队介绍</a>
+      <a href="#">成员</a>
+      <a href="#">项目</a>
+      <a href="#">公告</a>
+      <a href="#">资源</a>
+      <a href="#">留言板</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">NKU · 互联网数据库开发</span>
+    <h1>把数据讲成一个故事</h1>
+    <p class="lead">数聚 TeamHub 是团队的公开门户：成员、项目、公告与资源集中在这里，
+      访客三步之内就能找到想了解的人与事，成员登录后还能维护自己的资料与项目履历。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#">浏览项目 →</a>
+      <a class="btn btn-ghost" href="#">了解团队</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 数据条 ============ -->
+<div class="container">
+  <div class="stats">
+    <div class="stat"><div class="num">12</div><div class="label">团队成员</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">已发布项目</div></div>
+    <div class="stat"><div class="num">26</div><div class="label">团队公告</div></div>
+    <div class="stat"><div class="num">40</div><div class="label">共享资源</div></div>
+  </div>
+</div>
+
+<!-- ============ 精选项目 ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>精选项目</h2>
+      <a class="more" href="#">查看全部 8 个项目 →</a>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card-cover"><span>TEAMHUB</span></div>
+        <div class="card-body">
+          <h3>数聚 TeamHub 门户</h3>
+          <p>团队官网与成员中心，PHP + MySQL + jQuery，前后台一套账号体系。</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag accent">进行中</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-cover accent"><span>DATA</span></div>
+        <div class="card-body">
+          <h3>校园数据可视化</h3>
+          <p>把选课、图书借阅与消费流水汇总成看板，支持按院系与学期下钻。</p>
+          <div class="tags"><span class="tag">ECharts</span><span class="tag">SQL</span><span class="tag accent">已发布</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-cover gold"><span>LAB</span></div>
+        <div class="card-body">
+          <h3>数据库实验工具箱</h3>
+          <p>一键导入实验数据、生成 ER 图与 SQL 脚本的课程辅助工具。</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">SQLite</span><span class="tag accent">已发布</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 最新公告 ============ -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <h2>最新公告</h2>
+      <a class="more" href="#">公告中心 →</a>
+    </div>
+    <div class="announce">
+      <a class="announce-item" href="#">
+        <span class="date">2026-11-22</span>
+        <span class="title"><span class="pin">置顶</span>期末项目验收安排与答辩顺序说明</span>
+      </a>
+      <a class="announce-item" href="#">
+        <span class="date">2026-11-18</span>
+        <span class="title">成员中心上线：个人资料与项目履历可以自助维护了</span>
+      </a>
+      <a class="announce-item" href="#">
+        <span class="date">2026-11-15</span>
+        <span class="title">数据包导入导出功能开放测试，欢迎反馈问题</span>
+      </a>
+      <a class="announce-item" href="#">
+        <span class="date">2026-11-09</span>
+        <span class="title">团队资料与站点设置在后台统一维护</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 团队成员 ============ -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <h2>团队成员</h2>
+      <a class="more" href="#">成员列表 →</a>
+    </div>
+    <div class="member-grid">
+      <div class="member"><div class="avatar">杨</div><div class="name">杨斯源</div><div class="role">前端 · 2412796</div></div>
+      <div class="member"><div class="avatar">黄</div><div class="name">黄浩天</div><div class="role">后端 · 2413421</div></div>
+      <div class="member"><div class="avatar">钱</div><div class="name">钱泊瑜</div><div class="role">MVC · 负责人</div></div>
+      <div class="member"><div class="avatar">李</div><div class="name">李承泽</div><div class="role">数据库</div></div>
+      <div class="member"><div class="avatar">孙</div><div class="name">孙锘梵</div><div class="role">测试</div></div>
+      <div class="member"><div class="avatar">王</div><div class="name">王一诺</div><div class="role">文档</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h4>数聚 TeamHub</h4>
+        <p style="margin:0;font-size:13px;line-height:1.8">
+          南开大学《互联网数据库开发》课程项目<br>
+          一个可以查人、查项目、查公告的团队门户。
+        </p>
+      </div>
+      <div>
+        <h4>浏览</h4>
+        <a href="#">团队介绍</a><a href="#">成员列表</a><a href="#">项目列表</a>
+      </div>
+      <div>
+        <h4>社区</h4>
+        <a href="#">公告中心</a><a href="#">资源下载</a><a href="#">留言板</a>
+      </div>
+      <div>
+        <h4>成员</h4>
+        <a href="#">登录</a><a href="#">成员中心</a><a href="#">账号安全</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 数聚 TeamHub · 课程设计作品 · 全部数据仅用于教学演示</div>
+  </div>
+</footer>
+
+</body>
+</html>
