@@ -269,6 +269,7 @@ git push
 | 团队4 用户手册 | 自定义 | `docs/team/04-用户手册/` | ☐ |
 | 团队5 部署文档 | 部署还原流程；一键部署加分 | `docs/team/05-部署文档/` | ☐ |
 | 团队6 项目展示PPT | **必含小组分工与工作量分配** | `docs/team/06-项目展示PPT/` | ☐ |
+| 团队7 演示录屏 | 项目演示视频 | `docs/team/07-演示录屏/` → `code/data/team/` | ☐ |
 | 课程设计项目 | 前后台完整、>10 表、下载中心、每人 MVC 各 ≥1 文件 | `code/` | ☐ |
 | install.sql | 建表 + 初始数据，干净库可完整还原 | `code/data/install.sql` | ☐ |
 | 个人作业 1–3 | `作业N(学号_姓名).zip` | `personal/` → zip 至 `code/data/personal/` | ☐ |
